@@ -1,0 +1,118 @@
+<div class="checkout_area section-padding-80">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-md-6">
+                <div class="checkout_details_area mt-50 clearfix">
+
+                    <div class="cart-page-heading mb-30">
+                        <h5>Acceder</h5>
+                    </div>
+
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email">Email <span>*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" value="" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="password">Contraseña <span>*</span></label>
+                                <input type="password" class="form-control" id="password" value="" required>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" (click)="userLogin()">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                <div class="order-details-confirmation">
+
+                    <div class="cart-page-heading">
+                        <h5>Registrarse</h5>
+                        <p>Datos personales</p>
+                    </div>
+
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name">Rut <span>*</span></label>
+                                <input type="text" class="form-control" id="rut" name="rut" [(ngModel)]="usuario.rut" value="" required maxlength="13">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="last_name">Nombre <span>*</span></label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.nombre" value="" required maxlength="50">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="last_name">A. Paterno <span>*</span></label>
+                                <input type="text" class="form-control" id="a_paterno" name="a_paterno" [(ngModel)]="usuario.a_paterno" value="" required maxlength="50">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="last_name">A. Materno <span>*</span></label>
+                                <input type="text" class="form-control" id="a_materno" name="a_materno" [(ngModel)]="usuario.a_materno" value="" required maxlength="50">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="last_name">Dirección <span>*</span></label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="usuario.direccion" value="" required maxlength="255">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="company">Fono <span>*</span></label>
+                                <input type="text" class="form-control" id="fono" name="fono" [(ngModel)]="usuario.fono" value="" maxlength="15">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="company">Email <span>*</span></label>
+                                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" value="" maxlength="255">
+                            </div>
+                            
+                            <div class="col-12 mb-3">
+                                <label for="country">Pais <span>*</span></label>
+                                <select class="w-100 form-control" id="pais" name="pais" (change)="cargarRegiones()">
+                                    <option *ngFor="let pais of paises" value="{{ pais.id }}">{{ pais.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Región <span>*</span></label>
+                                <select class="w-100 form-control" id="region" nombre="region" (change)="cargarProvincias()">
+                                    <option *ngFor="let region of regiones" value="{{ region.id }}">{{ region.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Provincia <span>*</span></label>
+                                <select class="w-100 form-control" id="provincia" nombre="provincia" (change)="cargarComunas()">
+                                    <option *ngFor="let provincia of provincias" value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Comuna <span>*</span></label>
+                                <select class="w-100 form-control" id="comuna" nombre="comuna" (change)="cargarCiudades()">
+                                    <option *ngFor="let comuna of comunas" value="{{ comuna.id }}">{{ comuna.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Ciudad <span>*</span></label>
+                                <select class="w-100 form-control"  id="ciudad_id" name="ciudad_id" [(ngModel)]="usuario.ciudad_id">
+                                    <option *ngFor="let item of ciudades"  [value]="item.id">{{ item.nombre }}</option>
+                                </select>
+                            
+                                {{ ciudad_id }}
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="company">Nickname <span>*</span></label>
+                                <input type="text" class="form-control" id="nickname" name="nickname" [(ngModel)]="usuario.nickname" value="" maxlength="20">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="company">Contraseña <span>*</span></label>
+                                <input type="password" class="form-control" id="password2" name="passwword2" [(ngModel)]="usuario.password" value="" maxlength="20">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="company">Confirmación de contraseña <span>*</span></label>
+                                <input type="confirm_password" class="form-control" id="confirm_password" name="confirm_password" [(ngModel)]="usuario.confirm_password" value="" maxlength="20">
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" class="btn essence-btn" (click)="registrarUsuario()">Crear cuenta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

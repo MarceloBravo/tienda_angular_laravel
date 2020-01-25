@@ -1,0 +1,164 @@
+<!-- ##### Welcome Area Start ##### -->
+<ngb-carousel 
+  [showNavigationArrows]="false" 
+  [showNavigationIndicators]="false" 
+  interval="5000" 
+  [keyboard]="false"
+  [pauseOnHover]="false" 
+  [wrap]="true" 
+  [activeId]="slideTwo"
+>
+
+  <ng-template ngbSlide *ngFor="let imagen of imagenesSeccion1">
+    <section class="welcome_area bg-img background-overlay"
+      [ngStyle]="{background: 'url(assets/' + imagen.imagen + ') center center no-repeat','display': 'block', 'background-size': 'cover'}">
+      <div class="container h-100">
+        <div class="row h-100 align-items-center">
+          <div class="col-12">
+            <div class="hero-content">
+              <h6>{{ imagen.texto2 }}</h6>
+              <h2>{{ imagen.texto }}</h2>
+              <a *ngIf="imagen.img_link " href="{{ imagen.img_link}}"
+                class="btn essence-btn">{{ imagen.texto_link }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</ngb-carousel>
+<!-- ##### Welcome Area End ##### -->
+
+<!-- ##### Top Catagory Area Start ##### -->
+<div class="top_catagory_area section-padding-80 clearfix">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- Single Catagory -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+          style="background-image: url(assets/img/bg-img/bg-2.jpg);">
+          <div class="catagory-content">
+            <a href="#">Ropa</a>
+          </div>
+        </div>
+      </div>
+      <!-- Single Catagory -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+          style="background-image: url(assets/img/bg-img/bg-3.jpg);">
+          <div class="catagory-content">
+            <a href="#">Calzado</a>
+          </div>
+        </div>
+      </div>
+      <!-- Single Catagory -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+          style="background-image: url(assets/img/bg-img/bg-4.jpg);">
+          <div class="catagory-content">
+            <a href="#">Accesorios</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ##### Top Catagory Area End ##### -->
+
+<!-- ##### CTA Area Start ##### -->
+<ngb-carousel 
+  [showNavigationArrows]="false" 
+  [showNavigationIndicators]="false" 
+  interval="5000" 
+  [keyboard]="false"
+  [pauseOnHover]="false" 
+  [wrap]="true" 
+  [activeId]="'slideTwo'"
+  >
+
+  <ng-template ngbSlide *ngFor="let imagen of imagenesSeccion2">
+
+    <div class="cta-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="cta-content bg-img background-overlay"
+              [ngStyle]="{background: 'url(assets/' + imagen.imagen + ') center center no-repeat','display': 'block', 'background-size': 'cover'}">
+              <div class="h-100 d-flex align-items-center justify-content-end">
+                <div class="cta--text">
+                  <h6>{{ imagen.texto2 }}</h6>
+                  <h2>{{ imagen.texto }}</h2>
+                  <a *ngIf="imagen.img_link" href="{{ imagen.img_link }}" class="btn essence-btn">{{ imagen.texto_link }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</ngb-carousel>
+<!-- ##### CTA Area End ##### -->
+
+<!-- ##### New Arrivals Area Start ##### -->
+<section class="new_arrivals_area section-padding-80 clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-heading text-center">
+          <h2>Productos populares</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- ##### New Arrivals Area End ##### -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <owl-carousel-o [options]="customOptions">
+          <ng-template carouselSlide *ngFor="let producto of ofertas">
+
+            <div class="single-product-wrapper single-brands-logo col-md-3">
+              <!-- Product Image -->
+              <div class="product-img">
+                <img src="assets/{{ producto.src_imagen }}" alt="">
+
+                <!-- Hover Thumb -->
+                <img ng-if="producto.imagenes.count() > 0" class="hover-img"
+                  src="assets/{{ producto.imagenes[0].url}}/{{ producto.imagenes[0].nombre_archivo}} " alt="">
+
+                <!-- Favourite -->
+                <div class="product-favourite">
+                  <a routerLink="#" class="favme fa fa-heart"></a>
+                </div>
+              </div>
+              <!-- Product Description -->
+              <div class="picsum-img-wrapper product-description">
+                <span>topshop</span>
+                <a href="single-product-details.html">
+                  <h6>{{ producto.nombre }}</h6>
+                </a>
+                <p class="product-price">${{ producto.precio }}</p>
+
+                <!-- Hover Content -->
+                <div class="hover-content">
+                  <!-- Add to Cart -->
+                  <div class="add-to-cart-btn">
+                    <button (click)="agregarAlCarro(producto.id, 1)" class="btn essence-btn">Agregar al carro</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+        </owl-carousel-o>
+
+      </div>
+    </div>
+  </div>
+</div>

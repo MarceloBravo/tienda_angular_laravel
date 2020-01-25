@@ -1,0 +1,65 @@
+<?php
+//https://codebriefly.com/laravel-5-6-jwt-auth-api/  (Configuración para la identificación de usuario por token)
+//https://medium.com/@experttyce/c%C3%B3mo-crear-un-api-rest-con-laravel-5-7-y-jwt-token-94b79c533c6d (Configuración para la identificación de usuario por token + middleware)
+use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+/*
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+*/
+Route::post('login', 'API\AuthController@login');
+Route::middleware('jwt.auth')->group(function(){
+    
+    Route::get('logout', 'API\AuthController@logout');
+});
+
+Route::resource('admin/paises', 'Admin\PaisesController');
+Route::get('admin/paises/filtrar/{filtro}', 'Admin\PaisesController@filtrar');
+
+Route::resource('admin/regiones', 'Admin\RegionesController');
+Route::get('admin/regiones/filtrar/{filtro}', 'Admin\RegionesController@filtrar');
+Route::get('admin/regiones/pais/{pais_id}', 'Admin\RegionesController@regionesPais');
+
+Route::resource('admin/provincias','Admin\ProvinciasController');
+Route::get('admin/provincias/filtrar/{filtro}','Admin\ProvinciasController@filtrar');
+Route::get('admin/provincias/region/{region_id}','Admin\ProvinciasController@provinciasRegion');
+
+Route::resource('admin/comunas','Admin\ComunasController');
+Route::get('admin/comunas/filtrar/{filtro}','Admin\ComunasController@filtrar');
+Route::get('admin/comunas/provincia/{provincia_id}','Admin\ComunasController@comunasProvincia');
+
+Route::resource('admin/ciudades', 'Admin\CiudadesController');
+Route::get('admin/ciudades/filtrar/{filtro}','Admin\CiudadesController@filtrar');
+Route::get('admin/ciudades/comuna/{comuna_id}','Admin\CiudadesController@ciudadesComuna');
+
+Route::resource('admin/roles','Admin\RolesController');
+Route::get('admin/roles/filtrar/{filtro}','Admin\RolesController@filtrar');
+Route::get('admin/roles-default','Admin\RolesController@getDefaultRol');
+
+Route::resource('admin/usuarios','Admin\UsersController');
+Route::get('admin/usuarios/filtrar/{filtro}','Admin\UsersController@filtrar');
+
+Route::resource('admin/pantallas','Admin\PantallasController');
+Route::get('admin/pantallas/filtrar/{filtro}','Admin\PantallasController@filtrar');
+
+Route::resource('admin/marcas','Admin\MarcasController');
+Route::get('admin/marcas/filtrar/{filtro}', 'Admin\MarcasController@filtrar');
+
+Route::resource('admin/productos','Admin\ProductosController');
+Route::get('admin/productos/filtrar/{filtro}','Admin\ProductosController@filtrar');
+
+Route::resource('admin/ofertas','Admin\OfertasController');
+
+Route::get('home','HomeController@index');
+Route::get('home/imagenes/{seccion}','HomeController@imagenesSeccion');

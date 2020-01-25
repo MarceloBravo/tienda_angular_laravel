@@ -1,0 +1,48 @@
+<div class="cart-bg-overlay"></div>
+
+    <div id="right-side-cart-area" class="right-side-cart-area">
+
+        <!-- Cart Button -->
+        <div class="cart-button">
+            <a (click)="hiddenCart()" id="rightSideCart"><img src="assets/img/core-img/bag.svg" alt=""> <span id="spnCantidadProd">0</span></a>
+        </div>
+
+        <div class="cart-content d-flex">
+
+            <!-- Cart List Area -->
+            <div class="cart-list">
+                <!-- Single Cart Item -->
+
+                <!-- https://desarrolloweb.com/articulos/practica-observables-angular.html (Practicas de observables en Angular) -->
+                <div *ngFor="let item of carrito" class="single-cart-item" id="cartItem-{{ item.producto.id }}">
+                    
+                    <a class="product-image">
+                        <img ng-if="item.producto.imagenes.count() > 0" src="assets/{{ item.producto.imagenes[0].url}}/{{ item.producto.imagenes[0].nombre_archivo}}" class="cart-thumb" alt="">
+                        <!-- Cart Item Desc -->
+                        <div class="cart-item-desc">
+                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true" (click)="quitarDelCarrito( item.producto.id, item.cantidad )"></i></span>
+                            <span class="badge">{{ item.producto.nombre }}</span>
+                            <h6>{{ item.producto.resumen }}</h6>
+                            <p class="color">Cantidad: {{ item.cantidad }}</p>
+                            <p class="price">$ {{ (item.producto.precio * item.cantidad) }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-amount-summary">
+
+                <h2>Resumen</h2>
+                <ul class="summary-table">
+                    <li><span>Subtotal:</span> <span id="carritoSubTotal">$274.00</span></li>
+                    <li><span>Envío:</span> <span id="carritoEnvio">Free</span></li>
+                    <li><span>Descuento:</span> <span id="carritoDescuento">-15%</span></li>
+                    <li><span>Total:</span> <span id="carritoTotal">$232.00</span></li>
+                </ul>
+                <div class="checkout-btn mt-100">
+                    <a href="assets/checkout.html" class="btn essence-btn">Realizar pago</a>
+                </div>
+            </div>
+        </div>
+    </div>
