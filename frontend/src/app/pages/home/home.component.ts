@@ -112,8 +112,9 @@ export class HomeComponent implements OnInit {
         }
       },
       (error)=>{
-        console.log(error);
-        alert(error);
+        console.log(error);        
+        this._mensajeService.showModalMessage('Error', error);
+        //alert(error);
       });
   }
 
@@ -136,7 +137,8 @@ export class HomeComponent implements OnInit {
         var tipoMensaje: string = res ? "success" : "danger";
         this._mensajeService.mostrarMensaje(mensaje, tipoMensaje);
         //this._carritoService.actualizaInfoCarrito();
-        alert(mensaje);
+        this._mensajeService.showModalMessage('Información', mensaje);
+        //alert(mensaje);
       }
 
     }

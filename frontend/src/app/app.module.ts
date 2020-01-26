@@ -17,6 +17,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MessagesComponent } from './shared/messages/messages.component';
 import { FormsModule } from '@angular/forms';
+import { ModalMessageComponent } from './shared/modal-message/modal-message.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     CartComponent,
     LoginComponent,
-    MessagesComponent
+    MessagesComponent,
+    ModalMessageComponent
   ],
   imports: [
     BrowserModule,
