@@ -27,7 +27,7 @@ export class RightSideCartComponent implements OnInit {
         for(let key in res){
           items.push(res[key]);
         }
-        console.log(items);
+        //console.log(items);
         this.carrito = items;
 
         //this.cantProductos = this._carritoService.cantProductos();
@@ -42,7 +42,7 @@ export class RightSideCartComponent implements OnInit {
   {
     var cart = <HTMLDivElement>document.getElementById('right-side-cart-area');
     
-    console.log(cart.id);
+    //console.log(cart.id);
     for(var x = 0;x <= 800;x+=5)
     {
       cart.style.right = (x*-1).toString() + "px";      
@@ -57,5 +57,4 @@ export class RightSideCartComponent implements OnInit {
       this._carritoService.removerItem(id);
     }
   }
-
 }

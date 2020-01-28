@@ -148,8 +148,8 @@ export class CarritoService {
     for(let key in this.carrito){
       descuento = this.carrito[key].producto.porcentaje_descuento;
       sumaDescuento += descuento != null ? descuento : 0;
-      console.log(this.carrito[key].producto.porcentaje_descuento);
-      console.log(descuento);
+      //console.log(this.carrito[key].producto.porcentaje_descuento);
+      //console.log(descuento);
     }
 
     this.descuento = (sumaDescuento / this.CantitemsCarrito);

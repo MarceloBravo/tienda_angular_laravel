@@ -12,4 +12,12 @@ export class ComunasService {
   obtenerPorProvincia(idProvincia: number){
     return this.httpClient.get(this.endPoint + "/provincia/" + idProvincia);
   }
+
+  getAll(){
+    return this.httpClient.get(this.endPoint);
+  }
+
+  get(id: number){
+    return this.httpClient.get(this.endPoint + '/' + id);
+  }
 }

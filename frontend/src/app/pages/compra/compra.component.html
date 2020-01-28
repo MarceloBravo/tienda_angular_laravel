@@ -1,0 +1,152 @@
+ <!-- ##### Breadcumb Area Start ##### -->
+ <div class="breadcumb_area bg-img" style="background-image: url(assets/img/bg-img/breadcumb.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="page-title text-center">
+                    <h2>Compras</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
+
+<!-- ##### Checkout Area Start ##### -->
+<div class="checkout_area section-padding-80">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-md-6">
+                <div class="checkout_details_area mt-50 clearfix">
+
+                    <div class="cart-page-heading mb-30">
+                        <h5>Tus datos de cliente y dirección de entrega</h5>
+                    </div>
+
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name">Nombre <span>*</span></label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="usuario.data.usuario.nombre" required readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name">Apellidos <span>*</span></label>
+                                <input type="text" class="form-control" id="a_paterno" name="a_paterno" [(ngModel)]="usuario.data.usuario.a_paterno" required readonly>
+                            </div>
+                            <!-- 
+                            <div class="col-12 mb-3">
+                                <label for="company">Company Name</label>
+                                <input type="text" class="form-control" id="company" value="">
+                            </div>
+                            -->
+                            <div class="col-12 mb-3">
+                                <label for="pais">Pais <span>*</span></label>
+                                <select class="w-100 form-control" id="pais" name="pais" (change)="cargarRegiones()" [(ngModel)]="ciudad.pais_id">
+                                    <option *ngFor="let pais of paises" value="{{ pais.id}}">{{ pais.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Región <span>*</span></label>
+                                <select class="w-100 form-control" id="region" name="region" (change)="cargarProvincias()" [(ngModel)]="ciudad.region_id">
+                                    <option *ngFor="let region of regiones" value="{{ region.id }}">{{ region.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="provincia">Provincia <span>*</span></label>
+                                <select class="w-100 form-control" id="provincia" name="provincia" (change)="cargarComunas()" [(ngModel)]="ciudad.provincia_id">
+                                    <option *ngFor="let provincia of provincias" value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="comuna">Comuna <span>*</span></label>
+                                <select class="w-100 form-control" id="comuna" name="comuna" (change)="cargarCiudades()" [(ngModel)]="ciudad.comuna_id">
+                                    <option *ngFor="let comuna of comunas" value="{{ comuna.id }}">{{ comuna.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="country">Ciudad <span>*</span></label>
+                                <select class="w-100 form-control" id="ciudad_id" name="ciudad_id" [(ngModel)]="usuario.data.usuario.ciudad_id">
+                                    <option *ngFor="let ciudad of ciudades" value="{{ ciudad.id }}">{{ ciudad.nombre }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="direccion">Dirección de entrega<span>*</span></label>
+                                <input type="text" class="form-control mb-3" id="direccion" name="direccion" [(ngModel)]="usuario.data.usuario.direccion">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="fono">Fono <span>*</span></label>
+                                <input type="string" class="form-control" id="fono" name="fono" [(ngModel)]="usuario.data.usuario.fono">
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label for="email">Email <span>*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="usuario.data.usuario.email">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                <div class="order-details-confirmation">
+
+                    <div class="cart-page-heading">
+                        <h5>Tu Orden</h5>
+                        <p>Los detalles</p>
+                    </div>
+
+                    <ul class="order-details-form mb-4">
+                        <li><span>Producto</span> <span>Total</span></li>
+                        <li *ngFor="let item of carrito"><span>{{ item.producto.nombre }}</span> <span>$ {{ item.producto.precio * item.cantidad }}</span></li>
+                        <li><span>Shipping</span> <span>Free</span></li>
+                        <li><span>Total</span> <span>$ {{ total }}</span></li>
+                    </ul>
+
+                    <div id="accordion" role="tablist" class="mb-4">
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingFour">
+                                <h6 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseWebPay" aria-expanded="true" aria-controls="collapseWebPay"><i class="fa fa-circle-o mr-3"></i>WebPay</a>
+                                </h6>
+                            </div>
+                            <div id="collapseWebPay" class="collapse show" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>Con ésta opción puedes pagar con tarjetas de débito, Redcompra o cuenta Rut a través de Webpay. El monto de tu compra será cobrado en pesos chilenos.  El producto será enviado a tu dirección de entrega.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingOne">
+                                <h6 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapsePayPal" aria-expanded="false" aria-controls="collapsePayPal"><i class="fa fa-circle-o mr-3"></i>Paypal</a>
+                                </h6>
+                            </div>
+
+                            <div id="collapsePayPal" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>Efectuar el pago utilizando Paypal. Con ésta opción el monto a pagar de tu compra será traspasado a dolares y el producto será enviado a tu dirección de entrega.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingFour">
+                                <h6 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseCatch" aria-expanded="false" aria-controls="collapseCatch"><i class="fa fa-circle-o mr-3"></i>Pagar entienda</a>
+                                </h6>
+                            </div>
+                            <div id="collapseCatch" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>Con ésta opción puedes pagar el producto personalmente en la tienda y retirarlo en ella. Tu producto queda reservado (Puedes pagar y retirar tu producto hasta 48 horas despúes de haber realizado la compra).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn essence-btn">Concretar la compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

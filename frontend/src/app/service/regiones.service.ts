@@ -12,4 +12,12 @@ export class RegionesService {
   public obtenerPorPais(idPais: number){
     return this.httpClient.get(this.endPoint + "/pais/" + idPais);
   }
+
+  getAll(){
+    return this.httpClient.get(this.endPoint);
+  }
+  
+  get(id: number){
+    return this.httpClient.get(this.endPoint + '/' +id);
+  }
 }

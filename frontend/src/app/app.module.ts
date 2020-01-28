@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { MessagesComponent } from './shared/messages/messages.component';
 import { FormsModule } from '@angular/forms';
 import { ModalMessageComponent } from './shared/modal-message/modal-message.component';
+import { CompraComponent } from './pages/compra/compra.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ModalMessageComponent } from './shared/modal-message/modal-message.comp
     CartComponent,
     LoginComponent,
     MessagesComponent,
-    ModalMessageComponent
+    ModalMessageComponent,
+    CompraComponent
   ],
   imports: [
     BrowserModule,
