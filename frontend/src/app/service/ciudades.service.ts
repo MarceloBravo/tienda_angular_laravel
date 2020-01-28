@@ -12,4 +12,12 @@ export class CiudadesService {
   obtenerPorComuna(idComuna: number){
     return this.httpClient.get(this.endPoint + "/comuna/" + idComuna);
   }
+
+  getAll(){
+    return this.httpClient.get(this.endPoint);
+  }
+
+  get(id: number){
+    return this.httpClient.get(this.endPoint + '/' + id);
+  }
 }
