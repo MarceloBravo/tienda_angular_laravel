@@ -22,7 +22,7 @@ class CiudadesController extends Controller
                             ->join("paises", "regiones.pais_id", "=", "paises.id")                            
                             ->select("ciudades.*","comunas.nombre as comuna","provincias.nombre as provincia","regiones.nombre as region","paises.nombre as pais")
                             ->get();
-
+        
         return response()->json($ciudades->ToArray());
     }
 
@@ -69,7 +69,12 @@ class CiudadesController extends Controller
      */
     public function show($id)
     {
-        $ciudad = Ciudad::find($id);
+        $ciudad = Ciudad::join('comunas','ciudades.comuna_id','=','comunas.id')
+                    ->join('provincias','comunas.provincia_id','=','provincias.id')
+                    ->join('regiones','provincias.region_id','=','regiones.id')
+                    ->join('paises','regiones.pais_id','=','paises.id')
+                    ->select('ciudades.*','provincias.id as provincia_id','regiones.id as region_id','paises.id as pais_id')
+                    ->find($id);
 
         return response()->json($ciudad);
     }
