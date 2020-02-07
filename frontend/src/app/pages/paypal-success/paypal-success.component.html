@@ -1,0 +1,159 @@
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Tu compra ha finalizado exitosamente.<small></small></h3>
+      </div>
+
+      <div class="title_right">
+
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><small>Comprobante de compra</small></h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+
+            <section id="invoice" class="content invoice">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-md-12 invoice-header">
+                  <h1>
+                    <span><img src="..\..\assets\img\world.png"/></span>Factura
+                    <small class="pull-right">N°<span id="num-documento"></span></small>
+                  </h1>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                  De
+                  <address>
+                    <strong>{{ empresa.nombre }}</strong>
+                    <br>{{ empresa.direccion }}
+                    <br>{{ empresa.ciudad[0].nombre }}
+                    <br>Fono: {{ empresa.fono }}
+                    <br>Email: {{ empresa.email }}
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  Para
+                  <address>
+                    <strong>{{ usuario.data.usuario.nombre }} {{ usuario.data.usuario.a_paterno }} {{ usuario.data.usuario.a_materno }}</strong>
+                    <br>{{ usuario.data.usuario.direccion }}
+                    <br>{{ ciudad }}
+                    <br>Fono: {{ usuario.data.usuario.fono }}
+                    <br>Email: {{ usuario.data.usuario.email }}
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <b>Fecha de pago:</b> {{ fecha }}
+                  <br>
+                  <br>
+                  <b>Order N°:</b> <span id="num-orden"></span>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-xs-12 table">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Còdigo</th>
+                        <th style="width: 15%">Producto</th>
+                        <th style="width: 50%">Descripción</th>
+                        <th>Precio normal</th>
+                        <th>Precio venta</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of carritoArray">
+                        <td>{{ item.producto.id }}</td>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>{{ item.producto.descripcion }}</td>
+                        <td>$ {{ item.producto.precio_anterior.toLocaleString('es-ES') }}</td>
+                        <td>$ {{ item.producto.precio.toLocaleString('es-ES') }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>$ {{ (item.producto.precio * item.cantidad).toLocaleString('es-ES') }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-xs-6">
+                  <p class="lead d-print-none">Método de pago: <span><img src="/assets/img/commons/paypal.png" alt="Paypal"></span></p>
+                  <!-- <img src="images/visa.png" alt="Visa">
+                  <img src="images/mastercard.png" alt="Mastercard">
+                  <img src="images/american-express.png" alt="American Express"> -->                  
+                  <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                    <label class="d-print-none"> A continuación, para finalizar puedes imprimir o descargar el PDF del documento de compra.</label>
+                  </p>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-6 div-totales">
+                  <p class="lead">Fecha de pago {{ fecha }}</p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th style="width:50%">Subtotal:</th>
+                          <td>$ {{ this.datosVenta.subtotal.toLocaleString('es-ES') }}</td>
+                        </tr>
+                        <tr>
+                          <th>Shipping:</th>
+                          <td>$ {{ this.datosVenta.shipping.toLocaleString('es-ES') }}</td>
+                        </tr>
+                        <tr>
+                          <th>Descuento</th>
+                          <td>$ {{ (this.datosVenta.subtotal - this.datosVenta.total).toLocaleString('es-ES') }} ({{ this.datosVenta.descuento.toLocaleString('es-ES') }}%)</td>
+                        </tr>
+                        <tr>
+                          <th>Total:</th>
+                          <td>$ {{ datosVenta.total.toLocaleString('es-ES') }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+
+              
+            </section>
+            <!-- this row will not appear when printing -->
+            <div class="row no-print d-print-none">
+              <div class="col-xs-12 div-buttons-print">
+                <button class="btn btn-default" (click)="imprimirDocumento();"><i class="fa fa-print"></i> Imprimir </button>                  
+                <button class="btn btn-primary pull-right" (click)="generarPdf()" style="margin-right: 5px;"><i class="fa fa-download"></i>
+                  Generar PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /page content -->

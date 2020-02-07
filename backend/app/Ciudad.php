@@ -9,7 +9,7 @@ class Ciudad extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'Ciudades';
+    protected $table = 'ciudades';
 
     protected $fillable = ['nombre', 'comuna_id'];
 
@@ -21,5 +21,9 @@ class Ciudad extends Model
     public function usuarios()
     {
         return $this->hasMany('App\User','ciudad_id','id')->get();
+    }
+
+    public function empresa(){
+        return $this->hasMany('App\Empresa','ciudad_id','id')->get();
     }
 }

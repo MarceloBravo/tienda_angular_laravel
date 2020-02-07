@@ -22,6 +22,7 @@ class CreateOrdenesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('estado_id')->unsigned();
             $table->foreign('estado_id')->references('id')->on('estados');
+            $table->string('token');
             $table->timestamps();
             $table->softDeletes();
         });

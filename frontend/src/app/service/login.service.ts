@@ -15,6 +15,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   setToken(token: string){
+    sessionStorage.setItem("token", token);
     this.token = token;
   }
 
@@ -24,6 +25,7 @@ export class LoginService {
 
   setUser(usuario: UserLoggedInData){
     this.datosUsuario = usuario;
+    sessionStorage.setItem('user', JSON.stringify(this.datosUsuario));
   }
 
   getUser(){
@@ -42,6 +44,9 @@ export class LoginService {
 
   
   public showUserInfo(){
+    if(typeof(this.getUser()) == "undefined" ){
+      this.setUser(JSON.parse(sessionStorage.getItem('user')));
+    }
     if(typeof(this.getUser()) != "undefined"){
       var user: UserLoggedInData = this.getUser(); 
       var span = <HTMLSpanElement>document.getElementById("userName");

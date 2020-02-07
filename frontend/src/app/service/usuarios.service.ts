@@ -19,6 +19,4 @@ export class UsuariosService {
     return this.httpClient.post(this.endPoint, usuario, {headers:this.headers()});
   }
 
-
-  
 }

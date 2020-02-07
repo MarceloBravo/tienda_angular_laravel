@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { LoginService } from 'src/app/service/login.service';
 import { UserLoggedInData } from 'src/app/interfaces/userLogguedInData';
 import { Router } from '@angular/router';
@@ -13,12 +13,13 @@ import { ProvinciasService } from 'src/app/service/provincias.service';
 import { ComunasService } from 'src/app/service/comunas.service';
 import { CiudadesService } from 'src/app/service/ciudades.service';
 import { PaisesInterface } from '../../interfaces/PaisesInterface';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { usuariosInterfaces } from 'src/app/interfaces/usuariosInterface';
 import { MessagesService } from 'src/app/service/messages.service';
-import { ProductoInterface } from 'src/app/interfaces/productoInterface';
 import { ItemCarrito } from 'src/app/class/item-carrito';
 import { CarritoService } from 'src/app/service/carrito.service';
+import { PaypalService } from 'src/app/service/paypal.service';
+import { DOCUMENT } from '@angular/common';
+import { OrdenesService } from 'src/app/service/ordenes.service';
+import { PayPalTransactionInterface } from 'src/app/interfaces/PayPalTransactionInterface';
 
 @Component({
   selector: 'app-compra',
@@ -51,14 +52,24 @@ export class CompraComponent implements OnInit {
         ciudad: null
     }
   };
+  private PayPalData: PayPalTransactionInterface = {
+    TOKEN: null,
+    TIMESTAMP: null,
+    CORRELATIONID: null,
+    ACK: null, //Resultadio de la petición de transacción (success or error)
+    VERSION: null,
+    BUILD: null,
+    paypal_link: null
+  }
   public paises: Pais[];
   public regiones: Region[];
   public provincias: Provincia[];
   public comunas: Comuna[];
   public ciudades: Ciudad[];
   private ciudad: Ciudad = new Ciudad();
-  private carrito: ItemCarrito[];
+  private carrito: ItemCarrito[]; //Array con productos que contendrá el carrito, es utilizado para mostrar los productos en el DOM
   private total: number;
+  private tipoPago: number = 1;
 
   constructor(
     private _loginService: LoginService,
@@ -69,6 +80,9 @@ export class CompraComponent implements OnInit {
     private _ciudadesService: CiudadesService,
     private _messageService: MessagesService,
     private _carritoService: CarritoService,
+    private _paypalService: PaypalService,
+    private _ordenesService: OrdenesService,
+    @Inject(DOCUMENT) private document: Document,
     private router: Router
     ) { 
       this.cargarDatos();       
@@ -79,7 +93,8 @@ export class CompraComponent implements OnInit {
 
 
   private async cargarDatos(){
-    await this.getDatosUsuario();
+    this.getDatosUsuario();
+    this._ordenesService.setDatosCliente(this.usuario); //_ordenesService almacena todos los datos de kla orden (datos del cliente, contenido del carrito, número de orden de pedido, etc.)
     await this.obtenerCiudad(this.usuario.data.usuario.ciudad_id); 
     this.cargarPaises();
     this.cargarRegiones(this.ciudad.pais_id);
@@ -87,6 +102,7 @@ export class CompraComponent implements OnInit {
     this.cargarComunas(this.ciudad.provincia_id);
     this.cargarCiudades(this.ciudad.comuna_id);
     this.cargarCarrito();
+    this._ordenesService.setCarrito(this.carrito);  //_ordenesService almacena todos los datos de kla orden (datos del cliente, contenido del carrito, número de orden de pedido, etc.)
   }
 
 
@@ -202,7 +218,58 @@ export class CompraComponent implements OnInit {
     for(var item in carrito){
       this.carrito.push(carrito[item]);
       this.total += carrito[item].producto.precio * carrito[item].cantidad;
+    }    
+  }
+
+  public setTipoPago(tipo: number){
+    this.tipoPago = tipo;
+  }
+
+  private efectuarPago(){
+    console.log(this.tipoPago);
+    switch(this.tipoPago){
+      case 1:
+        this.pagoWebPay();
+        break;
+      case 2:
+        this.pagoPaypal();
+        break;
+      default:
+        break;
     }
-    //console.log(this.carrito);
+  }
+
+  private pagoPaypal(){
+    if(confirm("¿Desea concretar el pago con PayPal?")){ 
+      this._ordenesService.setTipoDocumento("F"); //"F" => La aplicación momentaneamente  sólo emite Facturas 
+      var codOrden = Math.floor(Math.random() * 100000) + 1000; //Genera un nùmero aleatorio entre 1000 y 100000 el cual es utilizasdo còmo còdigo de orden de compra.
+      this._ordenesService.setCodigoOrden(codOrden.toString()); //Adjunta el código de Orden provisorio a los datos de la venta
+
+      this._paypalService.paymentPaypal(this._ordenesService.getDatosVenta()).subscribe(
+        (res: string[])=>{
+          console.log(res);
+
+          //Recuperamos la respuesta de solicitud de transacción de devuelta por PayPal
+          this.PayPalData.TOKEN = res['RESPONSE']['TOKEN'];
+          this.PayPalData.ACK = res['RESPONSE']['ACK'];
+          this.PayPalData.BUILD = res['RESPONSE']['BUILD'];
+          this.PayPalData.CORRELATIONID = res['RESPONSE']['CORRELATIONID'];
+          this.PayPalData.TIMESTAMP = res['RESPONSE']['TIMESTAMP'];
+          this.PayPalData.VERSION = res['RESPONSE']['VERSION'];
+          this.PayPalData.paypal_link = res['RESPONSE']['paypal_link'];
+
+          this._ordenesService.setPayPalData(this.PayPalData);  //Adjunta los datos devueltos por PayPal a los datos de la venta
+
+          localStorage.setItem('datosVenta', JSON.stringify(this._ordenesService.getDatosVenta()));
+          this.document.location.href = res['RESPONSE']['paypal_link']; //Redirecciona a la página de PayPal para concretar la venta
+        },(error)=>{
+          console.log(error);
+          this._messageService.showModalMessage("Error",error.message);
+        })
+    }
+  }
+
+  private pagoWebPay(){
+    
   }
 }

@@ -19,6 +19,8 @@ import { MessagesComponent } from './shared/messages/messages.component';
 import { FormsModule } from '@angular/forms';
 import { ModalMessageComponent } from './shared/modal-message/modal-message.component';
 import { CompraComponent } from './pages/compra/compra.component';
+import { PaypalSuccessComponent } from './pages/paypal-success/paypal-success.component';
+import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { CompraComponent } from './pages/compra/compra.component';
     LoginComponent,
     MessagesComponent,
     ModalMessageComponent,
-    CompraComponent
+    CompraComponent,
+    PaypalSuccessComponent,
+    PaypalCancelComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,9 @@ class CreateItemsOrdenesTable extends Migration
             $table->bigInteger('producto_id')->unsigned();
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->integer('precio')->unsigned();
+            $table->integer('precio_anterior')->unsigned();
             $table->integer('cantidad')->unsigned();
+            $table->integer('descuento')->unsigned();
             $table->string('token', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();

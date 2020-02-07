@@ -33,4 +33,8 @@ class Producto extends Model
     {
         return $this->hasMany("App\Oferta", "producto_id", "id")->get();
     }
+
+    public function ItemOrden(){
+        return $this->hasMany('App\ItemsOrden','producto_id','id')->get();
+    }
 }
