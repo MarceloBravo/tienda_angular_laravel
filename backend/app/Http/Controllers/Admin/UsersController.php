@@ -71,6 +71,7 @@ class UsersController extends Controller
         return response()->json($user);
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *

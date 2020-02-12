@@ -177,6 +177,7 @@ return [
         Laraveles\Spanish\SpanishServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Srmklive\Paypal\Providers\PaypalServiceProvider::class,
+        \Freshwork\Transbank\Laravel\WebpayServiceProvider::class
     ],
 
     /*

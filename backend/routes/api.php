@@ -64,13 +64,6 @@ Route::resource('admin/ofertas','Admin\OfertasController');
 Route::get('home','HomeController@index');
 Route::get('home/imagenes/{seccion}','HomeController@imagenesSeccion');
 
-//Rutas PayPal
-Route::post('paypal','PaypalController@payment');
-Route::get('paypal/cancel','PaypalController@cancel')->name('payment.cancel');
-Route::get('paypal/success','PaypalController@success')->name('payment.success');
-//Route::get('payment/status','PaypalController@getPaymentStatus')->name('payment.status');
-Route::get('usd', 'PaypalController@getUSD');
-
 Route::resource('ordenes', 'Admin\OrdenesController');
 Route::get('ultima-orden','Admin\OrdenesController@getLastOrder');
 
@@ -79,3 +72,17 @@ Route::get('estados_compras_inicial','Admin\EstadosController@getFirstState');
 
 Route::resource('empresa','Admin\EmpresaController');
 Route::get('empresa_default','Admin\EmpresaController@first');
+
+
+//Rutas PayPal
+Route::post('paypal','PaypalController@payment');
+Route::get('paypal/cancel','PaypalController@cancel')->name('payment.cancel');
+Route::get('paypal/success','PaypalController@success')->name('payment.success');
+//Route::get('payment/status','PaypalController@getPaymentStatus')->name('payment.status');
+Route::get('usd', 'PaypalController@getUSD');
+
+//Rutas WebPay
+Route::get('/webpay/payment', 'WebPayController@initTransaction')->name('checkout');  
+Route::post('/checkout/webpay/response', 'WebPayController@response')->name('checkout.webpay.response');  
+Route::post('/checkout/webpay/finish', 'WebPayController@finish')->name('checkout.webpay.finish');
+

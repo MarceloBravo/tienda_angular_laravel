@@ -20,6 +20,7 @@ import { PaypalService } from 'src/app/service/paypal.service';
 import { DOCUMENT } from '@angular/common';
 import { OrdenesService } from 'src/app/service/ordenes.service';
 import { PayPalTransactionInterface } from 'src/app/interfaces/PayPalTransactionInterface';
+import { WebpayService } from 'src/app/service/webpay.service';
 
 @Component({
   selector: 'app-compra',
@@ -81,6 +82,7 @@ export class CompraComponent implements OnInit {
     private _messageService: MessagesService,
     private _carritoService: CarritoService,
     private _paypalService: PaypalService,
+    private _WebPayService: WebpayService,
     private _ordenesService: OrdenesService,
     @Inject(DOCUMENT) private document: Document,
     private router: Router
@@ -226,7 +228,6 @@ export class CompraComponent implements OnInit {
   }
 
   private efectuarPago(){
-    console.log(this.tipoPago);
     switch(this.tipoPago){
       case 1:
         this.pagoWebPay();
@@ -239,6 +240,7 @@ export class CompraComponent implements OnInit {
     }
   }
 
+  //https://www.itsolutionstuff.com/post/paypal-integration-in-laravel-6-exampleexample.html Implementar PayPal
   private pagoPaypal(){
     if(confirm("¿Desea concretar el pago con PayPal?")){ 
       this._ordenesService.setTipoDocumento("F"); //"F" => La aplicación momentaneamente  sólo emite Facturas 
@@ -264,12 +266,40 @@ export class CompraComponent implements OnInit {
           this.document.location.href = res['RESPONSE']['paypal_link']; //Redirecciona a la página de PayPal para concretar la venta
         },(error)=>{
           console.log(error);
-          this._messageService.showModalMessage("Error",error.message);
+          this._messageService.showModalMessage("Error",error.error.message);
         })
     }
   }
 
+
+  //https://packagist.org/packages/freshwork/transbank    Implementar WebPay
+  //https://www.transbankdevelopers.cl/documentacion/como_empezar#ambiente-de-integracion Datos de prueba WebPay
   private pagoWebPay(){
-    
+    if(confirm("¿Desea concretar el pago con WebPay?")){ 
+      var carrito: {[id: number]: ItemCarrito} = this._ordenesService.getCarrito();
+      var total: number = 0;
+      for(let item in carrito){
+        total += carrito[item].producto.precio * carrito[item].cantidad;
+      }
+      this._WebPayService.paymentWebPay(total).subscribe(
+        (res)=>{
+          localStorage.setItem('datosVenta', JSON.stringify(this._ordenesService.getDatosVenta()));
+          //console.log(res);
+
+          var form = document.createElement('form');
+          document.body.appendChild(form);
+          form.method = 'post';
+          form.action = res['url'];
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'TBK_TOKEN';
+          input.value = res['token'];
+          form.appendChild(input);
+          form.submit();
+      },(error)=>{
+        console.log(error);
+        this._messageService.showModalMessage("Error",error.error.message);
+      });
+   } 
   }
 }

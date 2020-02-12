@@ -21,6 +21,7 @@ import { ModalMessageComponent } from './shared/modal-message/modal-message.comp
 import { CompraComponent } from './pages/compra/compra.component';
 import { PaypalSuccessComponent } from './pages/paypal-success/paypal-success.component';
 import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.component';
+import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.compo
     ModalMessageComponent,
     CompraComponent,
     PaypalSuccessComponent,
-    PaypalCancelComponent
+    PaypalCancelComponent,
+    WebpaySuccessComponent,
   ],
   imports: [
     BrowserModule,

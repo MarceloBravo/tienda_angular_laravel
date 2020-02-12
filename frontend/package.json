@@ -32,6 +32,7 @@
     "ngx-owl-carousel-o": "^2.0.3",
     "ngx-useful-swiper": "^9.0.0",
     "owl.carousel": "^2.3.4",
+    "password-hash": "^1.2.2",
     "pdfmake": "^0.1.64",
     "popper.js": "^1.16.0",
     "rxjs": "~6.4.0",

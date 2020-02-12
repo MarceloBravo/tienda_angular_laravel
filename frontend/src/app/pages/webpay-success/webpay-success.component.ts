@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemCarrito } from 'src/app/class/item-carrito';
 import { LoginService } from 'src/app/service/login.service';
-import { UserLoggedInData } from 'src/app/interfaces/userLogguedInData';
-import { datosVenta } from '../../interfaces/datosVenta';
 import { OrdenesService } from 'src/app/service/ordenes.service';
 import { MessagesService } from 'src/app/service/messages.service';
 import { EstadosService } from 'src/app/service/estados.service';
-import { estadosInterface } from '../../interfaces/estadosInterface';
-import { ordenesInterface } from 'src/app/interfaces/ordenInterface';
-import { empresaInterface } from 'src/app/interfaces/empresaInterface';
 import { EmpresaService } from 'src/app/service/empresa.service';
 import { Router } from '@angular/router';
+import { ItemCarrito } from 'src/app/class/item-carrito';
+import { datosVenta } from 'src/app/interfaces/datosVenta';
+import { UserLoggedInData } from 'src/app/interfaces/userLogguedInData';
+import { estadosInterface } from 'src/app/interfaces/estadosInterface';
+import { empresaInterface } from 'src/app/interfaces/empresaInterface';
+import { ordenesInterface } from 'src/app/interfaces/ordenInterface';
 //https://blog.nubecolectiva.com/generar-pdf-con-angular-js-5/  //Generar pedf 
 import * as jsPDF from 'jspdf';
 import htmlToImage from 'html-to-image';
 
 @Component({
-  selector: 'app-paypal-success',
-  templateUrl: './paypal-success.component.html',
-  styleUrls: ['./paypal-success.component.css']
+  selector: 'app-webpay-success',
+  templateUrl: './webpay-success.component.html',
+  styleUrls: ['./webpay-success.component.css']
 })
-export class PaypalSuccessComponent implements OnInit {
+export class WebpaySuccessComponent implements OnInit {
   public carritoArray: ItemCarrito[] = new Array();
   public subTotal: number = 0;
-  //public shipping: number = 0;
-  //public descuento: number = 0;
-  //public total: number = 0;
   public fecha: string;
   public usuario: UserLoggedInData;
   public datosVenta: datosVenta;
@@ -68,10 +65,11 @@ export class PaypalSuccessComponent implements OnInit {
     this.actualizarCarritoTotalDescuentoSubtotal();  //Calculando el total de la venta
     //Preparando datos a mostrar en la factura
     this.prepararDatosAGrabar();  
-  }
+   }
 
   ngOnInit() {
   }
+
   
   private async prepararDatosAGrabar(){
     //Obteniendo los datos del cliente
@@ -86,7 +84,7 @@ export class PaypalSuccessComponent implements OnInit {
     this.datosVenta.shipping = 0; //Costo de envío
     this.datosVenta.user_id = this.datosVenta.datosCliente.data.usuario.id; //Id del usuario (Cliente)    
     this.datosVenta.tipo_documento = "F";  //Momentaneamente la aplicación sólo emitirá Facturas
-    console.log(this.datosVenta);
+    //console.log(this.datosVenta);
     this.grabarVenta(); //Registrando la venta en la base de datos
   }
 
@@ -109,11 +107,11 @@ export class PaypalSuccessComponent implements OnInit {
   private grabarVenta(){
     this._ordenesService.save(this.datosVenta).subscribe(
       (res: any) =>{
-      console.log(res);      
+      //console.log(res);      
       this._messagesService.mostrarMensaje(res.message, "success");
       this.actualizarNumeroDocumento(res.id);
     },(error)=>{
-      //console.log(error);
+      console.log(error);
       this._messagesService.mostrarMensaje(error.error.message, "success");
     });
   }
@@ -167,19 +165,7 @@ export class PaypalSuccessComponent implements OnInit {
     })
     .catch((error) => {
       console.error('oops, Algo salio mal!', error);
-    });
-    //var elem: HTMLDivElement = <HTMLDivElement>document.getElementById("invoice"); 
-    //const documentDefinition = { content: elem.innerHTML };
-    //pdfMake.createPdf(documentDefinition).open();
-/*
-      var doc = new jsPDF ('letter');
-      var elem = <HTMLDivElement>document.getElementById("invoice"); 
-      console.log(elem.innerHTML);     
-      doc.fromHTML(elem.innerHTML, 0, 0);
-      var fecha = new Date();
-      var strFecha = (fecha.getDate() < 10 ? '0' : '') + fecha.getDate() + '/' + (fecha.getMonth() < 9 ?  '0' : '') + (fecha.getMonth()+ 1)  + '/' + fecha.getFullYear();
-      doc.save('comprobante' + strFecha + '.pdf');
-  */    
+    });    
   }
 
   public imprimirDocumento(){
@@ -191,25 +177,7 @@ export class PaypalSuccessComponent implements OnInit {
     window.focus();
     window.print();
     body.innerHTML = originalBodyContent;
-    alert("Redireccionando");
     window.location.href = "http://127.0.0.1:4200/home";
-    //this.router.navigate(["/home"]);
-    /*
-    //Código para imprimir en una nueva ventana
-    //var winPrint = window.open('','PRINT','height=400,width=600');
-    var winPrint = window.open('','PRINT');
-    winPrint.document.write('<html><head><title>Factura</title>');
-    winPrint.document.write('<link rel=\'stylesheet\' href=\'./paypal-success.component.css\' />');
-    winPrint.document.write('</head>');
-    winPrint.document.write('<body>');
-    winPrint.document.write('<h1>Factura</h1>');
-    winPrint.document.write(divFactura.innerHTML);
-    winPrint.document.write('</body></html>');
-
-    winPrint.document.close(); //Necesario para IE
-    winPrint.focus(); //Necesario para IE
-    winPrint.print();
-    winPrint.close();
-    */
+    //this.router.navigate(["/home"]);    
   }
 }

@@ -1,0 +1,33 @@
+
+ body, h1, h2, h3, h4, div{
+    color: #2a3f54 !important;
+ }
+
+ .div-factura{
+    padding: 0% 3% !important;
+ }
+
+ .title_left > h3{
+    padding-left: 20px;
+}
+
+.div-totales{
+    width: 45%;
+}
+
+.img-webpay{
+    height: 100px !important;
+}
+
+.div-buttons-print{
+    width: 100%;
+    text-align: right;
+    /*left: calc(100% - 286px);*/
+}
+
+@media print{
+    body{
+        width: 100% !important;
+        height: 100% !important;
+    }
+}

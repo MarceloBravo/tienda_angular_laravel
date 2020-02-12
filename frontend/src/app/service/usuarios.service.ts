@@ -19,4 +19,8 @@ export class UsuariosService {
     return this.httpClient.post(this.endPoint, usuario, {headers:this.headers()});
   }
 
+  getUserByEmail(email: string){
+    return this.httpClient.get(this.endPoint + '/email/' + email);
+  }
+
 }
