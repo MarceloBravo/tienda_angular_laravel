@@ -42,8 +42,7 @@ import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    //NgModule
+    AppRoutingModule, //Necesario para poder utilizar la etiqueta <router-outlet></router-outlet>
     NgbModule,
     HttpClientModule,
 
