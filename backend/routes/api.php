@@ -73,6 +73,10 @@ Route::get('estados_compras_inicial','Admin\EstadosController@getFirstState');
 Route::resource('empresa','Admin\EmpresaController');
 Route::get('empresa_default','Admin\EmpresaController@first');
 
+Route::resource('admin/menus', 'Admin\MenusController');
+Route::get('admin/menus/filtrar/{id}/{pag}', 'Admin\MenusController@filtrar');
+Route::get('admin/menus/pag/{pag}', 'Admin\MenusController@index');
+Route::get('admin/menus-all', 'Admin\MenusController@getAll');
 
 //Rutas PayPal
 Route::post('paypal','PaypalController@payment');

@@ -12,11 +12,11 @@
                 aria-labelledby="searchDropdown">
                 <form class="navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-1 small"
+                        <input type="text" id="txt-busqueda-global" class="form-control bg-light border-1 small"
                             placeholder="Que deseas buscar?" aria-label="Search"
                             aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary" type="button" (click)="busquedaGlobal()">
                                 <i class="fas fa-search fa-sm"></i>
                             </button>
                         </div>
