@@ -17,7 +17,7 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 100)->unique();
             $table->string('icono_fa_class',50);
-            $table->bigInteger('menu_padre_id')->unsigned();
+            $table->bigInteger('menu_padre_id')->unsigned()->nullable();
             $table->integer('posicion')->unsigned();
             $table->bigInteger('pantalla_id')->unsigned();
             $table->foreign('pantalla_id')->references('id')->on('pantallas');
