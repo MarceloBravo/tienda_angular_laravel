@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SpinnerService } from './spinner.service';
 
-describe('LoadingService', () => {
+describe('SpinnerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
