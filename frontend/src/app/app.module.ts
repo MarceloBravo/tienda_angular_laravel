@@ -22,6 +22,7 @@ import { CompraComponent } from './pages/compra/compra.component';
 import { PaypalSuccessComponent } from './pages/paypal-success/paypal-success.component';
 import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.component';
 import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.component';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.co
     PaypalSuccessComponent,
     PaypalCancelComponent,
     WebpaySuccessComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,66 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Menús</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Menus</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Basic -->
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary col-md-7">Mantenedor de Menús</h6>
+                    <h6 class="m-0 font-weight-bold text-primary col-md-5" id="action-title">Nuevo</h6>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                            <input id="nombre" name="nombre" type="text" [(ngModel)]="menu.nombre" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú.">
+                            <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="icono_fa_class">Clase icono</label>
+                            <input id="icono_fa_class" name="icono_fa_class" type="text" [(ngModel)]="menu.icono_fa_class" class="form-control col-md-3" aria-describedby="icono_fa_classHelp" placeholder="Nombre de la clase fa para el icono.">
+                            <small id="icono_fa_classHelp" class="form-text text-muted">(Nombre de la clase fa de bootstrap, para el icono del menú.)</small>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="menu_padre_id">Menú padre</label>                            
+                            <select id="menu_padre_id" name="menu_padre_id" [(ngModel)]="menu.menu_padre_id" class="form-control col-md-3">
+                                <option *ngFor="let item of menus" [value]=" item.id ">{{ item.nombre }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="posicion">Posicion</label>
+                            <input id="posicion" name="posicion" type="text" [(ngModel)]="menu.posicion" class="form-control col-md-2" aria-describedby="nombreHelp" placeholder="Posición del menú.">
+                            <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="url">Url</label>
+                            <input id="url" name="url" type="text" [(ngModel)]="menu.url" class="form-control col-md-10" aria-describedby="nombreHelp" placeholder="Url asociada al menú.">
+                            <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="pantalla_id">Pantalla</label>                            
+                            <select id="pantalla_id" name="pantalla_id" [(ngModel)]="menu.pantalla_id" class="form-control col-md-3">
+                                <option *ngFor="let item of pantallas" [value]=" item.id ">{{ item.nombre }}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="div-buttons-group">
+                    <button class="btn btn-success" (click)="grabar()">Grabar</button>
+                    <span class="spn-separate"></span>
+                    <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+                    <span class="spn-separate"></span>
+                    <a class="btn btn-primary" routerLink="/menus">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
