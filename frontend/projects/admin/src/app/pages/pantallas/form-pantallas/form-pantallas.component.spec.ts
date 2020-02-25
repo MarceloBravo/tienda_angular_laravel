@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormPantallasComponent } from './form-pantallas.component';
-import {} from 'jest';
 
 describe('FormPantallasComponent', () => {
   let component: FormPantallasComponent;
