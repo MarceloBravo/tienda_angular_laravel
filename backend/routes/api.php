@@ -51,7 +51,10 @@ Route::resource('admin/usuarios','Admin\UsersController');
 Route::get('admin/usuarios/filtrar/{filtro}','Admin\UsersController@filtrar');
 
 Route::resource('admin/pantallas','Admin\PantallasController');
-Route::get('admin/pantallas/filtrar/{filtro}','Admin\PantallasController@filtrar');
+Route::get('admin/pantallas/filtrar/{filtro}/{pag}','Admin\PantallasController@filtrar');
+Route::get('admin/pantallas/pag/{pag}','Admin\PantallasController@index');
+Route::get('admin/pantallas-all','Admin\PantallasController@getAll');
+
 
 Route::resource('admin/marcas','Admin\MarcasController');
 Route::get('admin/marcas/filtrar/{filtro}', 'Admin\MarcasController@filtrar');

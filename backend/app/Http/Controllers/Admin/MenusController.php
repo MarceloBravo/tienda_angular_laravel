@@ -9,6 +9,7 @@ use Validator;
 
 class MenusController extends Controller
 {
+    
     private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
@@ -26,7 +27,7 @@ class MenusController extends Controller
                         ->orderBy('menus.nombre','ASC');
         $menus = $allMenus
             ->skip($pag*$this->rowsByPage)
-            ->take(10)
+            ->take($this->rowsByPage)
             ->get();
 
         return response()->json(['data'=>$menus,'rows'=>count($allMenus->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
@@ -168,7 +169,7 @@ class MenusController extends Controller
                         ->orderBy('menus.nombre','ASC');
         }
         $menus = $allMenus->skip($pag*$this->rowsByPage)
-                            ->take(10)
+                            ->take($this->rowsByPage)
                             ->get();
 
         return response()->json(['data'=>$menus,'rows'=>count($allMenus->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);

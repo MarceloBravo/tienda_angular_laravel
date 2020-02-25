@@ -12,8 +12,12 @@ import { FormMenusComponent } from './pages/menus/form-menus/form-menus.componen
 import { ModalMessagesComponent } from './shared/modal-messages/modal-messages.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MessagesComponent } from './shared/messages/messages.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { GridPantallasComponent } from './pages/pantallas/grid-pantallas/grid-pantallas.component';
+import { FormPantallasComponent } from './pages/pantallas/form-pantallas/form-pantallas.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,13 +30,16 @@ import { LoadingComponent } from './shared/loading/loading.component';
     FormMenusComponent,
     ModalMessagesComponent,
     MessagesComponent,
-    LoadingComponent
+    LoadingComponent,
+    GridPantallasComponent,
+    FormPantallasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, //Necesario para poder utilizar la etiqueta <router-outlet></router-outlet>
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

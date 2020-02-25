@@ -47,33 +47,38 @@ export class GridMenusComponent implements OnInit {
   ngOnInit() {
   }
 
-  paginar(pagina: number){
+  //Carga los registros de la página especificada en el parámetro "pagina: number"
+  paginar(pagina: number){    
     this.paginacion.pag = pagina;
-    sessionStorage.setItem('pag',this.paginacion.pag.toString());
-    console.log(this.paginacion.pag);
+    sessionStorage.setItem('pag',this.paginacion.pag.toString());    
     this.cargarRegistros();
   }
 
+  //Retrocede una página de registros
   paginarAnterior(){
-    this.paginacion.pag = this.paginacion.pag -1;
-    sessionStorage.setItem('pag',this.paginacion.pag.toString());
-    console.log(this.paginacion.pag);
-    this.cargarRegistros();
+    if(this.paginacion.pag > 1)
+    {
+      this.paginacion.pag = this.paginacion.pag -1;
+      sessionStorage.setItem('pag',this.paginacion.pag.toString());
+      this.cargarRegistros();
+    }
   }
   
+  //Avanza a la página siguiente de registros
   paginarSiguiente(){
-    this.paginacion.pag = this.paginacion.pag + 1;
-    sessionStorage.setItem('pag',this.paginacion.pag.toString());
-    console.log(this.paginacion.pag);
-    this.cargarRegistros();
+    if(this.paginacion.totPag > 1 && this.paginacion.pag < this.paginacion.totPag)
+    {
+      this.paginacion.pag = this.paginacion.pag + 1;
+      sessionStorage.setItem('pag',this.paginacion.pag.toString());
+      this.cargarRegistros();
+    }
   }
 
   private cargarRegistros(){
   
     this._spinnerService.show();
     this._menuService.getPaginate(this.paginacion.pag).subscribe(
-      (res: Menus[])=>{
-        //console.log(res['data']);
+      (res: Menus[])=>{;
         this.menus = res['data']; //Datos
 
         this.paginacion.pag = res['page']; //Número real de la página actual (Comienza desde 0)
