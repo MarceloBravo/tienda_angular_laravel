@@ -2,6 +2,10 @@
     text-align: right;
 }
 
+.errorFieldClass{
+    color: red;
+}
+
 .div-buttons-group{
     text-align: right;
     padding: 10px;

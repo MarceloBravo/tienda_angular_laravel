@@ -38,7 +38,7 @@ class PantallasController extends Controller
 
     public function getAll($pag=0)
     {
-        $pantallas = Pantalla::jleftJoin('menus','pantallas.id','=','menus.pantalla_id')
+        $pantallas = Pantalla::leftJoin('menus','pantallas.id','=','menus.pantalla_id')
                             ->select('pantallas.*',
                             'menus.nombre as menu',
                             'menus.icono_fa_class',
