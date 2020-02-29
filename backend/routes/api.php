@@ -44,7 +44,9 @@ Route::get('admin/ciudades/filtrar/{filtro}','Admin\CiudadesController@filtrar')
 Route::get('admin/ciudades/comuna/{comuna_id}','Admin\CiudadesController@ciudadesComuna');
 
 Route::resource('admin/roles','Admin\RolesController');
-Route::get('admin/roles/filtrar/{filtro}','Admin\RolesController@filtrar');
+Route::get('admin/roles/filtrar/{filtro}/{pag}','Admin\RolesController@filtrar');
+Route::get('admin/roles/pag/{pag}','Admin\RolesController@index');
+Route::get('admin/roles-all','Admin\RolesController@getAll');
 Route::get('admin/roles-default','Admin\RolesController@getDefaultRol');
 
 Route::resource('admin/usuarios','Admin\UsersController');

@@ -3,7 +3,6 @@ import { MenuService } from '../../../services/menu.service';
 import { Menus } from '../../../clases/menus';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from 'src/app/service/messages.service';
-import { element } from 'protractor';
 import { Pantalla } from '../../../clases/pantalla';
 import { PantallasService } from '../../../services/pantallas.service';
 import { SpinnerService } from 'src/app/service/spinner.service';

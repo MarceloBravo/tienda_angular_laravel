@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagesService } from 'src/app/service/messages.service';
 
 @Component({
   selector: 'app-messages',
@@ -7,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _mensajesServices: MessagesService
+  ) { }
 
   ngOnInit() {
   }
 
   cerrar(){
-    var div = <HTMLDivElement>document.getElementById('alert-message');
-    div.style.display = "none";
+    this._mensajesServices.ocultarMensaje();
   }
 }

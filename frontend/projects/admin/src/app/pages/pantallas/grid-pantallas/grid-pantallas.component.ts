@@ -3,7 +3,7 @@ import { PantallasService } from '../../../services/pantallas.service';
 import { Pantalla } from '../../../clases/pantalla';
 import { MessagesService } from 'src/app/service/messages.service';
 import { ScriptsService } from '../../../services/scripts.service';
-import { paginacionInterface } from '../../../clases/interfaces/paginacion';
+import { paginacionInterface } from '../../../interfaces/paginacion';
 import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({

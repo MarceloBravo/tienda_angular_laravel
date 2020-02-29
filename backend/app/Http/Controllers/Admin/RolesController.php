@@ -7,22 +7,36 @@ use Illuminate\Http\Request;
 use App\Rol;
 use Validator;
 use DB;
-use \App\Exceptions\CustomException;
+use Exception;
 
 class RolesController extends Controller
 {
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pag = 0)
     {
-        $roles = Rol::all();
+        $allRoles = Rol::orderBy('nombre', 'asc');
 
-        return response()->json($roles->ToArray());
+        $roles = $allRoles
+                ->skip($pag * $this->rowsByPage)
+                ->take($this->rowsByPage)
+                ->get();
+
+        return response()->json(['data' => $roles->ToArray(), 'rows' => count($allRoles->get()), 'page' => $pag, 'rowsByPage'=>$this->rowsByPage]);
     }
 
+
+    public function getAll(){
+        $roles = Rol::all();
+
+        return response()->json($roles->toArray());
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -49,11 +63,30 @@ class RolesController extends Controller
         }
 
         //Creando el registro
-        $rol = new Rol();
-        $result = $rol->fill($request->all())->save();
-        $mensaje = $result ? "El registro ha sido ingresado." : "Ocurrio un error al intentar ingresar el registro.";
-        $tipoMensaje = $result ? "success" : "danger";
-        $nuevoId = $result ? $rol->id : -1;
+        try{
+            $rol = new Rol();
+            $result = $rol->fill($request->all())->save();
+            $nuevoId = $result ? $rol->id : -1;
+            
+            if($result && $request['default'] == true){
+                $res = Rol::where("id","<>",$nuevoId)->update(["default"=>false]);
+            }
+            if($res){
+                DB::commit();            
+                $mensaje = $result ? "El registro ha sido ingresado." : "Ocurrio un error al intentar ingresar el registro.";
+                $tipoMensaje = $result ? "success" : "danger";
+                
+            }else{
+                DB::rollback();
+                throw new Exception("Error al ingresar el registro.");
+            }
+            
+        }catch(Exception $ex){
+            $mensaje = "Ocurrio un error al intentar ingresar el registro: ".$ex->getMessage();
+            $tipoMensaje = "danger";
+            DB::rollback();
+        }
+        
 
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje, "id"=>$nuevoId]);
     }
@@ -99,13 +132,12 @@ class RolesController extends Controller
 
         try
         {
-            DB:transaction();
+            DB::beginTransaction();
             $rol = Rol::find($id);
             $result = $rol->fill($request->all())->save();
-            
 
-            if($result){
-                $res = Rol::where("default","=",false)->where("id","<>",$id)->update(["default"=>false]);
+            if($result && $request['default'] == true){
+                $res = Rol::where("id","<>",$id)->update(["default"=>false]);
             }
             if($res){
                 DB::commit();            
@@ -113,11 +145,11 @@ class RolesController extends Controller
                 $tipoMensaje = $result ? "success" : "danger";
             }else{
                 DB::rollback();
-                throw new CustomException("Error al configurar el registro por default.");                
+                throw new Exception("Error al actualizar el registro.");                
             }
             
         }catch(Exception $ex){
-            $mensaje = "Ocurrio un error al intentar actualizar el registro por default: ".$ex.getMessage();
+            $mensaje = "Ocurrio un error al intentar actualizar el registro: ".$ex->getMessage();
             $tipoMensaje = "danger";
             DB::rollback();
         }
@@ -142,20 +174,23 @@ class RolesController extends Controller
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $pag = 0)
     {
         
         if(!isset($filtro) || $filtro == "")
         {
-            $roles = Roll::all();
+            $allRoles = Roll::orderBy('nombre','asc');            
         }else{
-            $roles = Rol::where("nombre","Like","%".$filtro."%")
+            $allRoles = Rol::where("nombre","Like","%".$filtro."%")
                         ->orWhere("descripcion","Like","%".$filtro."%")
                         ->select("roles.*")
-                        ->get();
+                        ->orderBy('nombre','asc');
         }
+        $roles = $allRoles->skip($pag * $this->rowsByPage)
+                        ->take($this->rowsByPage) 
+                        ->get();
 
-        return response()->json($roles->ToArray());
+        return response()->json(['data'=>$roles->ToArray(),'rows'=>count($allRoles->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
     }
 
 

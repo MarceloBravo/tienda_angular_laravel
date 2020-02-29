@@ -3,7 +3,7 @@ import { ScriptsService } from '../../../services/scripts.service'; //Importa el
 import { MenuService } from '../../../services/menu.service'; //Importa el servicio desde éste proyecto
 import { Menus } from '../../../clases/menus';  //Importa la clase desde éste proyecto
 import { MessagesService } from 'src/app/service/messages.service'; //Importa el servicio desde el proyecto principal no desed éste proyecto
-import { paginacionInterface } from '../../../clases/interfaces/paginacion';
+import { paginacionInterface } from '../../../interfaces/paginacion';
 import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({

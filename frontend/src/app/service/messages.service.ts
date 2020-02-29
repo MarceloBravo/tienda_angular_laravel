@@ -16,6 +16,11 @@ export class MessagesService {
     textoMensaje.innerHTML = mensaje;  
   }
 
+  ocultarMensaje(){
+    var div = <HTMLDivElement>document.getElementById('alert-message');
+    div.style.display = "none";
+  }
+
   showModalMessage(titulo: string, mensaje: string){
     var divModalMessage = <HTMLDivElement>document.getElementById('modal-message');
     var divTituloModalMessage = <HTMLDivElement>document.getElementById('modal-message-title');

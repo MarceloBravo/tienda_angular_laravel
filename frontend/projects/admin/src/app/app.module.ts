@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { GridPantallasComponent } from './pages/pantallas/grid-pantallas/grid-pantallas.component';
 import { FormPantallasComponent } from './pages/pantallas/form-pantallas/form-pantallas.component';
+import { GridRolesComponent } from './pages/roles/grid-roles/grid-roles.component';
+import { FormRolesComponent } from './pages/roles/form-roles/form-roles.component';
 
 
 
@@ -32,7 +34,9 @@ import { FormPantallasComponent } from './pages/pantallas/form-pantallas/form-pa
     MessagesComponent,
     LoadingComponent,
     GridPantallasComponent,
-    FormPantallasComponent
+    FormPantallasComponent,
+    GridRolesComponent,
+    FormRolesComponent
   ],
   imports: [
     BrowserModule,
