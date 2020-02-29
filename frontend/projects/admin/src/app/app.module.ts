@@ -18,6 +18,8 @@ import { GridPantallasComponent } from './pages/pantallas/grid-pantallas/grid-pa
 import { FormPantallasComponent } from './pages/pantallas/form-pantallas/form-pantallas.component';
 import { GridRolesComponent } from './pages/roles/grid-roles/grid-roles.component';
 import { FormRolesComponent } from './pages/roles/form-roles/form-roles.component';
+import { GridPaisesComponent } from './pages/paises/grid-paises/grid-paises.component';
+import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.component';
 
 
 
@@ -36,7 +38,9 @@ import { FormRolesComponent } from './pages/roles/form-roles/form-roles.componen
     GridPantallasComponent,
     FormPantallasComponent,
     GridRolesComponent,
-    FormRolesComponent
+    FormRolesComponent,
+    GridPaisesComponent,
+    FormPaisesComponent
   ],
   imports: [
     BrowserModule,

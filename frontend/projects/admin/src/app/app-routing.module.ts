@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { GridMenusComponent } from './pages/menus/grid-menus/grid-menus.component';
@@ -7,6 +7,8 @@ import { GridPantallasComponent } from './pages/pantallas/grid-pantallas/grid-pa
 import { FormPantallasComponent } from './pages/pantallas/form-pantallas/form-pantallas.component';
 import { GridRolesComponent } from './pages/roles/grid-roles/grid-roles.component';
 import { FormRolesComponent } from './pages/roles/form-roles/form-roles.component';
+import { GridPaisesComponent } from './pages/paises/grid-paises/grid-paises.component';
+import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'pantallas/:id', component: FormPantallasComponent},
   { path: 'roles', component: GridRolesComponent},
   { path: 'roles/:id', component: FormRolesComponent},
+  { path: 'paises' , component: GridPaisesComponent },
+  { path: 'paises/:id' , component: FormPaisesComponent },
 
   { path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];

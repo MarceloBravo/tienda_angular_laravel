@@ -132,7 +132,10 @@ export class CompraComponent implements OnInit {
         pais.nombre = resp.length > 0 ? "-- Seleccione --" : "-- No se encontraron registros --";
         resp.push(pais);
         this.paises = resp.sort((x, y) => x.id - y.id);
-    })
+    },(error)=>{
+      console.log(error);
+      this._messageService.mostrarMensaje(error.message, 'danger');
+    });
   }
 
   

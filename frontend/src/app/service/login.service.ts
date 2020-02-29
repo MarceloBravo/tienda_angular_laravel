@@ -47,7 +47,7 @@ export class LoginService {
     if(typeof(this.getUser()) == "undefined" ){
       this.setUser(JSON.parse(sessionStorage.getItem('user')));
     }
-    if(typeof(this.getUser()) != "undefined"){
+    if(typeof(this.getUser()) != "undefined" && this.getUser() != null){
       var user: UserLoggedInData = this.getUser(); 
       var span = <HTMLSpanElement>document.getElementById("userName");
       var divLogin = <HTMLSpanElement>document.getElementById("divLogin");

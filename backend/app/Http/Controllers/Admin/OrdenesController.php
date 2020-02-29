@@ -47,7 +47,7 @@ class OrdenesController extends Controller
 
         $validar = $this->validaDatos($request);
         if($validar->fails()){
-            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validar->errors()]);
+            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validar->errors(),'tipo-mensaje'=>'danger']);
         }
 
         try{

@@ -25,7 +25,9 @@ Route::middleware('jwt.auth')->group(function(){
 });
 
 Route::resource('admin/paises', 'Admin\PaisesController');
-Route::get('admin/paises/filtrar/{filtro}', 'Admin\PaisesController@filtrar');
+Route::get('admin/paises/filtrar/{filtro}/{pag}', 'Admin\PaisesController@filtrar');
+Route::get('admin/paises/pag/{pag}', 'Admin\PaisesController@index');
+Route::get('admin/paises-all', 'Admin\PaisesController@getAll');
 
 Route::resource('admin/regiones', 'Admin\RegionesController');
 Route::get('admin/regiones/filtrar/{filtro}', 'Admin\RegionesController@filtrar');

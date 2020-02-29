@@ -73,6 +73,7 @@ export class GridRolesComponent implements OnInit {
     this.paginacion.pag = res['page'];
     this.paginacion.totPag = Math.round(this.paginacion.filas / res['rowsByPage']);        
     this.paginacion.activePag = this.paginacion.pag + 1;        
+    this.paginacion.arrPagesNumbers = Array.from({length: this.paginacion.totPag},(k ,v)=> v + 1) //ver https://stackoverflow.com/questions/36354325/angular-2-ngfor-using-numbers-instead-collections
   }
 
   
