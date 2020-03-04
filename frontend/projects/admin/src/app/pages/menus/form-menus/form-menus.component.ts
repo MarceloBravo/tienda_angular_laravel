@@ -45,6 +45,7 @@ export class FormMenusComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
     ) {
+      this._messagesService.ocultarMensaje();
       var id = this.activatedRoute.snapshot.paramMap.get('id');      
       if(id != undefined){
         this.id = parseInt(id);

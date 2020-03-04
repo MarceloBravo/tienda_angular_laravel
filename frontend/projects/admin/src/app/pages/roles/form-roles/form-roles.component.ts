@@ -34,6 +34,7 @@ export class FormRolesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {
+    this._mensajesService.ocultarMensaje();
     var id = this.activatedRoute.snapshot.paramMap.get('id');
     if(id != "0" && id != null){
       this.id = parseInt(id);           

@@ -32,6 +32,7 @@ export class FormPantallasComponent implements OnInit {
     private _snipperService: SpinnerService,
     private fb: FormBuilder
   ) {
+    this._messagesService.ocultarMensaje();
     this.id =  parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
     if(this.id != undefined && this.id != 0){
       this.buscar();

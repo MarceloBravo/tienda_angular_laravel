@@ -31,6 +31,7 @@ export class FormPaisesComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) { 
+    this._messagesService.ocultarMensaje();
     var id = this.activatedRoute.snapshot.paramMap.get('id');
     if(id != undefined && id != '0'){
       this.id = parseInt(id);
