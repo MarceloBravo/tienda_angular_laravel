@@ -18,7 +18,7 @@
                 </div>
                 <div class="row div-btn-nuevo">
                     <div class="col-md-6">
-                        <a routerLink="/roles/0" class="btn btn-button btn-primary">Nuevo</a>
+                        <a routerLink="/admin/roles/0" class="btn btn-button btn-primary">Nuevo</a>
                     </div>
                     <div class="col-md-6">
                         <input id="filtro" class="from-control col-md-12" value=""
@@ -49,7 +49,7 @@
                                 <td>{{ item.descripcion }}</td>
                                 <td><i class="{{ item.default ? 'fas fa-check' : '' }}"></i></td>
                                 <td class="col-action">
-                                    <a class="btn btn-success btn-sm" routerLink="/roles/{{ item.id }}">Editar</a>
+                                    <a class="btn btn-success btn-sm" routerLink="/admin/roles/{{ item.id }}">Editar</a>
                                     <button class="btn btn-danger btn-sm"
                                         (click)="eliminar( item.id )">Eliminar</button>
                                 </td>

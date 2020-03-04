@@ -18,11 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+//Login tienda (Front Office)
 Route::post('login', 'API\AuthController@login');
 Route::middleware('jwt.auth')->group(function(){
-    
     Route::get('logout', 'API\AuthController@logout');
 });
+
+
+//Login administración de tienda (Back Office)
+Route::post('admin-login','Admin\LoginController@login');
+Route::middleware('jwt.auth')->group(function(){
+    Route::get('logout', 'Admin\LoginController@logout');
+});
+
 
 Route::resource('admin/paises', 'Admin\PaisesController');
 Route::get('admin/paises/filtrar/{filtro}/{pag}', 'Admin\PaisesController@filtrar');

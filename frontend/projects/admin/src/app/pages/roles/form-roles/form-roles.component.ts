@@ -95,7 +95,7 @@ export class FormRolesComponent implements OnInit {
         this._mensajesService.mostrarMensaje(res['mensaje'], res['tipo-mensaje']);
         if(res['tipo-mensaje'] == 'success')this.router.navigate(['/roles']);
         this._spinnerService.hide();
-
+        this.router.navigate(['/admin/roles']);
       },(error)=>{
         console.log(error);
         this._mensajesService.mostrarMensaje(error.message, 'danger');
@@ -106,10 +106,12 @@ export class FormRolesComponent implements OnInit {
   private actulizar(){
     this._rolesService.update(this.id, this.formRol.value).subscribe(
       (res: string[])=>{
+        console.log(res);
+        
         this._mensajesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
         if(res['tipo-mensaje'] == 'success')this.router.navigate(['/roles']);
         this._spinnerService.hide();
-
+        this.router.navigate(['/admin/roles']);
       },(error)=>{
         console.log(error);
         this._mensajesService.mostrarMensaje(error.message,'danger');
@@ -125,7 +127,7 @@ export class FormRolesComponent implements OnInit {
           this._mensajesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
           if(res['tipo-mensaje'] == 'success')this.router.navigate(['/roles']);
           this._spinnerService.hide();
-
+          this.router.navigate(['/admin/roles']);
         },(error)=>{
           console.log(error);
           this._mensajesService.mostrarMensaje(error.message,'danger');

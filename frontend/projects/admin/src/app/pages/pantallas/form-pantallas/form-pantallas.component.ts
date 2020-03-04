@@ -92,7 +92,7 @@ export class FormPantallasComponent implements OnInit {
       (res: any[])=>{
         this._messagesService.mostrarMensaje(res['mensaje'], res['tipo-mensaje']);
         this.id = res['id'];
-        this.router.navigate(['/pantallas']);
+        this.router.navigate(['/admin/pantallas']);
         this._snipperService.hide();  //Oculta la imágen modal de carga de datos
     },(error)=>{
       console.log(error);
@@ -107,7 +107,7 @@ export class FormPantallasComponent implements OnInit {
     this._pantallasService.update(this.id, this.pantalla).subscribe(
       (res: string[])=>{
         this._messagesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-        this.router.navigate(['/pantallas']);        
+        this.router.navigate(['/admin/pantallas']);        
         this._snipperService.hide();  //Oculta la imágen modal de carga de datos
       },(error)=>{
         console.log(error);
@@ -122,7 +122,7 @@ export class FormPantallasComponent implements OnInit {
       this._pantallasService.delete(this.id).subscribe(
         (res: string[])=>{
           this._messagesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-          this.router.navigate(['/pantallas']);
+          this.router.navigate(['/admin/pantallas']);
           this._snipperService.hide();  //Oculta la imágen modal de carga de datos
         },(error)=>{
           console.log(error);

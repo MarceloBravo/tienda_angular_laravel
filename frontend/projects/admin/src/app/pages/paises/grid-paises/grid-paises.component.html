@@ -2,7 +2,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Paises</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item">Sistema</li>
             <li class="breadcrumb-item active" aria-current="page">Paises</li>
         </ol>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="row div-btn-nuevo">
                     <div class="col-md-6">
-                        <a routerLink="/paises/0" class="btn btn-button btn-primary">Nuevo</a>
+                        <a routerLink="/admin/paises/0" class="btn btn-button btn-primary">Nuevo</a>
                     </div>
                     <div class="col-md-6">
                         <input id="filtro" class="from-control col-md-12" value=""
@@ -43,7 +43,7 @@
                             <tr *ngFor="let item of paises">
                                 <td>{{ item.nombre}}</td>
                                 <td class="col-action">
-                                    <a class="btn btn-success btn-sm" routerLink="/paises/{{ item.id }}">Editar</a>
+                                    <a class="btn btn-success btn-sm" routerLink="/admin/paises/{{ item.id }}">Editar</a>
                                     <button class="btn btn-danger btn-sm"
                                         (click)="eliminar( item.id )">Eliminar</button>
                                 </td>

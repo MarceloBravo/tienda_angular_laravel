@@ -18,7 +18,7 @@
                 </div>
                 <div class="row div-btn-nuevo">
                     <div class="col-md-6">
-                        <a routerLink="/pantallas/0" class="btn btn-button btn-primary">Nuevo</a>
+                        <a routerLink="/admin/pantallas/0" class="btn btn-button btn-primary">Nuevo</a>
                     </div>
                     <div class="col-md-6">
                         <input id="filtro" class="from-control col-md-12" value=""
@@ -58,7 +58,7 @@
                                 <td><i class="{{ item.permite_editar ? 'fas fa-check' : '' }}"></i></td>
                                 <td><i class="{{ item.permite_eliminar ? 'fas fa-check' : '' }}"></i></td>
                                 <td class="col-action">
-                                    <a class="btn btn-success btn-sm" routerLink="/pantallas/{{ item.id }}">Editar</a>
+                                    <a class="btn btn-success btn-sm" routerLink="/admin/pantallas/{{ item.id }}">Editar</a>
                                     <button class="btn btn-danger btn-sm"
                                         (click)="eliminar( item.id )">Eliminar</button>
                                 </td>

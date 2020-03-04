@@ -137,9 +137,9 @@ class RolesController extends Controller
             $result = $rol->fill($request->all())->save();
 
             if($result && $request['default'] == true){
-                $res = Rol::where("id","<>",$id)->update(["default"=>false]);
+                $result = Rol::where("id","<>",$id)->update(["default"=>false]);
             }
-            if($res){
+            if($result){
                 DB::commit();            
                 $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
                 $tipoMensaje = $result ? "success" : "danger";

@@ -89,9 +89,8 @@ export class FormPaisesComponent implements OnInit {
     this._paisesService.insert(this.formPais.value).subscribe(
       (res: string[])=>{
         this._messagesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-        this.router.navigate(['/paises']);
+        this.router.navigate(['/admin/paises']);
         this._spinnerService.hide();
-
       },(error)=>{
         console.log(error);
         this._messagesService.mostrarMensaje(error.message, 'danger');
@@ -103,7 +102,7 @@ export class FormPaisesComponent implements OnInit {
     this._paisesService.update(this.id, this.formPais.value).subscribe(
       (res: string[])=>{
         this._messagesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-        this.router.navigate(['/paises']);
+        this.router.navigate(['/admin/paises']);
         this._spinnerService.hide();
 
       },(error)=>{
@@ -119,7 +118,7 @@ export class FormPaisesComponent implements OnInit {
       this._paisesService.delete(this.id).subscribe(
         (res: string[])=>{
           this._messagesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-          this.router.navigate(['/paises']);
+          this.router.navigate(['/admin/paises']);
           this._spinnerService.hide();
 
         },(error)=>{

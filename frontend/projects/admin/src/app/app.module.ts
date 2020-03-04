@@ -20,6 +20,8 @@ import { GridRolesComponent } from './pages/roles/grid-roles/grid-roles.componen
 import { FormRolesComponent } from './pages/roles/form-roles/form-roles.component';
 import { GridPaisesComponent } from './pages/paises/grid-paises/grid-paises.component';
 import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 
 
@@ -40,7 +42,9 @@ import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.comp
     GridRolesComponent,
     FormRolesComponent,
     GridPaisesComponent,
-    FormPaisesComponent
+    FormPaisesComponent,
+    LoginComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,

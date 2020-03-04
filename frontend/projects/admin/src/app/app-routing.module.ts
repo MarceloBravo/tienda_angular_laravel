@@ -9,19 +9,25 @@ import { GridRolesComponent } from './pages/roles/grid-roles/grid-roles.componen
 import { FormRolesComponent } from './pages/roles/form-roles/form-roles.component';
 import { GridPaisesComponent } from './pages/paises/grid-paises/grid-paises.component';
 import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'menus', component: GridMenusComponent},
-  { path: 'menus/:id', component: FormMenusComponent},
-  { path: 'pantallas', component: GridPantallasComponent},
-  { path: 'pantallas/:id', component: FormPantallasComponent},
-  { path: 'roles', component: GridRolesComponent},
-  { path: 'roles/:id', component: FormRolesComponent},
-  { path: 'paises' , component: GridPaisesComponent },
-  { path: 'paises/:id' , component: FormPaisesComponent },
-
-  { path: '**', pathMatch: 'full', redirectTo: 'home'}
+  { path: '', component: LoginComponent},
+  { path: 'admin', component: AdminHomeComponent,
+    children:[
+      { path: 'home', component: HomeComponent},
+      { path: 'menus', component: GridMenusComponent},
+      { path: 'menus/:id', component: FormMenusComponent},
+      { path: 'pantallas', component: GridPantallasComponent},
+      { path: 'pantallas/:id', component: FormPantallasComponent},
+      { path: 'roles', component: GridRolesComponent},
+      { path: 'roles/:id', component: FormRolesComponent},
+      { path: 'paises' , component: GridPaisesComponent },
+      { path: 'paises/:id' , component: FormPaisesComponent }
+    ]
+  },
+  { path: '**', pathMatch: 'full', redirectTo: ''}
 ];
 
 @NgModule({

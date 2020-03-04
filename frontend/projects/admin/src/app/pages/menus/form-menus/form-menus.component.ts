@@ -130,7 +130,7 @@ export class FormMenusComponent implements OnInit {
 
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/menus']);
+        this.router.navigate(['/admin/menus']);
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);
@@ -147,7 +147,7 @@ export class FormMenusComponent implements OnInit {
 
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/menus']);        
+        this.router.navigate(['/admin/menus']);        
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);
@@ -161,10 +161,9 @@ export class FormMenusComponent implements OnInit {
       this._spinnerService.show();
       this._menusService.delete(this.id).subscribe(
         (res: string[])=>{
-
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/menus']);
+        this.router.navigate(['/admin/menus']);
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);
