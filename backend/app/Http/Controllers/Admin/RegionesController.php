@@ -5,21 +5,37 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Region;
+use App\Pais;
+use Validator;
 
 class RegionesController extends Controller
 {
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pag = 0)
     {
-        $region = Region::all();
+        $allRegiones = Region::join('paises','regiones.pais_id','=','paises.id')
+                                ->select('regiones.*','paises.nombre as pais')
+                                ->orderBy('regiones.nombre','asc');
 
-        return response()->json($region->ToArray());
+        $regiones = $allRegiones->skip($this->rowsByPage * $pag)
+                                ->take($this->rowsByPage)
+                                ->get();
+
+        return response()->json(['data'=>$regiones->ToArray(),'rows'=>count($allRegiones->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
     }
 
+
+    public function getAll(){
+        $regiones = Region::all();
+
+        return response()->json($regiones);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -38,6 +54,11 @@ class RegionesController extends Controller
      */
     public function store(Request $request)
     {
+        $validacion = $this->validaDatos($request);
+        if($validacion->fails()){
+            return response()->json(['mensaje'=>'Datos incompletos o no válidos','errores'=>$validacion->errors()]);
+        }
+
         $region = new Region();
         $result = $region->fill($request->all())->save();
         $mensaje = $result ? "El registro ha sido ingresado." : "Error al intentar ingresar el registro.";
@@ -80,6 +101,11 @@ class RegionesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validacion = $this->validaDatos($request, $id);
+        if($validacion->fails()){
+            return response()->json(['mensaje'=>'Datos incompletos o no válidos','errores'=>$validacion->errors()]);
+        }
+
         $region = Region::find($id);
         $result = $region->fill($request->all())->save();
         $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
@@ -105,21 +131,27 @@ class RegionesController extends Controller
     }
 
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $pag = 0)
     {
         if(is_null($filtro) || $filtro == "")
         {
-            $regiones = Region::all();
+            $allRegiones = Region::join('paises','regiones.pais_id','=','paises.id')
+                            ->select('regiones.*','paises.nombre as pais')
+                            ->orderBy('paises.nombre','Asc')
+                            ->orderBy('regiones.nombre','Asc');
         }else{
-            $regiones = Region::join("paises","regiones.pais_id","=","paises.id")
+            $allRegiones = Region::join("paises","regiones.pais_id","=","paises.id")
                                 ->where("pais_id","=",$filtro)
                                 ->orWhere("regiones.nombre","Like","%".$filtro."%")
                                 ->orWhere("paises.nombre","Like","%".$filtro."%")
-                                ->select("regiones.*")
-                                ->get();
+                                ->select("regiones.*","paises.nombre as pais");
         }
 
-        return response()->json($regiones->ToArray());
+        $regiones = $allRegiones->skip($this->rowsByPage * $pag)
+                                    ->take($this->rowsByPage)
+                                    ->get();
+
+        return response()->json(['data'=>$regiones->ToArray(),'rows'=>count($allRegiones->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
     }
 
     //Retorna el listado en formato JSON con las regiones que pertenecen al pais del id recibido
@@ -135,5 +167,22 @@ class RegionesController extends Controller
         }
 
         return response()->json($regiones->ToArray());
+    }
+
+
+    private function validaDatos(Request $request, $id = null){
+        $rules = [
+            'nombre'=>'required|min:3|max:50|unique:regiones,id,'.$id,
+            'pais_id' => 'required|exists:paises,id'
+        ];
+
+        $messages = [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.min' => 'El campo nombre debe tener almenos 3 carácteres. Ingresa un nombre mas largo.',
+            'nombre.max' => 'El campo nombre debe tener un máximo 50 carácteres.Ingresa un nombre mas corto.',
+            'nombre.unique' => 'El nombre ingresado ya se encuentra en uso. Ingresa un nombre diferente.'
+        ];
+
+        return Validator::make($request->all(), $rules, $messages);
     }
 }

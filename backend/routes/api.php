@@ -38,7 +38,9 @@ Route::get('admin/paises/pag/{pag}', 'Admin\PaisesController@index');
 Route::get('admin/paises-all', 'Admin\PaisesController@getAll');
 
 Route::resource('admin/regiones', 'Admin\RegionesController');
-Route::get('admin/regiones/filtrar/{filtro}', 'Admin\RegionesController@filtrar');
+Route::get('admin/regiones/filtrar/{filtro}/{pag}', 'Admin\RegionesController@filtrar');
+Route::get('admin/regiones/pag/{pag}','Admin\RegionesController@index');
+Route::get('admin/regiones-all','Admin\RegionesController@getAll');
 Route::get('admin/regiones/pais/{pais_id}', 'Admin\RegionesController@regionesPais');
 
 Route::resource('admin/provincias','Admin\ProvinciasController');

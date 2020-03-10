@@ -18,7 +18,8 @@ export class GridRolesComponent implements OnInit {
     filas: 0,
     totPag: 0,
     activePag: 1,
-    arrPagesNumbers: []
+    arrPagesNumbers: [],
+    filtro: false
   }
 
   constructor(
@@ -33,6 +34,7 @@ export class GridRolesComponent implements OnInit {
   }
 
   private obtenerRegistros(){
+    this.paginacion.filtro = false;
     this._spinnerService.show();
     this._rolesService.get(this.paginacion.pag).subscribe(
       (res: any)=>{
@@ -54,8 +56,12 @@ export class GridRolesComponent implements OnInit {
     this.paginacion.pag = 0;
     if(texto === "")
     {      
+      this.paginacion.pag = 0;
       this.obtenerRegistros();
     }else{
+      if(!this.paginacion.filtro)this.paginacion.pag = 0;
+      this.paginacion.filtro = false;
+
       this._rolesService.filter(texto).subscribe(
         (res: any) => {
           this.actualizaResult(res);
@@ -97,19 +103,27 @@ export class GridRolesComponent implements OnInit {
   public paginaAnterior(){
     if(this.paginacion.pag > 0){
       this.paginacion.pag--;
-      this.obtenerRegistros();
+      this.cambiarPagina();
     }
   }
 
   public paginar(pag: number){
     this.paginacion.pag = pag;
-    this.obtenerRegistros();
+    this.cambiarPagina();
   }
 
   public paginaSiguiente(){
     if(this.paginacion.pag < this.paginacion.totPag){
       this.paginacion.pag++;
-      this.obtenerRegistros();
+      this.cambiarPagina();
+    }
+  }
+
+  private cambiarPagina(){
+    if(this.paginacion.filtro){
+      this.filtrar();
+    }else{
+      this.obtenerRegistros()
     }
   }
 

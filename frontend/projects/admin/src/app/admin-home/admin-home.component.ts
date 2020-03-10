@@ -35,7 +35,7 @@ autenticado: Boolean = false;
   private checkUserDataLocalStorage(){
     var data = sessionStorage.getItem('login');
 
-    console.log(data);
+    //console.log(data);
     if(data == null){
       console.log('sessionstorage != null')
       var data = localStorage.getItem('login');

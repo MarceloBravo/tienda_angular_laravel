@@ -23,7 +23,8 @@ export class GridPantallasComponent implements OnInit {
     activePag: 1,
     totPag: 0,
     pag: 0,
-    filas: 0
+    filas: 0,
+    filtro: false        
   };
 
   private srcScripts: string[] = [
@@ -55,7 +56,7 @@ export class GridPantallasComponent implements OnInit {
     {
       this.paginacion.pag--;
       sessionStorage.setItem('pag',this.paginacion.pag.toString());
-      this.llenarGrilla();
+      this.cambiarPagina();
     }
     
   }
@@ -66,19 +67,28 @@ export class GridPantallasComponent implements OnInit {
     {
       this.paginacion.pag++;
       sessionStorage.setItem('pag',this.paginacion.pag.toString());
-      this.llenarGrilla();
+      this.cambiarPagina();    
     }
   }
 
   //Carga los registros del número de página recibido en el parámetros "pagina: number"
   paginar(pag: number){
     this.paginacion.pag = pag;
-    this.llenarGrilla();
+    this.cambiarPagina();    
+  }
+
+  private cambiarPagina(){
+    if(this.paginacion.filtro){
+      this.filtrar();
+    }else{
+      this.llenarGrilla();
+    }
   }
 
 
   //Solicita los registros al servicio y los carga a la variable paginas
   private llenarGrilla(){
+    this.paginacion.filtro=false;
     this._spinnerService.show();
     this._pantallasService.get(this.paginacion.pag).subscribe(
       (res: any)=>{
@@ -95,6 +105,10 @@ export class GridPantallasComponent implements OnInit {
     var txtFiltro = <HTMLInputElement>document.getElementById('filtro');
     var texto = txtFiltro.value;
     if(texto != ""){
+
+      if(!this.paginacion.filtro)this.paginacion.pag = 0;
+      this.paginacion.filtro = true;
+
       this._pantallasService.filter(texto, this.paginacion.pag).subscribe(
         (res: any)=>{
           this.cargarDatos(res);
@@ -103,6 +117,7 @@ export class GridPantallasComponent implements OnInit {
         this._messagesService.mostrarMensaje(error.message,'danger');
       });
     }else{
+      this.paginacion.pag = 0;
       this.llenarGrilla();
     }
   }

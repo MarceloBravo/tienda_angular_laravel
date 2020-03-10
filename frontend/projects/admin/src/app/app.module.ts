@@ -22,6 +22,8 @@ import { GridPaisesComponent } from './pages/paises/grid-paises/grid-paises.comp
 import { FormPaisesComponent } from './pages/paises/form-paises/form-paises.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { GridRegionesComponent } from './pages/regiones/grid-regiones/grid-regiones.component';
+import { FormRegionesComponent } from './pages/regiones/form-regiones/form-regiones.component';
 
 
 
@@ -44,7 +46,9 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     GridPaisesComponent,
     FormPaisesComponent,
     LoginComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    GridRegionesComponent,
+    FormRegionesComponent
   ],
   imports: [
     BrowserModule,

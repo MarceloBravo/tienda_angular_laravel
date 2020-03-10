@@ -17,7 +17,8 @@ export class GridPaisesComponent implements OnInit {
     activePag: 1,
     filas: 0,
     pag: 0,
-    arrPagesNumbers: []
+    arrPagesNumbers: [],
+    filtro: false
   };
 
   constructor(
@@ -33,6 +34,7 @@ export class GridPaisesComponent implements OnInit {
 
 
   private cargarRegistros(){
+    this.paginacion.filtro = false;
     this._spinnerService.show();
     this._paisesServices.get(this.paginacion.pag).subscribe(
       (res: any[])=>{
@@ -51,7 +53,10 @@ export class GridPaisesComponent implements OnInit {
     this._spinnerService.show();
     var txtFiltro = <HTMLInputElement>document.getElementById('filtro');
     if(txtFiltro.value != ""){
-      this.paginacion.pag = 0;      
+      
+      if(!this.paginacion.filtro)this.paginacion.pag = 0;
+
+      this.paginacion.filtro = true;
       this._paisesServices.filter(txtFiltro.value, this.paginacion.pag).subscribe(
         (res: any[])=>{
           this.actualizaResult(res);
@@ -63,6 +68,7 @@ export class GridPaisesComponent implements OnInit {
           this._spinnerService.hide();
         });
     }else{
+      this.paginacion.pag = 0;
       this.cargarRegistros();
     }
 
@@ -99,18 +105,26 @@ export class GridPaisesComponent implements OnInit {
   paginaAnterior(){
     if(this.paginacion.pag > 0){
       this.paginacion.pag--;
-      this.cargarRegistros();
+      this.cambiarPagina();
     }
   }
 
   paginar(pag: number){
     this.paginacion.pag = pag;
-    this.cargarRegistros();
+    this.cambiarPagina();
   }
 
   paginaSiguiente(){
     if(this.paginacion.pag < this.paginacion.totPag){
       this.paginacion.pag++;
+      this.cambiarPagina();
+    }
+  }
+
+  private cambiarPagina(){
+    if(this.paginacion.filtro){
+      this.filtrar();
+    }else{
       this.cargarRegistros();
     }
   }

@@ -30,7 +30,8 @@ export class GridMenusComponent implements OnInit {
     filas: 0,
     totPag: 0,
     activePag: 1,
-    arrPagesNumbers: Array()
+    arrPagesNumbers: Array(),
+    filtro: false    
   };
 
   constructor(
@@ -51,7 +52,7 @@ export class GridMenusComponent implements OnInit {
   paginar(pagina: number){    
     this.paginacion.pag = pagina;
     sessionStorage.setItem('pag',this.paginacion.pag.toString());    
-    this.cargarRegistros();
+    this.cambiarPagina();
   }
 
   //Retrocede una página de registros
@@ -60,7 +61,7 @@ export class GridMenusComponent implements OnInit {
     {
       this.paginacion.pag = this.paginacion.pag -1;
       sessionStorage.setItem('pag',this.paginacion.pag.toString());
-      this.cargarRegistros();
+      this.cambiarPagina();
     }
   }
   
@@ -70,12 +71,22 @@ export class GridMenusComponent implements OnInit {
     {
       this.paginacion.pag = this.paginacion.pag + 1;
       sessionStorage.setItem('pag',this.paginacion.pag.toString());
-      this.cargarRegistros();
+      this.cambiarPagina();
     }
+  }
+
+  private cambiarPagina(){
+    if(this.paginacion.filtro)
+      {
+        this.filtrar();
+      }else{
+        this.cargarRegistros();
+      }
   }
 
   private cargarRegistros(){
   
+    this.paginacion.filtro = false;
     this._spinnerService.show();
     this._menuService.getPaginate(this.paginacion.pag).subscribe(
       (res: Menus[])=>{;
@@ -113,14 +124,22 @@ export class GridMenusComponent implements OnInit {
   filtrar(){
     this._spinnerService.show();
     var input = <HTMLInputElement>document.getElementById('filtro');
-    this._menuService.filter(input.value).subscribe(
-      (res: Menus[])=>{
-        this.menus = res;
-        this._spinnerService.hide();
-      }, (error)=>{
-        console.log(error);
-        this._messagesServices.mostrarMensaje(error.message,'danger');
-        this._spinnerService.hide();
-      })
+    if(input.value != ""){
+      
+      if(!this.paginacion.filtro)this.paginacion.pag = 0;
+      this.paginacion.filtro = true;
+      this._menuService.filter(input.value).subscribe(
+        (res: Menus[])=>{
+          this.menus = res;
+          this._spinnerService.hide();
+        }, (error)=>{
+          console.log(error);
+          this._messagesServices.mostrarMensaje(error.message,'danger');
+          this._spinnerService.hide();
+        });
+    }else{
+      this.paginacion.pag = 0;
+      this.cargarRegistros();
+    }
   }
 }
