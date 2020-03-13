@@ -13,6 +13,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { GridRegionesComponent } from './pages/regiones/grid-regiones/grid-regiones.component';
 import { FormRegionesComponent } from './pages/regiones/form-regiones/form-regiones.component';
+import { GridProvinciasComponent } from './pages/provincias/grid-provincias/grid-provincias.component';
+import { FormProvinciasComponent } from './pages/provincias/form-provincias/form-provincias.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -28,7 +30,9 @@ const routes: Routes = [
       { path: 'paises' , component: GridPaisesComponent },
       { path: 'paises/:id' , component: FormPaisesComponent },
       { path: 'regiones', component: GridRegionesComponent},
-      { path: 'regiones/:id', component: FormRegionesComponent}
+      { path: 'regiones/:id', component: FormRegionesComponent},
+      { path: 'provincias', component: GridProvinciasComponent},
+      { path: 'provincias/:id', component: FormProvinciasComponent}
   
     ]
   },

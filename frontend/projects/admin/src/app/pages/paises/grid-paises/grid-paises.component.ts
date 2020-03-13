@@ -3,7 +3,7 @@ import { PaisesService } from 'src/app/service/paises.service';
 import { Pais } from 'src/app/class/pais';
 import { paginacionInterface } from '../../../interfaces/paginacion';
 import { MessagesService } from 'src/app/service/messages.service';
-import { SpinnerService } from '../../../../../../../src/app/service/spinner.service';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-grid-paises',

@@ -43,9 +43,13 @@ Route::get('admin/regiones/pag/{pag}','Admin\RegionesController@index');
 Route::get('admin/regiones-all','Admin\RegionesController@getAll');
 Route::get('admin/regiones/pais/{pais_id}', 'Admin\RegionesController@regionesPais');
 
+
 Route::resource('admin/provincias','Admin\ProvinciasController');
-Route::get('admin/provincias/filtrar/{filtro}','Admin\ProvinciasController@filtrar');
+Route::get('admin/provincias/filtrar/{filtro}/{pag}','Admin\ProvinciasController@filtrar');
+Route::get('admin/provincias/pag/{pag}','Admin\ProvinciasController@index');
+Route::get('admin/provincias-all','Admin\ProvinciasController@getAll');
 Route::get('admin/provincias/region/{region_id}','Admin\ProvinciasController@provinciasRegion');
+
 
 Route::resource('admin/comunas','Admin\ComunasController');
 Route::get('admin/comunas/filtrar/{filtro}','Admin\ComunasController@filtrar');
