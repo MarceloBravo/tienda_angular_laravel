@@ -55,7 +55,7 @@ class PaisesController extends Controller
         $validacion = $this->validaDatos($request, null);
         if($validacion->fails())
         {
-            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validar->errors(),'tipo-mensaje'=>'danger']);
+            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validacion->errors(),'tipo-mensaje'=>'danger']);
         }
 
         $pais = new Pais();

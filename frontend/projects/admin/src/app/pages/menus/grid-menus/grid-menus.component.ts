@@ -40,7 +40,7 @@ export class GridMenusComponent implements OnInit {
     private _messagesServices: MessagesService,  //Importa (ver imports) el servicio desde el proyecto principal no desed éste proyecto
     private _spinnerService: SpinnerService //Se encarga de mostrar (show()) u ocultar (hide()) el protctor de pantalla de la carga da datos.
   ) {
-    this._scriptService.loadScripts(this.src);
+    this._scriptService.loadScripts(this.src);  //Carga archivos javascripts
     this.cargarRegistros();
     sessionStorage.setItem('pag',this.paginacion.pag.toString());
    }

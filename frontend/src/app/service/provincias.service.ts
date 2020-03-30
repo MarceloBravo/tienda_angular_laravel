@@ -22,7 +22,7 @@ export class ProvinciasService {
     return this.httpClient.get(this.endPoint + '/pag/' + page);
   }
 
-  getAll(page: number){
+  getAll(){
     return this.httpClient.get(this.endPoint);
   }
 

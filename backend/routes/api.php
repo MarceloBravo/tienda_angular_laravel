@@ -52,7 +52,9 @@ Route::get('admin/provincias/region/{region_id}','Admin\ProvinciasController@pro
 
 
 Route::resource('admin/comunas','Admin\ComunasController');
-Route::get('admin/comunas/filtrar/{filtro}','Admin\ComunasController@filtrar');
+Route::get('admin/comunas/filtrar/{filtro}/{page}','Admin\ComunasController@filtrar');
+Route::get('admin/comunas/pag/{pag}', 'Admin\ComunasController@index');
+Route::get('admin/comunas-all', 'Admin\ComunasController@getAll');
 Route::get('admin/comunas/provincia/{provincia_id}','Admin\ComunasController@comunasProvincia');
 
 Route::resource('admin/ciudades', 'Admin\CiudadesController');

@@ -26,6 +26,8 @@ import { GridRegionesComponent } from './pages/regiones/grid-regiones/grid-regio
 import { FormRegionesComponent } from './pages/regiones/form-regiones/form-regiones.component';
 import { GridProvinciasComponent } from './pages/provincias/grid-provincias/grid-provincias.component';
 import { FormProvinciasComponent } from './pages/provincias/form-provincias/form-provincias.component';
+import { GridComunasComponent } from './pages/comunas/grid-comunas/grid-comunas.component';
+import { FormComunasComponent } from './pages/comunas/form-comunas/form-comunas.component';
 
 
 
@@ -52,7 +54,9 @@ import { FormProvinciasComponent } from './pages/provincias/form-provincias/form
     GridRegionesComponent,
     FormRegionesComponent,
     GridProvinciasComponent,
-    FormProvinciasComponent
+    FormProvinciasComponent,
+    GridComunasComponent,
+    FormComunasComponent
   ],
   imports: [
     BrowserModule,
