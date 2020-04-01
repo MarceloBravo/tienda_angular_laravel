@@ -31,7 +31,7 @@ export class GridMenusComponent implements OnInit {
     totPag: 0,
     activePag: 1,
     arrPagesNumbers: Array(),
-    filtro: false    
+    filtro: ''    
   };
 
   constructor(
@@ -76,7 +76,7 @@ export class GridMenusComponent implements OnInit {
   }
 
   private cambiarPagina(){
-    if(this.paginacion.filtro)
+    if(this.paginacion.filtro != '')
       {
         this.filtrar();
       }else{
@@ -86,7 +86,7 @@ export class GridMenusComponent implements OnInit {
 
   private cargarRegistros(){
   
-    this.paginacion.filtro = false;
+    this.paginacion.filtro = '';
     this._spinnerService.show();
     this._menuService.getPaginate(this.paginacion.pag).subscribe(
       (res: Menus[])=>{;
@@ -126,8 +126,8 @@ export class GridMenusComponent implements OnInit {
     var input = <HTMLInputElement>document.getElementById('filtro');
     if(input.value != ""){
       
-      if(!this.paginacion.filtro)this.paginacion.pag = 0;
-      this.paginacion.filtro = true;
+      if(this.paginacion.filtro != input.value)this.paginacion.pag = 0;
+      this.paginacion.filtro = input.value;
       this._menuService.filter(input.value).subscribe(
         (res: Menus[])=>{
           this.menus = res;

@@ -18,14 +18,14 @@ export class GridPaisesComponent implements OnInit {
     filas: 0,
     pag: 0,
     arrPagesNumbers: [],
-    filtro: false
+    filtro: ''
   };
 
   constructor(
     private _paisesServices: PaisesService,
     private _messagesServices: MessagesService,
     private _spinnerService: SpinnerService,
-  ) { 
+  ) {
     this.cargarRegistros();
   }
 
@@ -34,7 +34,7 @@ export class GridPaisesComponent implements OnInit {
 
 
   private cargarRegistros(){
-    this.paginacion.filtro = false;
+    this.paginacion.filtro = '';
     this._spinnerService.show();
     this._paisesServices.get(this.paginacion.pag).subscribe(
       (res: any[])=>{
@@ -54,9 +54,9 @@ export class GridPaisesComponent implements OnInit {
     var txtFiltro = <HTMLInputElement>document.getElementById('filtro');
     if(txtFiltro.value != ""){
       
-      if(!this.paginacion.filtro)this.paginacion.pag = 0;
-
-      this.paginacion.filtro = true;
+      if(this.paginacion.filtro != txtFiltro.value)this.paginacion.pag = 0;
+      this.paginacion.filtro = txtFiltro.value;
+      
       this._paisesServices.filter(txtFiltro.value, this.paginacion.pag).subscribe(
         (res: any[])=>{
           this.actualizaResult(res);
@@ -122,7 +122,7 @@ export class GridPaisesComponent implements OnInit {
   }
 
   private cambiarPagina(){
-    if(this.paginacion.filtro){
+    if(this.paginacion.filtro != ''){
       this.filtrar();
     }else{
       this.cargarRegistros();

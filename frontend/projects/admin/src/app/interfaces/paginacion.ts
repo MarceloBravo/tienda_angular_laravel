@@ -4,5 +4,5 @@ export interface paginacionInterface{
     totPag: number;
     activePag: number;
     arrPagesNumbers: number[];
-    filtro: boolean;
+    filtro: string;
 }

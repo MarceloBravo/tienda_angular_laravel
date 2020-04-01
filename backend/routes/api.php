@@ -58,7 +58,9 @@ Route::get('admin/comunas-all', 'Admin\ComunasController@getAll');
 Route::get('admin/comunas/provincia/{provincia_id}','Admin\ComunasController@comunasProvincia');
 
 Route::resource('admin/ciudades', 'Admin\CiudadesController');
-Route::get('admin/ciudades/filtrar/{filtro}','Admin\CiudadesController@filtrar');
+Route::get('admin/ciudades/filtrar/{filtro}/{page}','Admin\CiudadesController@filtrar');
+Route::get('admin/ciudades/pag/{page}','Admin\CiudadesController@index');
+Route::get('admin/ciudades-all','Admin\CiudadesController@getAll');
 Route::get('admin/ciudades/comuna/{comuna_id}','Admin\CiudadesController@ciudadesComuna');
 
 Route::resource('admin/roles','Admin\RolesController');

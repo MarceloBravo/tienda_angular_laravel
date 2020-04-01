@@ -24,7 +24,7 @@ export class GridPantallasComponent implements OnInit {
     totPag: 0,
     pag: 0,
     filas: 0,
-    filtro: false        
+    filtro: ''        
   };
 
   private srcScripts: string[] = [
@@ -41,7 +41,7 @@ export class GridPantallasComponent implements OnInit {
     private _messagesService: MessagesService,
     private _scriptService: ScriptsService,
     private _spinnerService: SpinnerService //Se encarga de mostrar (show()) u ocultar (hide()) el protctor de pantalla de la carga da datos.
-    ) {    
+    ) {
       this._scriptService.loadScripts(this.srcScripts);
       this.llenarGrilla();
       sessionStorage.setItem('pag', this.paginacion.pag.toString());
@@ -78,7 +78,7 @@ export class GridPantallasComponent implements OnInit {
   }
 
   private cambiarPagina(){
-    if(this.paginacion.filtro){
+    if(this.paginacion.filtro != ''){
       this.filtrar();
     }else{
       this.llenarGrilla();
@@ -88,7 +88,7 @@ export class GridPantallasComponent implements OnInit {
 
   //Solicita los registros al servicio y los carga a la variable paginas
   private llenarGrilla(){
-    this.paginacion.filtro=false;
+    this.paginacion.filtro='';
     this._spinnerService.show();
     this._pantallasService.get(this.paginacion.pag).subscribe(
       (res: any)=>{
@@ -106,8 +106,8 @@ export class GridPantallasComponent implements OnInit {
     var texto = txtFiltro.value;
     if(texto != ""){
 
-      if(!this.paginacion.filtro)this.paginacion.pag = 0;
-      this.paginacion.filtro = true;
+      if(this.paginacion.filtro != texto)this.paginacion.pag = 0;
+      this.paginacion.filtro = texto;
 
       this._pantallasService.filter(texto, this.paginacion.pag).subscribe(
         (res: any)=>{

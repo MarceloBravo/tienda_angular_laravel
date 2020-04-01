@@ -18,14 +18,14 @@ export class GridProvinciasComponent implements OnInit {
     totPag: 0,
     activePag: 1,
     arrPagesNumbers: [],
-    filtro: false
+    filtro: ''
   }
 
   constructor(
     private _provinciasService: ProvinciasService,
     private _mensajeService: MessagesService,
     private _spinnerService: SpinnerService
-  ) { 
+  ) {
     this.cargarRegistros();
   }
 
@@ -33,7 +33,7 @@ export class GridProvinciasComponent implements OnInit {
   }
 
   private cargarRegistros(){
-    this.paginacion.filtro = false;
+    this.paginacion.filtro = '';
     this._spinnerService.show();
     this._provinciasService.get(this.paginacion.pag).subscribe(
       (res: any) =>{
@@ -58,8 +58,8 @@ export class GridProvinciasComponent implements OnInit {
     if(txtFiltro.value !== ""){
       
         this._spinnerService.show();
-        if(!this.paginacion.filtro)this.paginacion.pag = 0;
-        this.paginacion.filtro = true;
+        if(this.paginacion.filtro != txtFiltro.value)this.paginacion.pag = 0;
+        this.paginacion.filtro = txtFiltro.value;
 
         this._provinciasService.filter(txtFiltro.value, this.paginacion.pag).subscribe(
           (res: any)=>{
@@ -127,7 +127,7 @@ export class GridProvinciasComponent implements OnInit {
   }
 
   private cargarPagina(){
-    if(this.paginacion.filtro){
+    if(this.paginacion.filtro != ''){
       this.filtrar();
     }else{
       this.cargarRegistros();

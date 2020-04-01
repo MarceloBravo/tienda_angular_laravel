@@ -19,7 +19,7 @@ export class GridComunasComponent implements OnInit {
     totPag: 0,
     activePag: 1, //Número de ágina a mostrar en el html, inicia desde 1
     arrPagesNumbers: [],
-    filtro: false
+    filtro: ''
   };
 
 
@@ -51,7 +51,8 @@ export class GridComunasComponent implements OnInit {
   filtrar(){
     var texto = <HTMLInputElement>document.getElementById('filtro');
     if(texto.value !== ""){
-      this.paginacion.filtro = true;
+      if(texto.value != this.paginacion.filtro)this.paginacion.pag = 0
+      this.paginacion.filtro = texto.value;
 
       this._spinnerService.show();
       this._comunasService.filter(texto.value, this.paginacion.pag).subscribe(
@@ -66,7 +67,7 @@ export class GridComunasComponent implements OnInit {
         });
 
     }else{
-      this.paginacion.filtro = false;
+      this.paginacion.filtro = '';
       this.obtenerComunas();
     }
   }
@@ -87,7 +88,7 @@ export class GridComunasComponent implements OnInit {
       this._comunasService.delete(id).subscribe(
         (res: string[])=>{
           this._mensajesService.mostrarMensaje(res['mensaje'],res['tipo-mensaje']);
-          this.paginacion.filtro = false;
+          this.paginacion.filtro = '';
           this.obtenerComunas();  //Buelve a consultar los datos desde la base de datos para refrescar la grilla
           this._spinnerService.hide();
 
@@ -102,7 +103,7 @@ export class GridComunasComponent implements OnInit {
   paginarAnterior(){
     if(this.paginacion.pag > 0){
       this.paginacion.pag--;  
-      if(this.paginacion.filtro){
+      if(this.paginacion.filtro != ''){
         this.filtrar();
       }else{
         this.obtenerComunas();
@@ -113,7 +114,7 @@ export class GridComunasComponent implements OnInit {
   paginarSiguiente(){
     if(this.paginacion.pag < this.paginacion.totPag){
       this.paginacion.pag++;  
-      if(this.paginacion.filtro){
+      if(this.paginacion.filtro != ''){
         this.filtrar();
       }else{
         this.obtenerComunas();
@@ -123,7 +124,7 @@ export class GridComunasComponent implements OnInit {
 
   paginar(pag: number){
     this.paginacion.pag = pag;  
-    if(this.paginacion.filtro){
+    if(this.paginacion.filtro != ''){
       this.filtrar();
     }else{
       this.obtenerComunas();

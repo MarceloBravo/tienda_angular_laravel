@@ -18,7 +18,7 @@ export class GridRegionesComponent implements OnInit {
     totPag: 0,
     activePag: 1,
     arrPagesNumbers: Array(),
-    filtro: false
+    filtro: ''
   }
 
   constructor(
@@ -33,9 +33,8 @@ export class GridRegionesComponent implements OnInit {
   }
 
   private obtenerRegistros(){
-    this.paginacion.filtro = false;
+    this.paginacion.filtro = '';
     this._spinnerService.show();
-    this.paginacion.filtro = false;
     this._regionesService.get(this.paginacion.pag).subscribe(
       (res: any[])=>{
         this.cargarResultados(res);
@@ -57,8 +56,8 @@ export class GridRegionesComponent implements OnInit {
       this.obtenerRegistros();
     }else{
 
-      if(!this.paginacion.filtro)this.paginacion.pag = 0;
-      this.paginacion.filtro = true;
+      if(this.paginacion.filtro != txtFiltro.value)this.paginacion.pag = 0;
+      this.paginacion.filtro = txtFiltro.value;
 
       this._spinnerService.show();
       this._regionesService.filter(txtFiltro.value, this.paginacion.pag).subscribe(
@@ -127,7 +126,7 @@ export class GridRegionesComponent implements OnInit {
   }
 
   private cambiarPagina(){
-    if(this.paginacion.filtro){
+    if(this.paginacion.filtro != ''){
       this.filtrar()
     }else{
       this.obtenerRegistros();
