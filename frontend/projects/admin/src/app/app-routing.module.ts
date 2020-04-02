@@ -19,6 +19,8 @@ import { GridComunasComponent } from './pages/comunas/grid-comunas/grid-comunas.
 import { FormComunasComponent } from './pages/comunas/form-comunas/form-comunas.component';
 import { GridCiudadesComponent } from './pages/ciudades/grid-ciudades/grid-ciudades.component';
 import { FormCiudadesComponent } from './pages/ciudades/form-ciudades/form-ciudades.component';
+import { GridEmpresasComponent } from './pages/empresas/grid-empresas/grid-empresas.component';
+import { FormEmpresasComponent } from './pages/empresas/form-empresas/form-empresas.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -40,7 +42,9 @@ const routes: Routes = [
       { path: 'comunas', component: GridComunasComponent },
       { path: 'comunas/:id', component: FormComunasComponent},
       { path: 'ciudades', component: GridCiudadesComponent},
-      { path: 'ciudades/:id', component: FormCiudadesComponent}
+      { path: 'ciudades/:id', component: FormCiudadesComponent},
+      { path: 'empresas', component: GridEmpresasComponent},
+      { path: 'empresas/:id', component: FormEmpresasComponent}
   
     ]
   },

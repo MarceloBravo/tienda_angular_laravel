@@ -24,7 +24,6 @@ import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.compo
 import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

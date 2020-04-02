@@ -21,41 +21,41 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú.">
-                            <div *ngIf="formCiudad.get('nombre').hasError('required')" class="errorFieldClass">En nombre de la ciudad es obligatorio</div>
-                            <div *ngIf="formCiudad.get('nombre').hasError('minlength')" class="errorFieldClass">El nombre debe tener al menos 3 carácteres</div>
-                            <div *ngIf="formCiudad.get('nombre').hasError('maxlength')" class="errorFieldClass">El nombre no debe sobrepasar los  50 carácteres</div>                            
+                            <div *ngIf="formCiudad.get('nombre').hasError('required') && formCiudad.get('nombre').dirty" class="errorFieldClass">En nombre de la ciudad es obligatorio</div>
+                            <div *ngIf="formCiudad.get('nombre').hasError('minlength') && formCiudad.get('nombre').dirty" class="errorFieldClass">El nombre debe tener al menos 3 carácteres</div>
+                            <div *ngIf="formCiudad.get('nombre').hasError('maxlength') && formCiudad.get('nombre').dirty" class="errorFieldClass">El nombre no debe sobrepasar los  50 carácteres</div>                            
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="pais">Pais</label>
-                            <select id="pais_id" formControlName="pais_id" (change)="cargarRegiones(this.id)">
+                            <select id="pais_id" formControlName="pais_id" (change)="cargarRegiones(this.id)" class="form-control col-md-5">
                                 <option *ngFor="let item of paises" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="formCiudad.get('pais_id').hasError('required')" class="errorFieldClass">Debe seleccionar una pais</div>
-                            <div *ngIf="formCiudad.get('pais_id').hasError('min')" class="errorFieldClass">La pais no es válida.</div>
+                            <div *ngIf="formCiudad.get('pais_id').hasError('required') && formCiudad.get('pais_id').dirty" class="errorFieldClass">Debe seleccionar una pais</div>
+                            <div *ngIf="formCiudad.get('pais_id').hasError('min') && formCiudad.get('pais_id').dirty" class="errorFieldClass">La pais no es válida.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="region">Región</label>
-                            <select id="region_id" formControlName="region_id" (change)="cargarProvincias()">
+                            <select id="region_id" formControlName="region_id" (change)="cargarProvincias()" class="form-control col-md-5">
                                 <option *ngFor="let item of regiones" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="formCiudad.get('region_id').hasError('required')" class="errorFieldClass">Debe seleccionar una región</div>
-                            <div *ngIf="formCiudad.get('region_id').hasError('min')" class="errorFieldClass">La región no es válida.</div>
+                            <div *ngIf="formCiudad.get('region_id').hasError('required') && formCiudad.get('region_id').dirty" class="errorFieldClass">Debe seleccionar una región</div>
+                            <div *ngIf="formCiudad.get('region_id').hasError('min') && formCiudad.get('region_id').dirty" class="errorFieldClass">La región no es válida.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="provincia_id">Provincia</label>
-                            <select id="provincia_id" formControlName="provincia_id" (change)="cargarComunas(this.id)">
+                            <select id="provincia_id" formControlName="provincia_id" (change)="cargarComunas(this.id)" class="form-control col-md-5">
                                 <option *ngFor="let item of provincias" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="formCiudad.get('provincia_id').hasError('required')" class="errorFieldClass">Debe seleccionar una provincia</div>
-                            <div *ngIf="formCiudad.get('provincia_id').hasError('min')" class="errorFieldClass">La provincia no es válida.</div>
+                            <div *ngIf="formCiudad.get('provincia_id').hasError('required') && formCiudad.get('provincia_id').dirty" class="errorFieldClass">Debe seleccionar una provincia</div>
+                            <div *ngIf="formCiudad.get('provincia_id').hasError('min') && formCiudad.get('provincia_id').dirty" class="errorFieldClass">La provincia no es válida.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="comuna_id">Comuna</label>
-                            <select id="comuna_id" formControlName="comuna_id">
+                            <select id="comuna_id" formControlName="comuna_id" class="form-control col-md-5">
                                 <option *ngFor="let item of comunas" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="formCiudad.get('comuna_id').hasError('required')" class="errorFieldClass">Debe seleccionar una comuna</div>
-                            <div *ngIf="formCiudad.get('comuna_id').hasError('min')" class="errorFieldClass">La comuna no es válida.</div>
+                            <div *ngIf="formCiudad.get('comuna_id').hasError('required') && formCiudad.get('comuna_id').dirty" class="errorFieldClass">Debe seleccionar una comuna</div>
+                            <div *ngIf="formCiudad.get('comuna_id').hasError('min') && formCiudad.get('comuna_id').dirty" class="errorFieldClass">La comuna no es válida.</div>
                         </div>                        
                     </form>
                 </div>

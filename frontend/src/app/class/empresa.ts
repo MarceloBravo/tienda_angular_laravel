@@ -1,7 +1,6 @@
-import { Ciudad } from '../class/ciudad';
-
-export interface empresaInterface{
+export class Empresa {
     id?: number;
+    rut: string;
     nombre: string;
     direccion: string;
     ciudad_id: number;

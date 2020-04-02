@@ -22,9 +22,9 @@
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <!-- <input id="nombre" name="nombre" type="text" [(ngModel)]="menu.nombre" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú."> -->
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú.">
-                            <div *ngIf="formMenu.get('nombre').hasError('required')" class="errorFieldClass">En nombre del menú es obligatorio</div>
-                            <div *ngIf="formMenu.get('nombre').hasError('minlength')" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
-                            <div *ngIf="formMenu.get('nombre').hasError('maxlength')" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
+                            <div *ngIf="formMenu.get('nombre').hasError('required') && formMenu.get('nombre').dirty" class="errorFieldClass">En nombre del menú es obligatorio</div>
+                            <div *ngIf="formMenu.get('nombre').hasError('minlength') && formMenu.get('nombre').dirty" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
+                            <div *ngIf="formMenu.get('nombre').hasError('maxlength') && formMenu.get('nombre').dirty" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
                             <!-- <small *ngIf="formMenu.get('nombre').hasError('required')" id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group row">
@@ -33,9 +33,9 @@
                             <input id="icono_fa_class" formControlName="icono_fa_class" type="text" class="form-control col-md-3" aria-describedby="icono_fa_classHelp" placeholder="Nombre de la clase fa para el icono.">
                             <small id="icono_fa_classHelp" class="form-text text-muted">(Nombre de la clase fa de bootstrap, para el icono del menú.)</small>
                             
-                            <div *ngIf="formMenu.get('icono_fa_class').hasError('required')" class="errorFieldClass">Este campo es obligatorio.</div>
-                            <div *ngIf="formMenu.get('icono_fa_class').hasError('minlength')" class="errorFieldClass">El campo no debe tener al menos 2 carácteres.</div>
-                            <div *ngIf="formMenu.get('icono_fa_class').hasError('maxlength')" class="errorFieldClass">El campo no debe sobrepasar los 50 carácteres.</div>
+                            <div *ngIf="formMenu.get('icono_fa_class').hasError('required') && formMenu.get('icono_fa_class').dirty" class="errorFieldClass">Este campo es obligatorio.</div>
+                            <div *ngIf="formMenu.get('icono_fa_class').hasError('minlength') && formMenu.get('icono_fa_class').dirty" class="errorFieldClass">El campo no debe tener al menos 2 carácteres.</div>
+                            <div *ngIf="formMenu.get('icono_fa_class').hasError('maxlength') && formMenu.get('icono_fa_class').dirty" class="errorFieldClass">El campo no debe sobrepasar los 50 carácteres.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="menu_padre_id">Menú padre</label>                            
@@ -44,25 +44,25 @@
                                 <option *ngFor="let item of menus" [value]=" item.id ">{{ item.nombre }}</option>
                             </select>
                             
-                            <div *ngIf="formMenu.get('menu_padre_id').hasError('min')" class="errorFieldClass">El valor seleccionado no es válido.</div>
-                            <div *ngIf="formMenu.get('menu_padre_id').hasError('max')" class="errorFieldClass">El valor seleccionado no es válido.</div>
+                            <div *ngIf="formMenu.get('menu_padre_id').hasError('min') && formMenu.get('menu_padre_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>
+                            <div *ngIf="formMenu.get('menu_padre_id').hasError('max') && formMenu.get('menu_padre_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="posicion">Posicion</label>
                             <!-- <input id="posicion" name="posicion" type="text" [(ngModel)]="menu.posicion" class="form-control col-md-2" aria-describedby="nombreHelp" placeholder="Posición del menú."> -->
                             <input id="posicion" formControlName="posicion" type="text" class="form-control col-md-2" aria-describedby="nombreHelp" placeholder="Posición del menú.">
-                            <div *ngIf="formMenu.get('posicion').hasError('required')" class="errorFieldClass">Este campo es obligatorio.</div>
-                            <div *ngIf="formMenu.get('posicion').hasError('min')" class="errorFieldClass">El campo solo acepta números ósitivos.</div>
-                            <div *ngIf="formMenu.get('posicion').hasError('max')" class="errorFieldClass">El campo no debe ser mayor a 1000.</div>
+                            <div *ngIf="formMenu.get('posicion').hasError('required') && formMenu.get('posicion').dirty" class="errorFieldClass">Este campo es obligatorio.</div>
+                            <div *ngIf="formMenu.get('posicion').hasError('min') && formMenu.get('posicion').dirty" class="errorFieldClass">El campo solo acepta números ósitivos.</div>
+                            <div *ngIf="formMenu.get('posicion').hasError('max') && formMenu.get('posicion').dirty" class="errorFieldClass">El campo no debe ser mayor a 1000.</div>
                             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="url">Url</label>
                             <!-- <input id="url" name="url" type="text" [(ngModel)]="menu.url" class="form-control col-md-10" aria-describedby="nombreHelp" placeholder="Url asociada al menú."> -->
-                            <input id="url" formControlName="url" type="text" class="form-control col-md-10" aria-describedby="nombreHelp" placeholder="Url asociada al menú.">
-                            <div *ngIf="formMenu.get('url').hasError('required')" class="errorFieldClass">Este campo es obligatorio.</div>
-                            <div *ngIf="formMenu.get('url').hasError('minlength')" class="errorFieldClass">El campo debe tener al menos 1 carácter.</div>
-                            <div *ngIf="formMenu.get('url').hasError('maxlength')" class="errorFieldClass">El campo no debe sobrepasar los 255 carácteres.</div>
+                            <input id="url" formControlName="url" type="text" class="form-control col-md-8" aria-describedby="nombreHelp" placeholder="Url asociada al menú.">
+                            <div *ngIf="formMenu.get('url').hasError('required') && formMenu.get('url').dirty" class="errorFieldClass">Este campo es obligatorio.</div>
+                            <div *ngIf="formMenu.get('url').hasError('minlength') && formMenu.get('url').dirty" class="errorFieldClass">El campo debe tener al menos 1 carácter.</div>
+                            <div *ngIf="formMenu.get('url').hasError('maxlength') && formMenu.get('url').dirty" class="errorFieldClass">El campo no debe sobrepasar los 255 carácteres.</div>
                             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group row">
@@ -71,8 +71,8 @@
                             <select id="pantalla_id" formControlName="pantalla_id" class="form-control col-md-3">
                                 <option *ngFor="let item of pantallas" [value]=" item.id ">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="formMenu.get('menu_padre_id').hasError('required')" class="errorFieldClass">El campo es obligatorio.</div>
-                            <div *ngIf="formMenu.get('menu_padre_id').hasError('min')" class="errorFieldClass">El valor seleccionado.</div>
+                            <div *ngIf="formMenu.get('menu_padre_id').hasError('required') && formMenu.get('menu_padre_id').dirty" class="errorFieldClass">El campo es obligatorio.</div>
+                            <div *ngIf="formMenu.get('menu_padre_id').hasError('min') && formMenu.get('menu_padre_id').dirty" class="errorFieldClass">El valor seleccionado.</div>
                         </div>
                     </form>
                 </div>

@@ -95,7 +95,10 @@ Route::get('ultima-orden','Admin\OrdenesController@getLastOrder');
 Route::resource('estados_compras','Admin\EstadosController');
 Route::get('estados_compras_inicial','Admin\EstadosController@getFirstState');
 
-Route::resource('empresa','Admin\EmpresaController');
+Route::resource('admin/empresas','Admin\EmpresaController');
+Route::get('admin/empresas/filtro/{ttexto}/{page}','Admin\EmpresaController@filtrar');
+Route::get('admin/empresas/pag/{page}','Admin\EmpresaController@index');
+Route::get('admin/empresas-all', 'Admin\EmpresaController@getAll');
 Route::get('empresa_default','Admin\EmpresaController@first');
 
 Route::resource('admin/menus', 'Admin\MenusController');

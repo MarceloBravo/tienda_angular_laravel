@@ -22,9 +22,9 @@
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <!-- <input id="nombre" name="nombre" type="text" [(ngModel)]="Region.nombre" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú."> -->
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre de la región.">
-                            <div *ngIf="form.get('nombre').hasError('required')" class="errorFieldClass">En nombre de la región es obligatorio</div>
-                            <div *ngIf="form.get('nombre').hasError('minlength')" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
-                            <div *ngIf="form.get('nombre').hasError('maxlength')" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
+                            <div *ngIf="form.get('nombre').hasError('required') && form.get('nombre').dirty" class="errorFieldClass">En nombre de la región es obligatorio</div>
+                            <div *ngIf="form.get('nombre').hasError('minlength') && form.get('nombre').dirty" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
+                            <div *ngIf="form.get('nombre').hasError('maxlength') && form.get('nombre').dirty" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
                             <!-- <small *ngIf="formRegion.get('nombre').hasError('required')" id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group row">
@@ -32,8 +32,8 @@
                             <select id="pais_id" formControlName="pais_id" class="form-control col-md-5">
                                 <option *ngFor="let item of paises" [value]=" item.id ">{{ item.nombre }}</option>
                             </select>
-                            <div *ngIf="form.get('pais_id').hasError('required')" class="errorFieldClass">Debe seleccionar un pais</div>
-                            <div *ngIf="form.get('pais_id').hasError('min')" class="errorFieldClass">El pais seleccionado no es válido</div>
+                            <div *ngIf="form.get('pais_id').hasError('required') && form.get('pais_id').dirty" class="errorFieldClass">Debe seleccionar un pais</div>
+                            <div *ngIf="form.get('pais_id').hasError('min') && form.get('pais_id').dirty" class="errorFieldClass">El pais seleccionado no es válido</div>
                         </div>
                     </form>
                 </div>

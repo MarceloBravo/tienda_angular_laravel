@@ -30,6 +30,8 @@ import { GridComunasComponent } from './pages/comunas/grid-comunas/grid-comunas.
 import { FormComunasComponent } from './pages/comunas/form-comunas/form-comunas.component';
 import { GridCiudadesComponent } from './pages/ciudades/grid-ciudades/grid-ciudades.component';
 import { FormCiudadesComponent } from './pages/ciudades/form-ciudades/form-ciudades.component';
+import { GridEmpresasComponent } from './pages/empresas/grid-empresas/grid-empresas.component';
+import { FormEmpresasComponent } from './pages/empresas/form-empresas/form-empresas.component';
 
 
 
@@ -60,7 +62,9 @@ import { FormCiudadesComponent } from './pages/ciudades/form-ciudades/form-ciuda
     GridComunasComponent,
     FormComunasComponent,
     GridCiudadesComponent,
-    FormCiudadesComponent
+    FormCiudadesComponent,
+    GridEmpresasComponent,
+    FormEmpresasComponent
   ],
   imports: [
     BrowserModule,

@@ -21,18 +21,18 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del rol.">
-                            <div *ngIf="formRol.get('nombre').hasError('required')" class="errorFieldClass">El nombre es obligatorio</div>
-                            <div *ngIf="formRol.get('nombre').hasError('minlength')" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
-                            <div *ngIf="formRol.get('nombre').hasError('maxlength')" class="errorFieldClass">Debe ingresar un máximo de 50 carácteres.</div>
+                            <div *ngIf="formRol.get('nombre').hasError('required') && formRol.get('nombre').dirty" class="errorFieldClass">El nombre es obligatorio</div>
+                            <div *ngIf="formRol.get('nombre').hasError('minlength') && formRol.get('nombre').dirty" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
+                            <div *ngIf="formRol.get('nombre').hasError('maxlength') && formRol.get('nombre').dirty" class="errorFieldClass">Debe ingresar un máximo de 50 carácteres.</div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="descripcion">Descripción</label>
                             <input id="tabla" formControlName="descripcion" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa una descripción para el rol.">
                             
-                            <div *ngIf="formRol.get('descripcion').hasError('required')" class="errorFieldClass">El nombre de la tabla asociada es obligatorio</div>
-                            <div *ngIf="formRol.get('descripcion').hasError('minlength')" class="errorFieldClass">Debe ingresar un minimo 10 carácteres</div>
-                            <div *ngIf="formRol.get('descripcion').hasError('maxlength')" class="errorFieldClass">Debe ingresar un máximo de 255 carácteres.</div>
+                            <div *ngIf="formRol.get('descripcion').hasError('required') && formRol.get('descripcion').dirty" class="errorFieldClass">El nombre de la tabla asociada es obligatorio</div>
+                            <div *ngIf="formRol.get('descripcion').hasError('minlength') && formRol.get('descripcion').dirty" class="errorFieldClass">Debe ingresar un minimo 10 carácteres</div>
+                            <div *ngIf="formRol.get('descripcion').hasError('maxlength') && formRol.get('descripcion').dirty" class="errorFieldClass">Debe ingresar un máximo de 255 carácteres.</div>
                         
                         </div>
                         

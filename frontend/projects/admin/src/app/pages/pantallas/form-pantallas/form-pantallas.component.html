@@ -21,17 +21,17 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre de la pantalla.">
-                            <div *ngIf="formPantalla.get('nombre').hasError('required')" class="errorFieldClass">El nombre es obligatorio</div>
-                            <div *ngIf="formPantalla.get('nombre').hasError('minlength')" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
-                            <div *ngIf="formPantalla.get('nombre').hasError('maxlength')" class="errorFieldCalss">Debe ingresar un máximo de 50 carácteres.</div>
+                            <div *ngIf="formPantalla.get('nombre').hasError('required') && formPantalla.get('nombre').dirty" class="errorFieldClass">El nombre es obligatorio</div>
+                            <div *ngIf="formPantalla.get('nombre').hasError('minlength') && formPantalla.get('nombre').dirty" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
+                            <div *ngIf="formPantalla.get('nombre').hasError('maxlength') && formPantalla.get('nombre').dirty" class="errorFieldCalss">Debe ingresar un máximo de 50 carácteres.</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="tabla">Tabla</label>
                             <input id="tabla" formControlName="tabla" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre de la tabla asociada a la pantalla.">
                             
-                            <div *ngIf="formPantalla.get('tabla').hasError('required')" class="errorFieldClass">El nombre de la tabla asociada es obligatorio</div>
-                            <div *ngIf="formPantalla.get('tabla').hasError('minlength')" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
-                            <div *ngIf="formPantalla.get('tabla').hasError('maxlength')" class="errorFieldCalss">Debe ingresar un máximo de 50 carácteres.</div>
+                            <div *ngIf="formPantalla.get('tabla').hasError('required') && formPantalla.get('tabla').dirty" class="errorFieldClass">El nombre de la tabla asociada es obligatorio</div>
+                            <div *ngIf="formPantalla.get('tabla').hasError('minlength') && formPantalla.get('tabla').dirty" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
+                            <div *ngIf="formPantalla.get('tabla').hasError('maxlength') && formPantalla.get('tabla').dirty" class="errorFieldCalss">Debe ingresar un máximo de 50 carácteres.</div>
                         
                         </div>
                         

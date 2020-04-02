@@ -22,9 +22,9 @@
                             <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
                             <!-- <input id="nombre" name="nombre" type="text" [(ngModel)]="Pais.nombre" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú."> -->
                             <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del menú.">
-                            <div *ngIf="formPais.get('nombre').hasError('required')" class="errorFieldClass">En nombre del pais es obligatorio</div>
-                            <div *ngIf="formPais.get('nombre').hasError('minlength')" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
-                            <div *ngIf="formPais.get('nombre').hasError('maxlength')" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
+                            <div *ngIf="formPais.get('nombre').hasError('required') && formPais.get('nombre').dirty" class="errorFieldClass">En nombre del pais es obligatorio</div>
+                            <div *ngIf="formPais.get('nombre').hasError('minlength') && formPais.get('nombre').dirty" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
+                            <div *ngIf="formPais.get('nombre').hasError('maxlength') && formPais.get('nombre').dirty" class="errorFieldClass">El campo no debe sobrepasar los  100 carácteres</div>
                             <!-- <small *ngIf="formPais.get('nombre').hasError('required')" id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                     </form>
