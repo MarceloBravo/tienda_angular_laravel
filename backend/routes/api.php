@@ -106,6 +106,12 @@ Route::get('admin/menus/filtrar/{id}/{pag}', 'Admin\MenusController@filtrar');
 Route::get('admin/menus/pag/{pag}', 'Admin\MenusController@index');
 Route::get('admin/menus-all', 'Admin\MenusController@getAll');
 
+Route::resource('admin/categorias', 'Admin\CategoriasController');
+Route::get('admin/categorias/filtro/{filtro}/{page}', 'Admin\CategoriasController@filtrar');
+Route::get('admin/categorias/pag/{page}', 'Admin\CategoriasController@index');
+Route::get('admin/categorias-all','Admin\CategoriasController@getAll');
+
+
 //Rutas PayPal
 Route::post('paypal','PaypalController@payment');
 Route::get('paypal/cancel','PaypalController@cancel')->name('payment.cancel');
