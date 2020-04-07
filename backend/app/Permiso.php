@@ -16,4 +16,8 @@ class Permiso extends Model
     public function roles(){
         return $this->belongsTo('App\Rol','id','rol_id')->get();
     }
+
+    public function pantallas(){
+        return $this->hasOne('App\Pantallas','id','pantalla_id')->get();
+    }
 }

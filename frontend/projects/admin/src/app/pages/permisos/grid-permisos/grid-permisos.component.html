@@ -1,0 +1,81 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Permisos</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Permisos</li>
+        </ol>
+    </div>
+
+    <!-- Row -->
+    <div class="row">
+        <!-- Datatables -->
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Listado de Permisos</h6>
+                </div>
+
+                
+                <div class="row">
+                    <label for="rol_id" class="col-md-2 label-rol">Rol: </label>
+                    <select id="rol_id" name="rol_id" (change)="obtenerPermisos()" class="form-control col-md-3" >
+                        <option *ngIf="roles">-- Seleccione --</option>
+                        <option *ngFor="let item of roles" [value]=" item.id ">{{ item.nombre }}</option>
+                    </select>
+                </div>
+                
+
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>(Acceso) Pantalla</th>
+                                <th>Crear</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>(Acceso) Pantalla</th>
+                                <th>Crear</th>
+                                <th>Actualizar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr *ngFor="let item of permisos">
+                                <td>
+                                    <input type="checkbox" id="chk_acceder_{{ item.id }}_{{ item.id_pantalla }}" [checked]=" item.acceder " class="chk_permisos custom-control-input"/>
+                                    <label class="custom-control-label" for="customControlAutosizing" (click)="changeCheckValue( 'acceder', item.id, item.id_pantalla )"></label>
+                                    {{ item.pantalla}}
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="chk_crear_{{ item.id }}_{{ item.id_pantalla }}" [checked]=" item.crear " class="custom-control-input"/>
+                                    <label class="custom-control-label" for="customControlAutosizing" (click)="changeCheckValue( 'crear', item.id, item.id_pantalla )"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="chk_actualizar_{{ item.id }}_{{ item.id_pantalla }}" [checked]=" item.actualizar " class="custom-control-input"/>
+                                    <label class="custom-control-label" for="customControlAutosizing" (click)="changeCheckValue( 'actualizar', item.id, item.id_pantalla )"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="chk_eliminar_{{ item.id }}_{{ item.id_pantalla }}" [checked]=" item.eliminar " class="custom-control-input"/>
+                                    <label class="custom-control-label" for="customControlAutosizing" (click)="changeCheckValue( 'eliminar', item.id, item.id_pantalla )"></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="div-buttons-group">
+                    <button class="btn btn-success" (click)="grabar()">Grabar</button>                    
+                    <span class="spn-separate"></span>
+                    <a class="btn btn-primary" routerLink="/admin">Home</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

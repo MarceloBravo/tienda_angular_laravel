@@ -26,7 +26,7 @@ export class RolesService {
   }
 
   getAll(){
-    return this.httpClient.get(this.endPoint);
+    return this.httpClient.get(this.endPoint + '-all');
   }
 
   find(id: number){

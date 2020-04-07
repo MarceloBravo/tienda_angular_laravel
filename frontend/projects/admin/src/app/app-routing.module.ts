@@ -23,6 +23,7 @@ import { GridEmpresasComponent } from './pages/empresas/grid-empresas/grid-empre
 import { FormEmpresasComponent } from './pages/empresas/form-empresas/form-empresas.component';
 import { GridCategoriasComponent } from './pages/categorias/grid-categorias/grid-categorias.component';
 import { FormCategoriasComponent } from './pages/categorias/form-categorias/form-categorias.component';
+import { GridPermisosComponent } from './pages/permisos/grid-permisos/grid-permisos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -48,7 +49,8 @@ const routes: Routes = [
       { path: 'empresas', component: GridEmpresasComponent},
       { path: 'empresas/:id', component: FormEmpresasComponent},
       { path: 'categorias', component: GridCategoriasComponent},
-      { path: 'categorias/:id', component: FormCategoriasComponent}
+      { path: 'categorias/:id', component: FormCategoriasComponent},
+      { path: 'permisos', component: GridPermisosComponent}
   
     ]
   },

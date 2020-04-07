@@ -111,6 +111,13 @@ Route::get('admin/categorias/filtro/{filtro}/{page}', 'Admin\CategoriasControlle
 Route::get('admin/categorias/pag/{page}', 'Admin\CategoriasController@index');
 Route::get('admin/categorias-all','Admin\CategoriasController@getAll');
 
+Route::resource('admin/permisos','Admin\PermisosController');
+Route::get('admin/permisos/filtro/{texto}/{pag}','Admin\PermisosController@filtrar');
+Route::get('admin/permisos/pag/{page}', 'Admin\PermisosController@index');
+Route::get('admin/permisos-all', 'Admin\PermisosController@getAll');
+
+Route::get('admin/permisos/rol/{idRol}','Admin\PermisosController@getByRol');
+
 
 //Rutas PayPal
 Route::post('paypal','PaypalController@payment');
