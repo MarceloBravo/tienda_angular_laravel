@@ -35,6 +35,8 @@ import { FormEmpresasComponent } from './pages/empresas/form-empresas/form-empre
 import { GridCategoriasComponent } from './pages/categorias/grid-categorias/grid-categorias.component';
 import { FormCategoriasComponent } from './pages/categorias/form-categorias/form-categorias.component';
 import { GridPermisosComponent } from './pages/permisos/grid-permisos/grid-permisos.component';
+import { GridMarcasComponent } from './pages/marcas/grid-marcas/grid-marcas.component';
+import { FormMarcasComponent } from './pages/marcas/form-marcas/form-marcas.component';
 
 
 
@@ -70,7 +72,9 @@ import { GridPermisosComponent } from './pages/permisos/grid-permisos/grid-permi
     FormEmpresasComponent,
     GridCategoriasComponent,
     FormCategoriasComponent,
-    GridPermisosComponent
+    GridPermisosComponent,
+    GridMarcasComponent,
+    FormMarcasComponent
   ],
   imports: [
     BrowserModule,

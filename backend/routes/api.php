@@ -79,7 +79,10 @@ Route::get('admin/pantallas-all','Admin\PantallasController@getAll');
 
 
 Route::resource('admin/marcas','Admin\MarcasController');
-Route::get('admin/marcas/filtrar/{filtro}', 'Admin\MarcasController@filtrar');
+Route::get('admin/marcas/filtrar/{filtro}/{page}', 'Admin\MarcasController@filtrar');
+Route::get('admin/marcas/pag/{page}','Admin\MarcasController@index');
+Route::get('admin/marcas-all','Admin\MarcasController@getAll');
+
 
 Route::resource('admin/productos','Admin\ProductosController');
 Route::get('admin/productos/filtrar/{filtro}','Admin\ProductosController@filtrar');

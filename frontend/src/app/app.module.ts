@@ -23,6 +23,7 @@ import { PaypalSuccessComponent } from './pages/paypal-success/paypal-success.co
 import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.component';
 import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { MarcasComponent } from './service/marcas/marcas.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { LoadingComponent } from './shared/loading/loading.component';
     PaypalCancelComponent,
     WebpaySuccessComponent,
     LoadingComponent,
+    MarcasComponent,
   ],
   imports: [
     BrowserModule,
