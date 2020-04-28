@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GridMenusComponent } from './pages/menus/grid-menus/grid-menus.component';
 import { FormMenusComponent } from './pages/menus/form-menus/form-menus.component';
 import { ModalMessagesComponent } from './shared/modal-messages/modal-messages.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MessagesComponent } from './shared/messages/messages.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './shared/loading/loading.component';
@@ -37,7 +37,19 @@ import { FormCategoriasComponent } from './pages/categorias/form-categorias/form
 import { GridPermisosComponent } from './pages/permisos/grid-permisos/grid-permisos.component';
 import { GridMarcasComponent } from './pages/marcas/grid-marcas/grid-marcas.component';
 import { FormMarcasComponent } from './pages/marcas/form-marcas/form-marcas.component';
+import { GridProductosComponent } from './pages/productos/grid-productos/grid-productos.component';
+import { FormProductosComponent } from './pages/productos/form-productos/form-productos.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; //Necesario para utiliza Tabs
+import {FileInputAccessorModule} from "file-input-accessor";
 
+import { UploadFilesService } from './services/upload-files.service';
+
+
+import { MatToolbarModule,  
+          MatIconModule,  
+          MatCardModule,  
+          MatButtonModule,  
+          MatProgressBarModule } from '@angular/material';
 
 
 @NgModule({
@@ -74,16 +86,27 @@ import { FormMarcasComponent } from './pages/marcas/form-marcas/form-marcas.comp
     FormCategoriasComponent,
     GridPermisosComponent,
     GridMarcasComponent,
-    FormMarcasComponent
+    FormMarcasComponent,
+    GridProductosComponent,
+    FormProductosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, //Necesario para poder utilizar la etiqueta <router-outlet></router-outlet>
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    MatToolbarModule,  
+    MatIconModule,  
+    MatButtonModule,  
+    MatCardModule,  
+    MatProgressBarModule,
+    FileInputAccessorModule
   ],
-  providers: [],
+  providers: [
+    UploadFilesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

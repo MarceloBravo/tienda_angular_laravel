@@ -86,6 +86,9 @@ Route::get('admin/marcas-all','Admin\MarcasController@getAll');
 
 Route::resource('admin/productos','Admin\ProductosController');
 Route::get('admin/productos/filtrar/{filtro}','Admin\ProductosController@filtrar');
+Route::get('admin/productos/pag/{page}','Admin\ProductosController@index');
+Route::get('admin/productos-all','Admin\ProductosController@getAll');
+
 
 Route::resource('admin/ofertas','Admin\OfertasController');
 
@@ -120,6 +123,9 @@ Route::get('admin/permisos/pag/{page}', 'Admin\PermisosController@index');
 Route::get('admin/permisos-all', 'Admin\PermisosController@getAll');
 
 Route::get('admin/permisos/rol/{idRol}','Admin\PermisosController@getByRol');
+
+Route::post('upload-file','Admin\ImagenesProductosController@uploadFile');
+Route::put('update-file/{id}','Admin\ImagenesProductosController@updateFile');
 
 
 //Rutas PayPal

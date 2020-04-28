@@ -26,6 +26,8 @@ import { FormCategoriasComponent } from './pages/categorias/form-categorias/form
 import { GridPermisosComponent } from './pages/permisos/grid-permisos/grid-permisos.component';
 import { GridMarcasComponent } from './pages/marcas/grid-marcas/grid-marcas.component';
 import { FormMarcasComponent } from './pages/marcas/form-marcas/form-marcas.component';
+import { GridProductosComponent } from './pages/productos/grid-productos/grid-productos.component';
+import { FormProductosComponent } from './pages/productos/form-productos/form-productos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -54,7 +56,9 @@ const routes: Routes = [
       { path: 'categorias/:id', component: FormCategoriasComponent},
       { path: 'permisos', component: GridPermisosComponent},
       { path: 'marcas', component: GridMarcasComponent},
-      { path: 'marcas/:id', component: FormMarcasComponent}
+      { path: 'marcas/:id', component: FormMarcasComponent},
+      { path: 'productos', component: GridProductosComponent},
+      { path: 'productos/:id', component: FormProductosComponent}
       
     ]
   },

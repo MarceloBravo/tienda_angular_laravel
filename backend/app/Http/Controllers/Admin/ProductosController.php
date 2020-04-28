@@ -4,22 +4,33 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\DB;
 use App\Producto;
 use App\ImagenesProducto;
 use Validator;
+use DB;
+use Carbon\Carbon;
 
 class ProductosController extends Controller
 {
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($page = 0)
     {
-        $productos = Producto::join("marcas","productos.marca_id","=","marcas.id")
+        $allReg = Producto::join("marcas","productos.marca_id","=","marcas.id")
                             ->join("categorias","productos.categoria_id","=","categorias.id")
                             ->select("productos.*","marcas.nombre as marca", "categorias.nombre as categoria")
+                            ->orderBy('productos.nombre','asc');
+
+
+        $CantReg = count($allReg->get());
+
+        $productos = $allReg->skip($this->rowsByPage * $page)
+                            ->take($this->rowsByPage)
                             ->get();
         
         foreach($productos as $item)
@@ -28,9 +39,21 @@ class ProductosController extends Controller
             $item->imagenes = $imagenes;
         }
 
-        return response()->json($productos->ToArray());
+        return response()->json(['data'=>$productos->ToArray(), 'rows' => $CantReg, 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
     }
 
+
+    public function getAll()
+    {
+        $productos = Producto::join('marcas','productos.marca_id','=','marcas.id')
+                            ->join('categorias','productos.categoria_id','=','catgorias.id')
+                            ->select('productos.*','marcas.nombre as marca','categorias.nombre as categoria')
+                            ->orderby('productos.nombre','asc')
+                            ->get();
+
+        return response()->json($productos->toArray());
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -52,14 +75,36 @@ class ProductosController extends Controller
         $validar = $this->validarCampos($request);
         if($validar->fails())
         {
-            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validar->errors()]);
+            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "tipo-mensaje" => "danger", "errores"=>$validar->errors()]);
         }
 
-        $producto = new Producto();
-        $result = $producto->fill($request->all())->save();
-        $mensaje = $result ? "El registro ha sido creado." : "Ocurrio un error al intentar ingresar el registro.";
-        $tipoMensaje = $result ? "success" : "danger";
-        $id = $result ? $producto->id : -1;
+        try{
+            $producto = new Producto();
+            DB::begiTransaction();
+            $result = $producto->fill($request->all())->save();
+            $mensaje = $result ? "El registro ha sido creado." : "Ocurrio un error al intentar ingresar el registro.";
+            $tipoMensaje = $result ? "success" : "danger";
+            $id = $result ? $producto->id : -1;
+            if($result && $request->file("file") !== null){
+                $resultImage = $this->_uploadFile($request, $id);
+                if($resultImage['tipo-mensaje'] == "danger"){
+                    $mensaje = $resultImage['mensaje'];
+                    $tipoMensaje = $resultImage['tipo-mensaje'];
+                    $result = false;
+                }
+            }
+            
+            if($result){
+                DB::rollback();
+            }else{
+                DB::commit();
+            }
+
+        }catch(Exception $ex){
+            $mensaje = "Ocurrio un error al intentar ingresar el registro: ".$ex->getMessage();
+            $tipoMensaje = "danger";
+            $id = -1;
+        }
 
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje, "id"=>$id]);
     }
@@ -105,16 +150,39 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return response()->json(['request' =>$request->input('file'), 'file' =>$request->file('file')]);
+        
         $validar = $this->validarCampos($request, $id);
         if($validar->fails())
         {
-            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "errores"=>$validar->errors()]);
+            return response()->json(["mensaje"=>"Datos incompletos o no válidos", "tipo-mensaje" => "danger", "errores"=>$validar->errors()]);
         }
 
         $producto = Producto::find($id);
-        $result = $producto->fill($request->all())->save();
-        $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
-        $tipoMensaje = $result ? "success" : "danger";
+        try{
+            DB::beginTransaction();            
+            $result = $producto->fill($request->all())->save();
+            $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
+            $tipoMensaje = $result ? "success" : "danger";
+            if($result && $request->input("file") !== null){
+                $resultImage = $this->updateFile($request, $id);
+                if($resultImage['tipo-mensaje'] == "danger"){
+                    $mensaje = $resultImage['mensaje'];
+                    $tipoMensaje = $resultImage['tipo-mensaje'];
+                    $result = false;
+                }
+            }
+            
+            if($result){
+                DB::rollback();
+            }else{
+                DB::commit();
+            }
+
+        }catch(Exception $ex){
+            $mensaje = "Ocurrio un error al intentar actualizar el registro: ".$ex->getMessage();
+            $tipoMensaje = "danger";
+        }
 
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
@@ -135,16 +203,16 @@ class ProductosController extends Controller
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $page = 0)
     {
         if(!isset($filtro) || $filtro == "")
         {
-            $productos = Producto::join("marcas","productos.marca_id","=","marcas.id")
+            $allReg = Producto::join("marcas","productos.marca_id","=","marcas.id")
                                 ->join("categorias","productos.categoria_id","=","categorias.id")
                                 ->select("productos.*","marcas.nombre as marca", "categorias.nombre as categoria")
-                                ->get();
+                                ->orderBy('productos.nombre','asc');
         }else{
-            $productos = Producto::join("marcas","productos.marca_id","=","marcas.id")
+            $allReg = Producto::join("marcas","productos.marca_id","=","marcas.id")
                                 ->join("categorias","productos.categoria_id","=","categorias.id")
                                 ->where("productos.nombre","Like","%".$filtro."%")
                                 ->orWhere("productos.descripcion","Like","%".$filtro."%")
@@ -155,15 +223,21 @@ class ProductosController extends Controller
                                 ->orWhere("marcas.nombre","Like","%".$filtro."%")
                                 ->orWhere("categorias.nombre","Like","%".$filtro."%")
                                 ->select("productos.*","marcas.nombre as marca","categorias.nombre as categoria")
-                                ->get();
+                                ->orderBy('productos','asc');
         }
+        
+        $cantReg = count($allReg->get());
 
+        $productos = $allReg->skip($this->rowsByPage * $page)
+                                ->take($this->rowsByPage)
+                                ->get();
         foreach($productos as $item)
         {
             $imagenes = ImagenesProducto::where("producto_id","=",$item->id)->get();
             $item->imagenes = $imagenes;
         }
-        return response()->json($productos->ToArray());
+        
+        return response()->json(['data'=>$productos->ToArray(), 'rows' => $CantReg, 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
     }
 
 
@@ -178,10 +252,7 @@ class ProductosController extends Controller
             "marca_id" => "required|exists:marcas,id",
             "precio" => "required|integer|min:0|max:9999999999",
             "precio_anterior" => "required|numeric|min:0|max:9999999999",
-            "visible" => "required|integer|min:0|max:1",
-            "color" => "required|min:0|max:20",
-            "nuevo" => "required|integer|min:0|max:1",
-            "oferta" => "required|integer|min:0|max:1"
+            "color" => "required|min:0|max:20"
         ];
 
         $messages = [
@@ -209,22 +280,73 @@ class ProductosController extends Controller
             'precio_anterior.min' => 'El precio anterior no puede ser un valor negativo',
             'precio_anterior.max' => 'El precio anterior ingresado es demasiado largo. Ingresa un precio menor',
 
-            'visible.integer' => 'El valor para el campo visible no es válido.',
-            'visible.min' => 'El valor para el campo visible no es válido. Ingrese 0 o 1',           
-            'visible.max' => 'El valor para el campo visible no es válido. Ingrese 0 o 1',           
             'color.required' => 'Debe ingresar el color del producto.',
             'color.min' => 'El nombre del color es muy corto. Ingrese un mínimo de 3 carácteres.',
             'color.max' => 'El nombre del color es muy largo, Ingrese un máximo de 20 carácteres.',
-            'nuevo.integer' => 'El valor para el campo nuevo no es válido.',            
-            'nuevo.min' => 'El valor para el campo nuevo no es válido. Ingrese 0 o 1',           
-            'nuevo.max' => 'El valor para el campo nuevo no es válido. Ingrese 0 o 1',           
-            'oferta.integer' => 'El valor para el campo oferta no es válido.',
-            'oferta.min' => 'El valor para el campo oferta no es válido. Ingrese 0 o 1',           
-            'oferta.max' => 'El valor para el campo oferta no es válido. Ingrese 0 o 1',            
-            //'imagen_predeterminada.required' => 'Debe seleccionar la imágen por defecto (o imágen principal) del producto.',
-            //'imagenes.one_of' => 'Debe seleccionar almenos una imágen para el producto.',
+            'nuevo.integer' => 'El valor para el campo nuevo no es válido.', 
         ];
 
         return Validator::make($request->all(), $rules, $messages);
+    }
+
+
+    
+
+    private function _uploadFile(Request $request, $id)
+    {
+        if($request->input("file") !== null){
+            $repositorio = new ImagenesProducto();
+            return $this->storeFile($repositorio, $request, $id);
+        }else{
+            return ['mensaje' => 'No se han recibido archivos', 'tipo-mensaje' => 'danger'];
+        }
+    }
+
+
+
+    //PUT
+    private function UpdateFile(Request $request, $id)
+    {
+        if($request->input("file") !== null){
+            $repositorio = ImagenesProducto::find($id);
+            return $this->storeFile($repositorio, $request, $id);
+        }else{
+            return ['mensaje' => 'No se han recibido archivos', 'tipo-mensaje' => 'danger'];
+        }
+    }
+
+
+    private function storeFile($repositorio, Request $request, $id){
+        try{
+            $archivo = $this->uploadFile($request->input('file'), 'docs', true);
+            
+            if($archivo != ""){
+                $repositorio->producto_id = $id;
+                $repositorio->nombre_archivo = $request->input("file")->getClientOriginalName();
+                $repositorio->url = $archivo;
+            
+                $res = $repositorio->save();
+                if($archivo != "")
+                $mensaje = $res ? "El archivo de imagen sido subido." : "Ocurrió un error al intentar subir el archivo.";
+                $tipoMensaje = $res ? "success" : "danger";
+
+                return ['mensaje' => $mensaje, 'tipo-mensaje' => $tipoMensaje];
+            }else{
+                return ['mensaje' => '', 'tipo-mensaje' => ''];
+            }
+
+        }catch(Exception $error){ 
+            return ['mensaje' => 'Ocurrió un error al intentar subir el archivo: ' .$error->getMessage(), 'tipo-mensaje' => 'danger'];
+        }
+    }
+
+    private function uploadFile($path, $destino = 'local', $sobreescribir = false){
+        $name = "";
+        if(!empty($path)){
+            $name = ($sobreescribir ? "" : Carbon::now()->second).$path->getClientOriginalName();
+            //$this->attributes['afiche'] = $name;    //Asigna automáticamente el nombre al cargar los datos en el controlador, con la función fill($request->all())
+            \Storage::disk($destino)->put($name, \File::get($path));            
+        }
+        return $name;   //En el caso de no cargar los datos con la función fill($request->all()), se debuelve el nombre generado para el archivo. 
     }
 }

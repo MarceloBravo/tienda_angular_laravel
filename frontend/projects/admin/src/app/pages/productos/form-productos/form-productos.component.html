@@ -1,0 +1,218 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Productos</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Productos</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Basic -->
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary col-md-7">Mantenedor de Productos</h6>
+                    <h6 class="m-0 font-weight-bold text-primary col-md-5" id="action-title">Nuevo</h6>
+                </div>
+
+                <form [formGroup]="form">
+                <ngb-tabset [destroyOnHide]="false">
+                    
+                        <ngb-tab >
+                            <ng-template ngbTabTitle>Producto</ng-template>
+                            <ng-template ngbTabContent>
+                                
+                                    <div class="card-body">
+                                        <!-- <form [formGroup]="form"> -->
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                                                <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre de la región.">
+                                                <div *ngIf="form.get('nombre').hasError('required') && form.get('nombre').dirty" class="errorFieldClass">En nombre de la región es obligatorio</div>
+                                                <div *ngIf="form.get('nombre').hasError('minlength') && form.get('nombre').dirty" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
+                                                <div *ngIf="form.get('nombre').hasError('maxlength') && form.get('nombre').dirty" class="errorFieldClass">El campo no debe sobrepasar los  50 carácteres</div>                            
+                                            </div>
+                
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="descripcion">Descripción</label>
+                                                <textarea id="descripcion" formControlName="descripcion" class="form-control col-md-5"></textarea>
+                                                <div *ngIf="form.get('descripcion').hasError('required') && form.get('descripcion').dirty" class="errorFieldClass">La descripción del producto es obligatoria.</div>
+                                                <div *ngIf="form.get('descripcion').hasError('minlength') && form.get('descripcion').dirty">La descripción debe tener almenos 10 carácteres.</div>
+                                                <div *ngIf="form.get('descripcion').hasError('maxlength') && form.get('descripcion').dirty">La descripción no debe sobrepasar los 500 carácteres.</div>
+                                            </div>
+                
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="resumen">Resumen</label>
+                                                <textarea id="resumen" formControlName="resumen" class="form-control col-md-5"></textarea>
+                                                <div *ngIf="form.get('resumen').hasError('required') && form.get('resumen').dirty" class="errorFieldClass">El resumen del producto es obligatoria.</div>
+                                                <div *ngIf="form.get('resumen').hasError('minlength') && form.get('resumen').dirty">El resumen debe tener almenos 10 carácteres.</div>
+                                                <div *ngIf="form.get('resumen').hasError('maxlength') && form.get('resumen').dirty">El resumen no debe sobrepasar los 500 carácteres.</div>
+                                            </div>
+                
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="slug">Slug</label>
+                                                <input type="text" id="slug" formControlName="slug" class="form-control col-md-5"/>
+                                                <div *ngIf="form.get('slug').hasError('required') && form.get('slug').dirty" class="errorFieldClass">El slug es obligatoria.</div>
+                                                <div *ngIf="form.get('slug').hasError('minlength') && form.get('slug').dirty">El slug debe tener almenos 3 carácteres.</div>
+                                                <div *ngIf="form.get('slug').hasError('maxlength') && form.get('slug').dirty">El slug no debe sobrepasar los 255 carácteres.</div>
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label" for="region_id">Marca</label>
+                                                <select id="marca_id" formControlName="marca_id" class="form-control col-md-3">
+                                                    <option *ngFor="let item of marcas" [value]=" item.id ">{{ item.nombre }}</option>
+                                                </select>
+                                                
+                                                <div *ngIf="form.get('marca_id').hasError('required') && form.get('marca_id').dirty" class="errorFieldClass">Debes seleccionar una región.</div>                            
+                                                <div *ngIf="form.get('marca_id').hasError('min') && form.get('marca_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>                            
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label" for="categoria_id">Categoría</label>
+                                                <select id="categoria_id" formControlName="categoria_id" class="form-control col-md-3">
+                                                    <option *ngFor="let item of categorias" [value]=" item.id ">{{ item.nombre }}</option>
+                                                </select>
+                                                
+                                                <div *ngIf="form.get('categoria_id').hasError('required') && form.get('categoria_id').dirty" class="errorFieldClass">Debes seleccionar una región.</div>                            
+                                                <div *ngIf="form.get('categoria_id').hasError('min') && form.get('categoria_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>                            
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="precio">Precio</label>
+                                                $<input id="precio" type="number" formControlName="precio" class="form-control col-md-2"/>
+                                                <div *ngIf="form.get('precio').hasError('required') && form.get('precio').dirty" class="errorFieldClass">El precio es obligatorio.</div>
+                                                <div *ngIf="form.get('precio').hasError('min') && form.get('precio').dirty">El precio debe ser un valor positivo.</div>
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="precio_anterior">Precio anterior</label>
+                                                $<input id="precio_anterior" type="number" formControlName="precio_anterior" class="form-control col-md-2"/>
+                                                <div *ngIf="form.get('precio_anterior').hasError('required') && form.get('precio_anterior').dirty" class="errorFieldClass">El precio anterior es obligatorio.</div>
+                                                <div *ngIf="form.get('precio_anterior').hasError('min') && form.get('precio_anterior').dirty">El precio anterior debe ser un valor positivo.</div>
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="porcentaje_descuento">Porcentaje de descuento</label>
+                                                <input id="porcentaje_descuento" type="number" formControlName="porcentaje_descuento" class="form-control col-md-2"/> %
+                                                <div *ngIf="form.get('porcentaje_descuento').hasError('required') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento es obligatorio.</div>
+                                                <div *ngIf="form.get('porcentaje_descuento').hasError('min') && form.get('porcentaje_descuento').dirty">El porcentaje de descuento debe ser un valor positivo.</div>
+                                                <div *ngIf="form.get('porcentaje_descuento').hasError('max') && form.get('porcentaje_descuento').dirty">El porcentaje de descuento no debe sobrepasar el 100%.</div>
+                                            </div>
+                
+                                            <div class="form-group row">
+                                                <label class="col-md-2 form-label" for="color">Color</label>
+                                                <input id="color" type="text" formControlName="color" class="form-control col-md-5"/>
+                                                <div *ngIf="form.get('color').hasError('required') && form.get('color').dirty" class="errorFieldClass">El color es obligatorio.</div>                            
+                                                <div *ngIf="form.get('color').hasError('maxlength') && form.get('color').dirty">El color no debe sobrepasar los 20 carácteres.</div>
+                                            </div>
+                                            
+                                            <div class="custom-control custom-checkbox row">
+                                                <div class="form-group row">
+                                                    <div class="col-md-4">
+                                                        <input type="checkbox" class="custom-control-input" id="oferta" formControlName="oferta">
+                                                        <label class="custom-control-label" for="oferta">Oferta</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="checkbox" class="custom-control-input" id="nuevo" formControlName="nuevo">
+                                                        <label class="custom-control-label" for="nuevo">Nuevo</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="checkbox" class="custom-control-input" id="visible" formControlName="visible">
+                                                        <label class="custom-control-label" for="visible">Visible</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- </form> -->
+                                    </div>
+                                
+                            </ng-template>
+                        </ngb-tab>
+                        
+                        <ngb-tab >
+                            <ng-template ngbTabTitle>Imágenes</ng-template>
+                            <ng-template ngbTabContent>          
+                                <div class="card-body">
+                                <!-- <form (ngSubmit)="uploadFile()" enctype="multipart/form-data">  -->
+                                    <p>
+                                        <label form="txt_fileName">Nombre del archivo</label>
+                                        <input type="text" id="file" />
+                                    </p>
+                                    <p>
+                                        <input type="file" formControlName="file" accept="image/*" (change)="seleccionarArchivo($event)"/>
+                                    </p>
+                                </div>
+                                    <!--<p>
+                                        <button type="submit" class="btn btn-primary">Subir archivo</button>
+                                    </p>
+                                -->
+                                <!-- </form> -->
+                                <!--
+                                <div style="text-align:center; margin-top: 100px; ">
+                                    <mat-card style="margin-top:10px; width: 50%;">  
+                                        <mat-card-content>  
+                                            <ul class="ul-upload-files">  
+                                                <li class="li-upload-files" *ngFor="let file of files">  
+                                                    <mat-progress-bar [value]="file.progress"></mat-progress-bar>  
+                                                    <span id="file-label">  
+                                                        
+                                                    </span>  
+                                                </li>  
+                                            </ul>  
+                                        </mat-card-content>  
+                                        <mat-card-actions>  
+                                            <button mat-button color="warn" (click)="onClick()">  
+                                                <mat-icon>file_upload</mat-icon>  <!-- Agreagar en index.html -> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  <!-- Necesario para los iconos de Material ui (Ej. Mantenedor de productos boton subir imágen ) 
+                                                Subir  
+                                            </button>  
+                                        </mat-card-actions>  
+                                    </mat-card>
+                                    
+                                    <input 
+                                        type="file" 
+                                        #fileUpload 
+                                        id="fileUpload" 
+                                        name="fileUpload" 
+                                        multiple="multiple" 
+                                        accept="image/*" 
+                                        style="display:none;" 
+                                    />
+                                </div>
+                                -->
+
+                            </ng-template>
+                        </ngb-tab>
+                    
+                    <!-- 
+                    <ngb-tab>
+                      <ng-template ngbTabTitle>Email Setting</ng-template>
+                      <ng-template ngbTabContent>
+                          <p>This is Email Setting</p>
+                      </ng-template>
+                    </ngb-tab>
+                    
+                    <ngb-tab title="Disabled" [disabled]="true">
+                      <ng-template ngbTabContent>
+                        <p>This is Disabled</p>
+                      </ng-template>
+                    </ngb-tab>
+                    -->
+                  </ngb-tabset>
+                </form>
+
+
+
+                
+                    
+                
+                <div class="div-buttons-group">
+                    <button class="btn btn-success" (click)="grabar()" [disabled]="form.invalid">Grabar</button>
+                    <span class="spn-separate"></span>
+                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="id == 0">Eliminar</button>
+                    <span class="spn-separate"></span>
+                    <a class="btn btn-primary" routerLink="/admin/productos">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
