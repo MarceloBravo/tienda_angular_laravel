@@ -14,7 +14,7 @@ import { MessagesComponent } from 'src/app/shared/messages/messages.component';
   styleUrls: ['./form-roles.component.css']
 })
 export class FormRolesComponent implements OnInit {
-  private id: number = null;
+  public id: number = null;
   private rol: Rol = new Rol();
   public formRol: FormGroup = new FormGroup({
     id: new FormControl(),

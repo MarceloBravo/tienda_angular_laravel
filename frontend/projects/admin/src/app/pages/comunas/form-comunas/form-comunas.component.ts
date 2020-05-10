@@ -20,7 +20,7 @@ import { Pais } from 'src/app/class/pais';
 })
 export class FormComunasComponent implements OnInit {
   public comuna: Comuna = new Comuna();
-  private id: number = 0;
+  public id: number = 0;
   public formComuna: FormGroup = new FormGroup({
     id: new FormControl(),
     nombre: new FormControl(),

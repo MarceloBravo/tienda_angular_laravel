@@ -15,6 +15,10 @@
     width: 45%;
 }
 
+.col-monto-resumen{
+    text-align: right !important;
+}
+
 .img-webpay{
     height: 100px !important;
 }

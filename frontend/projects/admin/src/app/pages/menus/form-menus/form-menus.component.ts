@@ -16,7 +16,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 export class FormMenusComponent implements OnInit {
   private menu: Menus = new Menus();
   public menus: Menus[];
-  private id: number = 0;
+  public id: number = 0;
   public pantallas: Pantalla[];
   formMenu: FormGroup = new FormGroup({
     id: new FormControl(),

@@ -23,7 +23,7 @@ import { UploadFilesService } from '../../../services/upload-files.service';
   styleUrls: ['./form-productos.component.css']
 })
 export class FormProductosComponent implements OnInit {
-  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = [];  
+  @ViewChild("fileUpload") fileUpload: ElementRef;files  = [];  
   public id: number;
   public producto: Producto = new Producto();
   public form: FormGroup = new FormGroup({
@@ -106,7 +106,8 @@ export class FormProductosComponent implements OnInit {
       created_at: [this.producto.created_at],
       updated_at: [this.producto.updated_at],
       deleted_at: [this.producto.deleted_at],
-      file: [this.producto.file]
+      file: [this.producto.file],
+      _method: null
       
     })
   }
@@ -181,6 +182,7 @@ export class FormProductosComponent implements OnInit {
 
   private actualizar(){
     console.log(this.form.value);
+
     this._productosService.update(this.id, this.form.value).subscribe(
       (res: any[])=>{
         this.handlerSuccess(res);

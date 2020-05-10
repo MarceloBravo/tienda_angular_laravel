@@ -27,7 +27,7 @@ export class RightSideCartComponent implements OnInit {
         for(let key in res){
           items.push(res[key]);
         }
-        //console.log(items);
+        console.log(items);
         this.carrito = items;
 
         //this.cantProductos = this._carritoService.cantProductos();

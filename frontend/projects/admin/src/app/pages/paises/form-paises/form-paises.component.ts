@@ -14,7 +14,7 @@ import { SpinnerService } from 'src/app/service/spinner.service';
 })
 export class FormPaisesComponent implements OnInit {
   public pais: Pais = new Pais();
-  private id: number = 0;
+  public id: number = 0;
   public formPais: FormGroup = new FormGroup({
     id: new FormControl(),
     nombre: new FormControl(),

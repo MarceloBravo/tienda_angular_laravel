@@ -12,7 +12,7 @@ import { SpinnerService } from 'src/app/service/spinner.service';
   styleUrls: ['./form-categorias.component.css']
 })
 export class FormCategoriasComponent implements OnInit {
-  private id: number = 0;
+  public id: number = 0;
   public categoria: Categoria = new Categoria();
   public formCategoria: FormGroup = new FormGroup({
     id: new FormControl(),

@@ -48,7 +48,7 @@
                 <div class="div-buttons-group">
                     <button class="btn btn-success" (click)="grabar()" [disabled]="!formRol.valid">Grabar</button>
                     <span class="spn-separate"></span>
-                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="formRol.id === null">Eliminar</button>
+                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="id === null">Eliminar</button>
                     <span class="spn-separate"></span>
                     <a class="btn btn-primary" routerLink="/admin/roles">Regresar</a>
                 </div>

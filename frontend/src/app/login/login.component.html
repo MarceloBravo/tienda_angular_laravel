@@ -93,8 +93,6 @@
                                 <select class="w-100 form-control"  id="ciudad_id" name="ciudad_id" [(ngModel)]="usuario.ciudad_id">
                                     <option *ngFor="let item of ciudades"  [value]="item.id">{{ item.nombre }}</option>
                                 </select>
-                            
-                                {{ ciudad_id }}
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="company">Nickname <span>*</span></label>

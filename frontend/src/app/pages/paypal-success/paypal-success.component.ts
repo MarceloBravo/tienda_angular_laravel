@@ -38,7 +38,7 @@ export class PaypalSuccessComponent implements OnInit {
     updated_at: null,
     deleted_at: null
   }
-  private empresa: empresaInterface = {  
+  public empresa: empresaInterface = {  
     id: null,
     nombre: null,
     direccion: null,
@@ -49,7 +49,11 @@ export class PaypalSuccessComponent implements OnInit {
     created_at: null,
     updated_at: null,
     deleted_at: null,
-    ciudad: null
+    ciudad: null,
+    comuna: null,
+    provincia: null,
+    region: null,
+    pais: null
   }
   
   constructor(
@@ -144,7 +148,8 @@ export class PaypalSuccessComponent implements OnInit {
     this._empresaService.getDefault().subscribe(
       (res: empresaInterface) => {        
         this.empresa = res;
-        this.ciudad = res.ciudad[0].nombre;
+        //this.ciudad = res.ciudad;
+
     },(error)=>{
       console.log(error);
       this._messagesService.mostrarMensaje(error.error.message, "success");

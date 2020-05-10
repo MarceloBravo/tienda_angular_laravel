@@ -30,6 +30,7 @@ export class LoginAdminService {
 
   public async autenticar(nickname: string, password: string, remember: boolean): Promise<string>{
     
+    console.log(nickname, password);
     var res =  await this.login(nickname, password).toPromise().then(
       (res: any)=>{      
         

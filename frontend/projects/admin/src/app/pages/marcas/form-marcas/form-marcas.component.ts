@@ -12,7 +12,7 @@ import { FormBuilder, Form, FormControl, FormGroup, Validators } from '@angular/
   styleUrls: ['./form-marcas.component.css']
 })
 export class FormMarcasComponent implements OnInit {
-  private id: number;
+  public id: number;
   public marcas: Marca =  new Marca();
   public form: FormGroup = new FormGroup({
     id: new FormControl(),

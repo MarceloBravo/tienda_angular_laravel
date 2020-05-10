@@ -21,7 +21,7 @@ import { PaisesService } from 'src/app/service/paises.service';
 })
 export class FormCiudadesComponent implements OnInit {
   public ciudad: Ciudad = new Ciudad();
-  private id: number = 0;
+  public id: number = 0;
   public formCiudad: FormGroup = new FormGroup({
     id: new FormControl(),
     nombre: new FormControl(),

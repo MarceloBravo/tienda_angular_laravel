@@ -1,5 +1,6 @@
 export interface usuariosInterfaces{
     id?: number,
+    rut: string,
     nombre: string,
     a_paterno: string,
     a_materno: string,

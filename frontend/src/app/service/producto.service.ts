@@ -12,7 +12,11 @@ export class ProductoService {
   constructor(private http:HttpClient) { }
 
   private getHeaders(){
-    return new HttpHeaders({'Accept':'application/json'});
+    return new HttpHeaders({'Content-Type':'application/json'});
+  }
+
+  private getHeaders2(){
+    return new HttpHeaders({'Content-Type': 'multipart/form-json'});  
   }
 
   get(page: number){
@@ -36,7 +40,7 @@ export class ProductoService {
   }
 
   update(id: number, producto: Producto){
-    return this.http.put(this.endPoint + 'admin/productos/' + id, producto, {headers: this.getHeaders()});
+    return this.http.post<any>(this.endPoint + 'admin/productos/' + id + '?_method=PUT', JSON.stringify(producto), {headers: this.getHeaders2()});
   }
 
   delete(id: number){

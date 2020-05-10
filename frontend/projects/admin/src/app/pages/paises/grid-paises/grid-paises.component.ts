@@ -102,7 +102,7 @@ export class GridPaisesComponent implements OnInit {
 
   }
 
-  paginaAnterior(){
+  paginarAnterior(){
     if(this.paginacion.pag > 0){
       this.paginacion.pag--;
       this.cambiarPagina();
@@ -114,7 +114,7 @@ export class GridPaisesComponent implements OnInit {
     this.cambiarPagina();
   }
 
-  paginaSiguiente(){
+  paginarSiguiente(){
     if(this.paginacion.pag < this.paginacion.totPag){
       this.paginacion.pag++;
       this.cambiarPagina();

@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="pais">Pais</label>
-                            <select id="pais_id" formControlName="pais_id" (change)="cargarRegiones()" class="form-control col-md-5">
+                            <select id="pais_id" formControlName="pais_id" (change)="cargarRegiones(null)" class="form-control col-md-5">
                                 <option *ngFor="let item of paises" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
                             <div *ngIf="formEmpresa.get('pais_id').hasError('required') && formEmpresa.get('pais_id').dirty" class="errorFieldClass">Debe seleccionar una pais</div>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="region">Región</label>
-                            <select id="region_id" formControlName="region_id" (change)="cargarProvincias()" class="form-control col-md-5">
+                            <select id="region_id" formControlName="region_id" (change)="cargarProvincias(null)" class="form-control col-md-5">
                                 <option *ngFor="let item of regiones" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
                             <div *ngIf="formEmpresa.get('region_id').hasError('required') && formEmpresa.get('region_id').dirty" class="errorFieldClass">Debe seleccionar una región</div>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="provincia_id">Provincia</label>
-                            <select id="provincia_id" formControlName="provincia_id" (change)="cargarComunas()" class="form-control col-md-5">
+                            <select id="provincia_id" formControlName="provincia_id" (change)="cargarComunas(null)" class="form-control col-md-5">
                                 <option *ngFor="let item of provincias" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
                             <div *ngIf="formEmpresa.get('provincia_id').hasError('required') && formEmpresa.get('provincia_id').dirty" class="errorFieldClass">Debe seleccionar una provincia</div>
@@ -92,7 +92,7 @@
                         
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="comuna_id">Comuna</label>
-                            <select id="comuna_id" formControlName="comuna_id" (change)="cargarCiudades()" class="form-control col-md-5">
+                            <select id="comuna_id" formControlName="comuna_id" (change)="cargarCiudades(null)" class="form-control col-md-5">
                                 <option *ngFor="let item of comunas" value="{{ item.id }}">{{ item.nombre }}</option>
                             </select>
                             <div *ngIf="formEmpresa.get('comuna_id').hasError('required') && formEmpresa.get('comuna_id').dirty" class="errorFieldClass">Debe seleccionar una comuna</div>

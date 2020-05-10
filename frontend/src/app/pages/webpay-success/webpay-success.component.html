@@ -39,7 +39,7 @@
                     <address>
                       <strong>{{ empresa.nombre }}</strong>
                       <br>{{ empresa.direccion }}
-                      <br>{{ empresa.ciudad[0].nombre }}
+                      <br>{{ empresa.ciudad }}
                       <br>Fono: {{ empresa.fono }}
                       <br>Email: {{ empresa.email }}
                     </address>
@@ -114,19 +114,19 @@
                         <tbody>
                           <tr>
                             <th style="width:50%">Subtotal:</th>
-                            <td>$ {{ this.datosVenta.subtotal.toLocaleString('es-ES') }}</td>
+                            <td class="col-monto-resumen">$ {{ this.datosVenta.subtotal.toLocaleString('es-ES') }}</td>
                           </tr>
                           <tr>
                             <th>Shipping:</th>
-                            <td>$ {{ this.datosVenta.shipping.toLocaleString('es-ES') }}</td>
+                            <td class="col-monto-resumen">$ {{ this.datosVenta.shipping.toLocaleString('es-ES') }}</td>
                           </tr>
                           <tr>
                             <th>Descuento</th>
-                            <td>$ {{ (this.datosVenta.subtotal - this.datosVenta.total).toLocaleString('es-ES') }} ({{ this.datosVenta.descuento.toLocaleString('es-ES') }}%)</td>
+                            <td class="col-monto-resumen">$ {{ (this.datosVenta.subtotal - this.datosVenta.total).toLocaleString('es-ES') }} ({{ this.datosVenta.descuento.toLocaleString('es-ES') }}%)</td>
                           </tr>
                           <tr>
                             <th>Total:</th>
-                            <td>$ {{ datosVenta.total.toLocaleString('es-ES') }}</td>
+                            <td class="col-monto-resumen">$ {{ datosVenta.total.toLocaleString('es-ES') }}</td>
                           </tr>
                         </tbody>
                       </table>

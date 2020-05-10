@@ -22,6 +22,10 @@
     left: calc(100% - 286px);
 }
 
+.col-monto-resumen{
+    text-align: right !important;
+}
+
 @media print{
     body{
         width: 100% !important;

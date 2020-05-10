@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
   styleUrls: ['./form-pantallas.component.css']
 })
 export class FormPantallasComponent implements OnInit {
-  private id: number = 0;
+  public id: number = 0;
   public pantalla: Pantalla = new Pantalla();
 
  formPantalla: FormGroup = new FormGroup({

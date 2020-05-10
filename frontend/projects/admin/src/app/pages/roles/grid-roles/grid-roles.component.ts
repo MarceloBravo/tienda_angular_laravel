@@ -100,7 +100,7 @@ export class GridRolesComponent implements OnInit {
     }
   }
 
-  public paginaAnterior(){
+  public paginarAnterior(){
     if(this.paginacion.pag > 0){
       this.paginacion.pag--;
       this.cambiarPagina();
@@ -112,7 +112,7 @@ export class GridRolesComponent implements OnInit {
     this.cambiarPagina();
   }
 
-  public paginaSiguiente(){
+  public paginarSiguiente(){
     if(this.paginacion.pag < this.paginacion.totPag){
       this.paginacion.pag++;
       this.cambiarPagina();

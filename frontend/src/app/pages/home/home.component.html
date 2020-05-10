@@ -1,4 +1,4 @@
-<!-- ##### Welcome Area Start ##### -->
+<!-- ##### Welcome Area Start ##### 
 <ngb-carousel 
   [showNavigationArrows]="false" 
   [showNavigationIndicators]="false" 
@@ -7,6 +7,16 @@
   [pauseOnHover]="false" 
   [wrap]="true" 
   [activeId]="slideTwo"
+>
+-->
+<!-- ##### Welcome Area Start ##### -->
+<ngb-carousel 
+  [showNavigationArrows]="false" 
+  [showNavigationIndicators]="false" 
+  interval="5000" 
+  [keyboard]="false"
+  [pauseOnHover]="false" 
+  [wrap]="true"   
 >
 
   <ng-template ngbSlide *ngFor="let imagen of imagenesSeccion1">

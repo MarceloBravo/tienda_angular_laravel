@@ -23,7 +23,7 @@ import { CustomValidators } from '../../../../../../../src/app/customValidators/
   styleUrls: ['./form-empresas.component.css']
 })
 export class FormEmpresasComponent implements OnInit {
-  private id: number = 0;
+  public id: number = 0;
   public empresa: Empresa = new Empresa();
   public formEmpresa: FormGroup = new FormGroup({
     id: new FormControl(),
@@ -145,7 +145,7 @@ export class FormEmpresasComponent implements OnInit {
   }
 
   cargarRegiones(idPais: number){
-    if(idPais === undefined){
+    if(idPais === undefined || idPais === undefined){
       var selectPais = <HTMLSelectElement>document.getElementById('pais_id');
       idPais = parseInt(selectPais.value);
     }
@@ -162,7 +162,7 @@ export class FormEmpresasComponent implements OnInit {
   }
 
   cargarProvincias(idRegion: number){
-    if(idRegion === undefined){
+    if(idRegion === undefined || idRegion === null){
       var selectRegion = <HTMLSelectElement>document.getElementById('region_id');
       idRegion = parseInt(selectRegion.value);
     }
@@ -179,7 +179,7 @@ export class FormEmpresasComponent implements OnInit {
   }
 
   cargarComunas(idProvincia: number){
-    if(idProvincia === undefined){
+    if(idProvincia === undefined || idProvincia === null){
       var selectProvincia = <HTMLSelectElement>document.getElementById('provincia_id');
       idProvincia = parseInt(selectProvincia.value);
     }
@@ -196,7 +196,7 @@ export class FormEmpresasComponent implements OnInit {
   }
 
   cargarCiudades(idComuna: number){
-    if(idComuna === undefined){
+    if(idComuna === undefined || idComuna === null){
       var selectComuna = <HTMLSelectElement>document.getElementById('comuna_id');
       idComuna = parseInt(selectComuna.value);
     }

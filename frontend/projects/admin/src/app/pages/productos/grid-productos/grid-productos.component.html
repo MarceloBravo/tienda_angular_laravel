@@ -61,9 +61,9 @@
                     </table>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginaAnterior()">Anterior</button></li>
+                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginarAnterior()">Anterior</button></li>
                             <li class="page-item" *ngFor="let pag of paginacion.arrPagesNumbers"><button class="page-link" (click)="paginar( (pag - 1) )">{{ pag }}</button></li>
-                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginaSiguiente()">Siguiente</button></li>
+                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginarSiguiente()">Siguiente</button></li>
                           </ul>
                     </nav>
                 </div>

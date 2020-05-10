@@ -15,7 +15,7 @@ import { RegionesService } from 'src/app/service/regiones.service';
 })
 export class FormProvinciasComponent implements OnInit {
   public regiones: Region[];
-  private id: number = 0;
+  public id: number = 0;
   private provincia: Provincia = new Provincia();
   public form: FormGroup =  new FormGroup({
     id: new FormControl(),
