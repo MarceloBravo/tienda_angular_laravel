@@ -170,6 +170,15 @@ class EmpresaController extends Controller
         return response()->json($empresa);
     }
 
+    
+    public function default()
+    {
+        $empresa = Empresa::where('predeterminada','=',true)->first();
+        $empresa->ciudad = $empresa->ciudad();
+
+        return response()->json($empresa);
+    }
+
 
     public function filtrar($texto, $page = 0)
     {

@@ -150,7 +150,8 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response()->json(['request' =>$request->input('file'), 'file' =>$request->file('file')]);
+        //dd($request->all(),$request->file('file'));
+        return response()->json(['all' =>$request->all(), 'file' =>$request->file('file')]);
         
         $validar = $this->validarCampos($request, $id);
         if($validar->fails())

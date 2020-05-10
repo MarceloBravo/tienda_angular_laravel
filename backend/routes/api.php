@@ -105,7 +105,7 @@ Route::resource('admin/empresas','Admin\EmpresaController');
 Route::get('admin/empresas/filtro/{ttexto}/{page}','Admin\EmpresaController@filtrar');
 Route::get('admin/empresas/pag/{page}','Admin\EmpresaController@index');
 Route::get('admin/empresas-all', 'Admin\EmpresaController@getAll');
-Route::get('empresa_default','Admin\EmpresaController@first');
+Route::get('admin/empresa_default','Admin\EmpresaController@default');
 
 Route::resource('admin/menus', 'Admin\MenusController');
 Route::get('admin/menus/filtrar/{id}/{pag}', 'Admin\MenusController@filtrar');
