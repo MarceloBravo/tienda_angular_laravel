@@ -18,6 +18,7 @@ autenticado: Boolean = false;
     token: null,
     remember: false
   };
+  public URL = '';
 
   constructor (
     private _loginService: LoginAdminService,
@@ -25,7 +26,8 @@ autenticado: Boolean = false;
     private router: Router
   ){
     //console.log("iniciando...");
-    console.log(this.router);
+    this.URL = this.router.url;
+    //console.log(this.router);
     this.checkUserDataLocalStorage();
   }
 
