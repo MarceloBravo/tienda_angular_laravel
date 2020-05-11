@@ -87,10 +87,21 @@ export class CompraComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private router: Router
     ) { 
+      this._messageService.ocultarMensaje();
+      this.ocultarCarrito();
       this.cargarDatos();       
     }
 
   ngOnInit() {
+  }
+
+  private ocultarCarrito()
+  {
+    var cart = <HTMLDivElement>document.getElementById('right-side-cart-area');
+    for(var x = 0;x <= 800;x+=5)
+    {
+      cart.style.right = (x*-1).toString() + "px";      
+    }
   }
 
 
@@ -248,7 +259,7 @@ export class CompraComponent implements OnInit {
   //https://www.itsolutionstuff.com/post/paypal-integration-in-laravel-6-exampleexample.html Implementar PayPal
   private pagoPaypal(){
     if(confirm("¿Desea concretar el pago con PayPal?")){ 
-      this._ordenesService.setTipoDocumento("F"); //"F" => La aplicación momentaneamente  sólo emite Facturas 
+      this._ordenesService.setTipoDocumento("F");               //"F" => La aplicación momentaneamente  sólo emite Facturas 
       var codOrden = Math.floor(Math.random() * 100000) + 1000; //Genera un nùmero aleatorio entre 1000 y 100000 el cual es utilizasdo còmo còdigo de orden de compra.
       this._ordenesService.setCodigoOrden(codOrden.toString()); //Adjunta el código de Orden provisorio a los datos de la venta
 
@@ -271,7 +282,7 @@ export class CompraComponent implements OnInit {
           this.document.location.href = res['RESPONSE']['paypal_link']; //Redirecciona a la página de PayPal para concretar la venta
         },(error)=>{
           console.log(error);
-          this._messageService.showModalMessage("Error",error.error.message);
+          this._messageService.showModalMessage("Error",error.message);
         })
     }
   }
@@ -303,7 +314,7 @@ export class CompraComponent implements OnInit {
           form.submit();
       },(error)=>{
         console.log(error);
-        this._messageService.showModalMessage("Error",error.error.message);
+        this._messageService.showModalMessage("Error",error.status === 500 ? 'No fue posible conectar con la plataforma de pago. Intentalo más tarde.' : error.error.message);
       });
    } 
   }
