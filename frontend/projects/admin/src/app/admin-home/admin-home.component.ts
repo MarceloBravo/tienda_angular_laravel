@@ -25,9 +25,7 @@ autenticado: Boolean = false;
     private _mensajeService: MessagesService,
     private router: Router
   ){
-    //console.log("iniciando...");
     this.URL = this.router.url;
-    //console.log(this.router);
     this.checkUserDataLocalStorage();
   }
 
