@@ -9,17 +9,47 @@ use Validator;
 
 class PantallasController extends Controller
 {
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pag=0)
     {
-        $pantallas = Pantalla::all();
+        $allPantallas = Pantalla::leftJoin('menus','pantallas.id','=','menus.pantalla_id')
+                            ->select('pantallas.*',
+                            'menus.nombre as menu',
+                            'menus.icono_fa_class',
+                            'menus.menu_padre_id',
+                            'menus.posicion',
+                            'menus.url')
+                            ->orderBy('menus.nombre');
+                            
+        $pantallas = $allPantallas
+                    ->skip($pag * $this->rowsByPage)
+                    ->take($this->rowsByPage)
+                    ->get();
+
+        return response()->json(['data'=>$pantallas->toArray(), 'rows'=>count($allPantallas->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
+    }
+
+
+
+    public function getAll($pag=0)
+    {
+        $pantallas = Pantalla::leftJoin('menus','pantallas.id','=','menus.pantalla_id')
+                            ->select('pantallas.*',
+                            'menus.nombre as menu',
+                            'menus.icono_fa_class',
+                            'menus.menu_padre_id',
+                            'menus.posicion',
+                            'menus.url')
+                            ->get();
 
         return response()->json($pantallas->ToArray());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +58,7 @@ class PantallasController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -117,24 +147,36 @@ class PantallasController extends Controller
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $pag = 0)
     {
         if(!isset($filtro))
         {
-            $pantallas = Pantalla::all();
+            $allPantallas = Pantalla::leftJoin('menus','pantallas.id','=','menus.pantalla_id')
+                            ->select('pantallas.*',
+                            'menus.nombre as menu',
+                            'menus.icono_fa_class',
+                            'menus.menu_padre_id',
+                            'menus.posicion',
+                            'menus.url')
+                            ->orderBy('menus.nombre');
         }else{
-            $pantallas = Pantalla::leftJoin("menus","menus.pantalla_id","=","pantallas.id")
+            $allPantallas = Pantalla::leftJoin("menus","menus.pantalla_id","=","pantallas.id")
                                 ->where("pantallas.nombre","Like","%".$filtro."%")
                                 ->orWhere("pantallas.tabla","Like","%".$filtro."%")
                                 ->orWhere("menus.nombre","Like","%".$filtro."%")
                                 ->orWhere("menus.icono_fa_class","Like","%".$filtro."%")
                                 ->orWhere("menus.posicion","Like","%".$filtro."%")
                                 ->orWhere("menus.url","Like","%".$filtro."%")
-                                ->select("pantallas.*","menus.nombre as menu", "menus.url")                                                                
-                                ->get();
+                                ->select("pantallas.*","menus.nombre as menu", "menus.url")
+                                ->orderBy("menus.nombre");
         }
+        $pantallas = $allPantallas
+                    ->skip($pag * $this->rowsByPage)
+                    ->take($this->rowsByPage)
+                    ->get();
 
-        return response()->json($pantallas->ToArray());
+        return response()->json(['data'=>$pantallas->toArray(), 'rows'=>count($allPantallas->get()),'page'=>$pag,'rowsByPage'=>$this->rowsByPage]);
+        //return response()->json($pantallas->ToArray());
     }
 
     private function validaDatos(Request $request, $id)

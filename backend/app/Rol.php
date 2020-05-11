@@ -17,4 +17,11 @@ class Rol extends Model
     {
         return $this->hasMany('App\User','rol_id','id')->get();
     }
+
+    public function permisos()
+    {
+        return $this->hasMany('App\Permiso','rol_id','id')->get();
+    }
+    
+    
 }

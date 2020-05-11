@@ -22,7 +22,8 @@ import { CompraComponent } from './pages/compra/compra.component';
 import { PaypalSuccessComponent } from './pages/paypal-success/paypal-success.component';
 import { PaypalCancelComponent } from './pages/paypal-cancel/paypal-cancel.component';
 import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.component';
-
+import { LoadingComponent } from './shared/loading/loading.component';
+//import { MarcasComponent } from './service/marcas/marcas.component';
 
 @NgModule({
   declarations: [
@@ -39,11 +40,12 @@ import { WebpaySuccessComponent } from './pages/webpay-success/webpay-success.co
     PaypalSuccessComponent,
     PaypalCancelComponent,
     WebpaySuccessComponent,
+    LoadingComponent,
+    //MarcasComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    //NgModule
+    AppRoutingModule, //Necesario para poder utilizar la etiqueta <router-outlet></router-outlet>
     NgbModule,
     HttpClientModule,
 

@@ -14,4 +14,8 @@ class Pantalla extends Model
     protected $fillable = [
         'nombre', 'tabla', 'permite_crear', 'permite_editar', 'permite_eliminar'
     ];
+
+    public function menu(){
+        return $this->hasMany('App\Menu','pantalla_id','id')->get();
+    }
 }

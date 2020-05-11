@@ -8,19 +8,33 @@ use App\Marca;
 use Validator;
 
 class MarcasController extends Controller
-{
+{   
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($page = 0)
+    {
+        $allRecords = Marca::orderBy('nombre','asc');
+
+        $totFilas = count($allRecords->get());
+
+        $marcas = $allRecords->skip($this->rowsByPage * $page)
+                            ->take($this->rowsByPage)
+                            ->get();
+
+        return response()->json(['data'=>$marcas->ToArray(), 'rows'=> $totFilas, 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
+    }
+
+
+    public function getAll()
     {
         $marcas = Marca::all();
 
-        return response()->json($marcas->ToArray());
+        return response()->json($marcas->toArray());
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -117,18 +131,23 @@ class MarcasController extends Controller
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $page = 0)
     {
         if(!isset($filtro) || $filtro == "")
         {
-            $marcas = Marca::all();
+            $allRecord = Marca::orderBy('nombre','asc');
         }else{
-            $marcas = Marca::where("nombre","Like","%".$filtro."%")
-                            ->select("marcas.*")
-                            ->get();
+            $allRecord = Marca::where("nombre","Like","%".$filtro."%")
+                            ->select("marcas.*");
         }
 
-        return response()->json($marcas->ToArray());
+        $totFilas = count($allRecord->get());
+
+        $marcas = $allRecord->skip($this->rowsByPage * $page)
+                            ->take($this->rowsByPage)
+                            ->get();
+
+        return response()->json(['data'=>$marcas->ToArray(), 'rows'=> $totFilas, 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
     }
 
     protected function validaDatos(Request $request, $id)

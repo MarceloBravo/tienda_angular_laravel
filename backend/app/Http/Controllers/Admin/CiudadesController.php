@@ -9,23 +9,50 @@ use Validator;
 
 class CiudadesController extends Controller
 {
+    private $rowsByPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($page = 0)
     {
+        $allCiudades = Ciudad::join("comunas", "ciudades.comuna_id","=","comunas.id")
+                            ->join("provincias", "comunas.provincia_id", "=", "provincias.id")
+                            ->join("regiones", "provincias.region_id", "=", "regiones.id")
+                            ->join("paises", "regiones.pais_id", "=", "paises.id")                            
+                            ->select(
+                                "ciudades.*",
+                                "comunas.nombre as comuna",
+                                "provincias.nombre as provincia",
+                                "regiones.nombre as region",
+                                "paises.nombre as pais"
+                                )
+                            ->orderBy('paises.nombre','asc')
+                            ->orderBy('regiones.nombre','asc')
+                            ->orderBy('provincias.nombre','asc')
+                            ->orderBy('ciudades.nombre','asc');
+        $totFilas = count($allCiudades->get());
+
+        $ciudades = $allCiudades->skip($this->rowsByPage * $page)
+                                ->take($this->rowsByPage)
+                                ->get();
+
+        return response()->json(['data'=>$ciudades->ToArray(), 'rows' => $totFilas, 'page'=> $page, 'rowsByPage' => $this->rowsByPage ]);
+    }
+
+
+    public function getAll(){
         $ciudades = Ciudad::join("comunas", "ciudades.comuna_id","=","comunas.id")
                             ->join("provincias", "comunas.provincia_id", "=", "provincias.id")
                             ->join("regiones", "provincias.region_id", "=", "regiones.id")
                             ->join("paises", "regiones.pais_id", "=", "paises.id")                            
                             ->select("ciudades.*","comunas.nombre as comuna","provincias.nombre as provincia","regiones.nombre as region","paises.nombre as pais")
                             ->get();
-        
-        return response()->json($ciudades->ToArray());
-    }
 
+    
+        return response()->json($ciudades->toArray());
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -73,7 +100,12 @@ class CiudadesController extends Controller
                     ->join('provincias','comunas.provincia_id','=','provincias.id')
                     ->join('regiones','provincias.region_id','=','regiones.id')
                     ->join('paises','regiones.pais_id','=','paises.id')
-                    ->select('ciudades.*','provincias.id as provincia_id','regiones.id as region_id','paises.id as pais_id')
+                    ->select(
+                        'ciudades.*',
+                        'provincias.id as provincia_id',
+                        'regiones.id as region_id',
+                        'paises.id as pais_id'
+                    )
                     ->find($id);
 
         return response()->json($ciudad);
@@ -130,26 +162,29 @@ class CiudadesController extends Controller
         return response()->json(["mensaje"=>$mensaje, "tipo-mensaje"=>$tipoMensaje]);
     }
 
-    public function filtrar($filtro)
+    public function filtrar($filtro, $page = 0)
     {
-        if(!isset($filtro) || $filtro == "")
+        $allCities = Ciudad::join("comunas", "ciudades.comuna_id","=","comunas.id")
+                                ->join("provincias", "comunas.provincia_id", "=", "provincias.id")
+                                ->join("regiones", "provincias.region_id", "=", "regiones.id")
+                                ->join("paises", "regiones.pais_id", "=", "paises.id")
+                                ->select("ciudades.*","comunas.nombre as comuna","provincias.nombre as provincia","regiones.nombre as region","paises.nombre as pais");
+                                
+
+        if(isset($filtro) && $filtro != "")
         {
-            $ciudades = Ciudad::all();
-        }else{
-            $ciudades = Ciudad::join("comunas", "ciudades.comuna_id","=","comunas.id")
-                            ->join("provincias", "comunas.provincia_id", "=", "provincias.id")
-                            ->join("regiones", "provincias.region_id", "=", "regiones.id")
-                            ->join("paises", "regiones.pais_id", "=", "paises.id")
-                            ->where("ciudades.nombre", "Like", "%".$filtro."%")
-                            ->orWhere("comunas.nombre", "Like", "%".$filtro."%")
-                            ->orWhere("provincias.nombre", "Like", "%".$filtro."%")
-                            ->orWhere("regiones.nombre", "Like", "%".$filtro."%")
-                            ->orWhere("paises.nombre", "Like", "%".$filtro."%")
-                            ->select("ciudades.*","comunas.nombre as comuna","provincias.nombre as provincia","regiones.nombre as region","paises.nombre as pais")
-                            ->get();
+            $ciudades = $allCities->where("ciudades.nombre", "Like", "%".$filtro."%")
+                                ->orWhere("comunas.nombre", "Like", "%".$filtro."%")
+                                ->orWhere("provincias.nombre", "Like", "%".$filtro."%")
+                                ->orWhere("regiones.nombre", "Like", "%".$filtro."%")
+                                ->orWhere("paises.nombre", "Like", "%".$filtro."%");
         }
 
-        return response()->json($ciudades);
+        $ciudades = $allCities->skip($this->rowsByPage * $page)
+                                ->take($this->rowsByPage)
+                                ->get();
+
+        return response()->json(['data' => $ciudades->ToArray(), 'rows' => count($allCities->get()), 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
     }
 
     public function ciudadesComuna($idComuna){

@@ -1,0 +1,25 @@
+#div-loading-spinner, .back-ground-modal{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;    
+}
+
+#div-loading-spinner{
+    display: none;
+}
+
+.back-ground-modal{
+    background-color:#0000004a;
+}
+
+.spinner-border {
+    width: 5rem !important;
+    height: 5rem !important;
+    top: 36%;
+    position: absolute;
+    left: 45%;
+    border-width: thick;
+}

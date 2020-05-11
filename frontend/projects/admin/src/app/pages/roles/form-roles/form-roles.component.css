@@ -1,0 +1,20 @@
+#action-title{
+    text-align: right;
+}
+
+.errorFieldClass{
+    color: red;
+}
+
+.div-buttons-group{
+    text-align: right;
+    padding: 10px;
+}
+
+.btn{
+    color: white !important;
+}
+
+.spn-separate{
+    padding: 5px;
+}

@@ -1,0 +1,81 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Empresas</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Empresas</li>
+        </ol>
+    </div>
+
+    <!-- Row -->
+    <div class="row">
+        <!-- Datatables -->
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Listado de Empresas</h6>
+                </div>
+                <div class="row div-btn-nuevo">
+                    <div class="col-md-6">
+                        <a routerLink="/admin/empresas/0" class="btn btn-button btn-primary">Nuevo</a>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="filtro" class="from-control col-md-12" value=""
+                            placeholder="Ingresa el texto a buscar" (change)="filtrar()" />
+                    </div>
+                </div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush" id="dataTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Casa matriz</th>
+                                <th>Dirección</th>
+                                <th>Ciudad</th>
+                                <th>Región</th>
+                                <th>Pais</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Casa matriz</th>
+                                <th>Dirección</th>
+                                <th>Ciudad</th>
+                                <th>Región</th>
+                                <th>Pais</th>
+                                <th>Acción</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr *ngFor="let item of empresas">
+                                <td>{{ item.nombre}}</td>
+                                <td>{{ item.predeterminada ? 'Si' : 'No' }}</td>
+                                <td>{{ item.direccion}}</td>
+                                <td>{{ item.ciudad}}</td>
+                                <td>{{ item.region}}</td>
+                                <td>{{ item.pais}}</td>
+                                <td class="col-action">
+                                    <a class="btn btn-success btn-sm" routerLink="/admin/empresas/{{ item.id }}">Editar</a>
+                                    <button class="btn btn-danger btn-sm" 
+                                        (click)="eliminar( item.id )">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginarAnterior()">Anterior</button></li>
+                            <li class="page-item" *ngFor="let pag of paginacion.arrPagesNumbers"><button class="page-link" (click)="paginar( (pag - 1) )">{{ pag }}</button></li>
+                            <li class="page-item" *ngIf="paginacion.arrPagesNumbers.length > 1"><button class="page-link" (click)="paginarSiguiente()">Siguiente</button></li>
+                          </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

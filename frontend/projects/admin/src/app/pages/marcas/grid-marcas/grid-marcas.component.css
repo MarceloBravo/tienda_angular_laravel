@@ -1,0 +1,16 @@
+
+.div-btn-nuevo{
+    padding: 0px 10px;
+}
+
+.col-accion{
+    width: 175px;
+}
+
+#filtro{
+    border-color: #babbbf;
+    border-width: thin;
+    border-radius: 5px;
+    padding: 5px;
+    border-style: solid;
+}

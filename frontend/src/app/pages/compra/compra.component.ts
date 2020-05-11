@@ -67,10 +67,10 @@ export class CompraComponent implements OnInit {
   public provincias: Provincia[];
   public comunas: Comuna[];
   public ciudades: Ciudad[];
-  private ciudad: Ciudad = new Ciudad();
-  private carrito: ItemCarrito[]; //Array con productos que contendrá el carrito, es utilizado para mostrar los productos en el DOM
-  private total: number;
-  private tipoPago: number = 1;
+  public ciudad: Ciudad = new Ciudad();
+  public carrito: ItemCarrito[]; //Array con productos que contendrá el carrito, es utilizado para mostrar los productos en el DOM
+  public total: number;
+  public tipoPago: number = 1;
 
   constructor(
     private _loginService: LoginService,
@@ -95,7 +95,7 @@ export class CompraComponent implements OnInit {
 
 
   private async cargarDatos(){
-    this.getDatosUsuario();
+    this.getDatosUsuario();    
     this._ordenesService.setDatosCliente(this.usuario); //_ordenesService almacena todos los datos de kla orden (datos del cliente, contenido del carrito, número de orden de pedido, etc.)
     await this.obtenerCiudad(this.usuario.data.usuario.ciudad_id); 
     this.cargarPaises();
@@ -109,11 +109,13 @@ export class CompraComponent implements OnInit {
 
 
   private async obtenerCiudad(id: number){    
-    await this._ciudadesService.get(id).toPromise().then((res: Ciudad)=>{
-      this.ciudad = res;
-    },(error)=>{
-      this._messageService.showModalMessage('Error', error);
-    })
+    await this._ciudadesService.find(id).toPromise().then(
+      (res: Ciudad)=>{
+        console.log(res);
+        this.ciudad = res;
+      },(error)=>{
+        this._messageService.showModalMessage('Error', error);
+      })
   }
 
   private getDatosUsuario(){
@@ -132,7 +134,10 @@ export class CompraComponent implements OnInit {
         pais.nombre = resp.length > 0 ? "-- Seleccione --" : "-- No se encontraron registros --";
         resp.push(pais);
         this.paises = resp.sort((x, y) => x.id - y.id);
-    })
+    },(error)=>{
+      console.log(error);
+      this._messageService.mostrarMensaje(error.message, 'danger');
+    });
   }
 
   
@@ -227,7 +232,7 @@ export class CompraComponent implements OnInit {
     this.tipoPago = tipo;
   }
 
-  private efectuarPago(){
+  public efectuarPago(){
     switch(this.tipoPago){
       case 1:
         this.pagoWebPay();

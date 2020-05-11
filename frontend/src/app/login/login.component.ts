@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   
   usuario: usuariosInterfaces = {
     id: null,
+    rut: null,
     nombre: null,
     a_paterno: null,
     a_materno: null,
@@ -207,7 +208,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  public cargarCiudades(idComuna: number){
+  public cargarCiudades(){    
     var comuna = <HTMLSelectElement>document.getElementById('comuna');
     this._ciudadesService.obtenerPorComuna(parseInt(comuna.value)).subscribe(
       (res: Ciudad[])=>{

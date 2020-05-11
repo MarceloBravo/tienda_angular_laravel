@@ -11,5 +11,15 @@ export interface empresaInterface{
     created_at: Date;
     updated_at: Date;
     deleted_at?: Date;
-    ciudad: Ciudad[];
+    
+    ciudad: string;
+
+    comuna_id?: number;
+    comuna: string;
+    provincia_id?: number;
+    provincia: string;
+    region_id?: number;
+    region: string;
+    pais_id?: number
+    pais: string;
 }

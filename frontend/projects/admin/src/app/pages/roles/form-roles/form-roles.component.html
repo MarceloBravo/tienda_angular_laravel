@@ -1,0 +1,59 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Roles</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Roles</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Basic -->
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary col-md-7">Mantenedor de roles</h6>
+                    <h6 class="m-0 font-weight-bold text-primary col-md-5" id="action-title">Nuevo</h6>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="formRol">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                            <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del rol.">
+                            <div *ngIf="formRol.get('nombre').hasError('required') && formRol.get('nombre').dirty" class="errorFieldClass">El nombre es obligatorio</div>
+                            <div *ngIf="formRol.get('nombre').hasError('minlength') && formRol.get('nombre').dirty" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
+                            <div *ngIf="formRol.get('nombre').hasError('maxlength') && formRol.get('nombre').dirty" class="errorFieldClass">Debe ingresar un máximo de 50 carácteres.</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="descripcion">Descripción</label>
+                            <input id="tabla" formControlName="descripcion" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa una descripción para el rol.">
+                            
+                            <div *ngIf="formRol.get('descripcion').hasError('required') && formRol.get('descripcion').dirty" class="errorFieldClass">El nombre de la tabla asociada es obligatorio</div>
+                            <div *ngIf="formRol.get('descripcion').hasError('minlength') && formRol.get('descripcion').dirty" class="errorFieldClass">Debe ingresar un minimo 10 carácteres</div>
+                            <div *ngIf="formRol.get('descripcion').hasError('maxlength') && formRol.get('descripcion').dirty" class="errorFieldClass">Debe ingresar un máximo de 255 carácteres.</div>
+                        
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="default" formControlName="default">
+                              <label class="custom-control-label" for="default">Predeterminado</label>
+                              <span *ngIf="formRol.get('default').hasError('required')" class="errorFieldClass">El campo es obligatorio</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="div-buttons-group">
+                    <button class="btn btn-success" (click)="grabar()" [disabled]="!formRol.valid">Grabar</button>
+                    <span class="spn-separate"></span>
+                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="id === null">Eliminar</button>
+                    <span class="spn-separate"></span>
+                    <a class="btn btn-primary" routerLink="/admin/roles">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

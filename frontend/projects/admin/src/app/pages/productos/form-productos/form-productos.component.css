@@ -1,0 +1,24 @@
+#action-title{
+    text-align: right;
+}
+
+.errorFieldClass{
+    color: red;
+}
+
+.div-buttons-group{
+    text-align: right;
+    padding: 10px;
+}
+
+.spn-separate{
+    padding: 5px;
+}
+
+
+.ul-upload-files,  
+.li-upload-files{  
+      margin: 0;  
+      padding: 0;  
+      list-style: none;  
+}

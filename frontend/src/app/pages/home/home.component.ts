@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit {
 
   private async  buscarProducto(id: number){
     var producto: ProductoInterface;
-    await this._productoService.get(id).toPromise().then(
+    await this._productoService.find(id).toPromise().then(
       (res :ProductoInterface) => {
         producto = res;
     });

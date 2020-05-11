@@ -15,15 +15,15 @@ class Ciudad extends Model
 
     public function comuna()
     {
-        return $this->belongsTo('App\Comuna')->get();
+        return $this->belongsTo('App\Comuna')->get();   //Muchos a uno
     }
 
     public function usuarios()
     {
-        return $this->hasMany('App\User','ciudad_id','id')->get();
+        return $this->hasMany('App\User','ciudad_id','id')->get();  //Uno a muchos
     }
 
     public function empresa(){
-        return $this->hasMany('App\Empresa','ciudad_id','id')->get();
+        return $this->hasMany('App\Empresa','ciudad_id','id')->get();   //Uno a muchos
     }
 }
