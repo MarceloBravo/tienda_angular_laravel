@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                       <!--
                         <div class="card">
                             <div class="card-header" role="tab" id="headingFour">
                                 <h6 class="mb-0">
@@ -142,7 +142,14 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
+
+                    <div>
+                        <h4 id="forma-pago-seleccionada">La forma de pago seleccionada es {{ tipoPago === 1 ? 'WebPay' : 'Paypal'}}</h4>
+                    </div>
+
+                    <br/>
 
                     <button class="btn essence-btn" (click)="efectuarPago()">Concretar la compra</button>
                 </div>

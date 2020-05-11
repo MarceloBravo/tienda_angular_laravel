@@ -57,7 +57,8 @@ class PaypalController extends Controller
      */
     public function cancel()
     {
-        return response()->json('Your payment is canceled. You can create cancel page here.');
+        //return response()->json(['mensaje' => 'El proceso de compra ha sido cancelado.','tipo-mensaje' => 'danger']);
+        return redirect()->away('http://127.0.0.1:4200/paypal/cancel');
     }
   
     /**

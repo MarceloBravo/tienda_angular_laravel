@@ -2,14 +2,9 @@ Instalar laravel
 
 Crear una base de datos en Mysql con el nombre "tiendaApi" 
 
-
-(*El directorio "tienda_angular_laravel" corresponde a la carpeta raiz*)
-
-
+(El directorio "tienda_angular_laravel" corresponde a la carpeta raiz)
 En la aplicación, configurar usuario y contraseña en el archivo "tienda_angular_laravel/backend/config/database.php"
-
 Ej.:
-```PHP
 	'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -29,55 +24,37 @@ Ej.:
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-```
-
-
-__Obs.__: La línea con la configuración __'engine' => 'InnoDB ROW_FORMAT=DYNAMIC'__, es importante ya que de no configurarla podrían fallar las migraciones
-
-
+		
+Obs.: La línea con la configuración 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC', es importante ya que de no configurarla podrían fallar las migraciones
 
 Configurar datos de conexión usuario y contraseña en el archivo "tienda_angular_laravel/.env"
 
 Ej.: 
-```JAVASCRIPT
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=tiendaApi
 DB_USERNAME=nombre_usuario
 DB_PASSWORD=contraseña_base_de_datos
-```
 
-
-**Desde consola Entrar al directorio backend (cd backend)**
-
+Desde consola Entrar al directorio backend (cd backend)
 En la carpeta backend correr las migraciones con el comando "php artisan migrate" para crear las tablas de la base de datos
-
 En el archivo "tienda_angular_laravel/backend/seeds/DatabaseSeeders.php" descomentar todas las líneas contenidas en la función run() que llaman a los seeders (Líneas desde la 14 hasta la 28) 
-
 En consola Entrar al directorio backend y correr el comando "php artisan db:seed" para sembrar los datos de prueba en la base de datos
 
-
-
-**Para correr el servicio Api (Backend)**
-
+Para correr el servicio Api (Backend)
 En consola desde el directorio backend levantar el servidor de API con el comando "php artisan serve"
 
-
-**Para correr la aplicación (Frontend)**
-
+Para correr la aplicación (Frontend)
 Correr Front Office (Tienda en línea)
-
 Abrir una nueva consola de simbolo de sistemas e ingresar al directorio frontend (cd frontend)
-
 Correr el comando "ng serve -o"	(Se levantara la aplicación en el puerto 4200)
 
-
-**Correr Back Office (Administración de la tienda)**
+Correr Back Office (Administración de la tienda)
 Abrir una nueva consola de simbolo de sistemas e ingrear al directorio frontend (cd frontend)
 Correr el comando "ng serve --project admin -o --port 5000" (Se levantara la aplicación en el puerto 5000)
 
-**Credenciales para para el backoffice (Solo en caso de haber corrido los seeders)**
+Credenciales para para el backoffice (Solo en caso de haber corrido los seeders)
 nickname	admin1
 password	123456
 
@@ -96,28 +73,27 @@ Seleccionar el botón concretar compra	(Sera redireccionado a la página de pago
 
 Para simular una compra utilizar uno de los siguientes datos (cuenta de usuario de Jhon Doe (Paypal) o tarjetas de credito de prueba de WebPay)
 
-
----
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Pago con Paypal	(En caso de no funcionar ingresar a Paypal developers y registrar la aplicación para obtener un correo de usuario y contraseña de pruebas nuevos)
 usuario (Jhon Doe)	Email	=	sb-couwh397037@personal.example.com
 contraseña			Password=	Qd2a$ZA5
----
+
 Pago con WebPay	(más info en https://www.transbankdevelopers.cl/documentacion/como_empezar#ambiente-de-integracion)
 Tarjetas de prueba
 VISA 		4051885600446623, 	=> CVV 123, cualquier fecha de expiración. Esta tarjeta genera transacciones aprobadas.
 MASTERCARD 	5186059559590568, 	=>CVV 123, cualquier fecha de expiración. Esta tarjeta genera transacciones rechazadas.
 Redcompra 	4051884239937763 	=>genera transacciones aprobadas (para operaciones que permiten débito Redcompra y prepago)
 Redcompra 	5186008541233829 	=>genera transacciones rechazadas (para operaciones que permiten débito Redcompra y prepago)
----
+
 Cuando aparece un formulario de autenticación con RUT y clave, se debe usar el RUT 11.111.111-1 y la clave 123.
----
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Luego de efectuar el pago se redireccionará de regreso a la aplicación 
 En caso de una compra exitosa se redireccionará a la página resumen de pago donde se puede imprimir o descargar la Factura
 En caso de una compra fallida se redireccionará a una página de error
 
-**El BackOffice de la app se encuentra en desarrollo y aún no es posible ingresar nuevos productos 
-Finalizado el backend finalizaré el frontend**
+El BackOffice de la app se encuentra en desarrollo y aún no es posible ingresar nuevos productos 
+Finalizado el backend finalizaré el frontend
 
 
 Este proyecto es desarrollado cómo hobby para probar el desarrollo del frontend con 2 proyectos angular en una sola aplicación y para consulta de código.

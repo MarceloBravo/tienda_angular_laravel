@@ -18,14 +18,14 @@ autenticado: Boolean = false;
     token: null,
     remember: false
   };
+  public URL = '';
 
   constructor (
     private _loginService: LoginAdminService,
     private _mensajeService: MessagesService,
     private router: Router
   ){
-    //console.log("iniciando...");
-    console.log(this.router);
+    this.URL = this.router.url;
     this.checkUserDataLocalStorage();
   }
 

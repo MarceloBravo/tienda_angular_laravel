@@ -13,7 +13,7 @@ import { ItemCarrito } from '../../class/item-carrito';
 import { MessagesService } from '../../service/messages.service';
 import { Router } from '@angular/router';
 
-//Carrusel owl multicolumna Anguklar + Bootstrap
+//Carrusel owl multicolumna Angular + Bootstrap
 //https://therichpost.com/how-to-implement-owl-carousel-slider-in-angular-8/
 
 //Opciones de configuración carrusel owl Angular
@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit {
       },
       (error)=>{
         console.log(error);        
-        this._mensajeService.showModalMessage('Error', error);
+        this._mensajeService.showModalMessage('Error', error.status === 500 ? 'No fue posible conectar con el servidor. <br/>Reintentelo más tarde.' : error.message);
         //alert(error);
       });
   }

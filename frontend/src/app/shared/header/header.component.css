@@ -1,3 +1,7 @@
+.classy-nav-container{
+    margin-bottom: 1px;
+}
+
 #userName{
     width: max-content !important;
     color: black;
