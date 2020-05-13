@@ -14,9 +14,9 @@ class UsersTableSeeder extends Seeder
     {
         User::Insert([
             'rut' =>  "44.444.444-4",
-            'nombre' =>  "Marcelo",
-            'a_paterno' =>  "Bravo",
-            'a_materno' =>  "Castillo",
+            'nombre' =>  "Perico",
+            'a_paterno' =>  "Perez",
+            'a_materno' =>  "Pereira",
             'email' =>  "prueba@ejemplo.cl",
             'email_verified_at' =>  null,
             'nickname' =>  "admin",
