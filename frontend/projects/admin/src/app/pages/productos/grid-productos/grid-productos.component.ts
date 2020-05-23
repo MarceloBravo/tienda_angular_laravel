@@ -124,4 +124,11 @@ export class GridProductosComponent implements OnInit {
     this._spinnerService.hide();
   }
 
+  public rutaImagen(item)
+  {
+    if(item.imagenes.length == 0)return '';
+    let img = item.imagenes.filter( i => i.default);
+    return (img[0] !== undefined ? item.ruta_imagen + '/' + img[0].url : '' );
+  }
+
 }

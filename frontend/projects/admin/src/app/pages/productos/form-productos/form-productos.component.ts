@@ -11,11 +11,7 @@ import { Marca } from 'src/app/class/marca';
 import { Categoria } from 'src/app/class/categoria';
 
 import { ViewChild, ElementRef  } from '@angular/core';
-import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { of } from 'rxjs';  
-import { catchError, map } from 'rxjs/operators';  
-import { UploadService } from  'src/app/service/upload.service';
-import { UploadFilesService } from '../../../services/upload-files.service';
+import { ImagenProducto } from '../../../../../../../src/app/class/imagen-producto';
 
 @Component({
   selector: 'app-form-productos',
@@ -45,18 +41,15 @@ export class FormProductosComponent implements OnInit {
     updated_at: new FormControl(),
     deleted_at: new FormControl(),
 
-    file: new FormControl()
+    file: new FormControl([]),
+    ruta_imagen: new FormControl([]),
+    imagenes: new FormControl([]),
+    
   });
   public marcas: Marca[];
   public categorias: Categoria[];
-
-  private archivo = {
-    nombre: null, //Nombre dado por el usuario
-    nombreArchivo:null, //Nombre real del archivo
-    base64TextString: null,
-    data: null
-  };
-
+  public imagesBlob: any[] = Array();
+  public deletedImages: number[] = [];
 
   constructor(
     private _productosService: ProductoService,
@@ -66,20 +59,18 @@ export class FormProductosComponent implements OnInit {
     private _mensajeService: MessagesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder,
-    private uploadService: UploadService,
-    private _uploadFilesService: UploadFilesService
-
+    private fb: FormBuilder
   ) { 
     this.cargarMarcas();
     this.cargarCategorias();
     this._mensajeService.ocultarMensaje();
 
     let id = this.activatedRoute.snapshot.paramMap.get('id');
-    if(id !== undefined && id !== ''){
+    if(id !== undefined && id !== '0'){
       this.id = parseInt(id);
       this.buscar();
     }else{
+      this.id = 0;
       this.buildForm();
     }
   }
@@ -99,14 +90,16 @@ export class FormProductosComponent implements OnInit {
       precio: [this.producto.precio, [Validators.required, Validators.min(1)]],
       precio_anterior: [this.producto.precio_anterior, [Validators.required, Validators.min(0)]],
       visible: [this.producto.visible, [Validators.required]],
-      color: [this.producto.color, [Validators.required, Validators.minLength(0), Validators.maxLength(20)]],
-      nuevo: [this.producto.nuevo, [Validators.required]],
-      oferta: [this.producto.oferta, [Validators.required]],
+      color: [this.producto.color === undefined ? false : this.producto.color , [Validators.required, Validators.minLength(0), Validators.maxLength(20)]],
+      nuevo: [this.producto.nuevo === undefined ? true : this.producto.nuevo, [Validators.required]],
+      oferta: [this.producto.oferta === undefined ? false : this.producto.oferta, [Validators.required]],
       porcentaje_descuento: [this.producto.porcentaje_descuento, [Validators.required, Validators.min(0), Validators.max(100)]],
       created_at: [this.producto.created_at],
       updated_at: [this.producto.updated_at],
       deleted_at: [this.producto.deleted_at],
       file: [this.producto.file],
+      ruta_imagen: [this.producto.file],
+      imagenes: [this.producto.imagenes],
       _method: null
       
     })
@@ -115,7 +108,7 @@ export class FormProductosComponent implements OnInit {
   private buscar(){
     this._spinnerService.show();
     this._productosService.find(this.id).subscribe(
-      (res: Producto) => {
+      (res: Producto) => {     
         this.producto = res;
         this.buildForm();
         if(res['id'] !== undefined){
@@ -169,29 +162,86 @@ export class FormProductosComponent implements OnInit {
     }
   }
 
-  private insertar(){
-    this._productosService.insert(this.form.value).subscribe(
-      (res: string[])=>{
-        this.handlerSuccess(res);
+  private async insertar(){
+    if(this.producto.imagenes !== undefined){
+      let images = this.producto.imagenes.map(f => {if(f.constructor.name === 'ImagenProducto'){return f}}).filter( i => i !== undefined);
+      await this.createListFile(images);
+    }
+    //let deletedImages: string[] =  this.producto.imagenes.map(f => {if(f.constructor.name === 'Object' && f.deleted_at !== null){return f.id.toString()}}).filter( i => i !== undefined);
 
-      },(error)=>{
-        this.handlerError(error);
+    const formData = new FormData();
+    for (const field in this.form.controls){
+      if(field === 'file'){        
+        if(this.form.get(field).value !== null){
+          this.form.get(field).value.map( f => formData.append('file[]', f, f.name));
+        }
+      }else if(field === 'imagenes'){
+          //if(this.producto.imagenes !== undefined)this.producto.imagenes = [];
+          this.producto.imagenes.map( f => formData.append('imagenes[]',JSON.stringify(f)));
+      }else{
+        formData.append(field, this.form.get(field).value);
       }
-    )
-  }
+    };
 
-  private actualizar(){
-    console.log(this.form.value);
+    formData.append('_method', 'POST');
 
-    this._productosService.update(this.id, this.form.value).subscribe(
+    this._productosService.insert(formData).subscribe(
+        (res: string[])=>{
+          this.handlerSuccess(res);
+
+        },(error)=>{
+          this.handlerError(error);
+        }
+      )
+    }
+
+
+  private async actualizar(){
+    let images = this.producto.imagenes.map(f => {if(f.constructor.name === 'ImagenProducto'){return f}}).filter( i => i !== undefined);
+    let deletedImages: string[] =  this.producto.imagenes.map(f => {if(f.constructor.name === 'Object' && f.deleted_at !== null){return f.id.toString()}}).filter( i => i !== undefined);
+
+    await this.createListFile(images);
+    const formData = new FormData();
+    for (const field in this.form.controls){
+      if(field === 'file'){        
+        if(this.form.get(field).value !== null){
+          this.form.get(field).value.map( f => formData.append('file[]', f, f.name));
+        }
+      }else if(field === 'imagenes'){
+          this.producto.imagenes.map( f => formData.append('imagenes[]',JSON.stringify(f)));
+      }else{
+        formData.append(field, this.form.get(field).value);
+      }
+    };
+
+    formData.append('_method', 'PUT');
+
+    if(deletedImages.length > 0){
+      deletedImages.map( i => formData.append('deletedFiles[]', i));
+    }    
+    
+    formData.append('_method', 'PUT');
+
+    this._productosService.update(this.id, formData).subscribe(
       (res: any[])=>{
         this.handlerSuccess(res);
-
       },(error)=>{
         this.handlerError(error);
       }
     )
   }
+
+
+  private async createListFile(origen)
+  {
+    var file = <HTMLInputElement>document.getElementById('input-files');
+    let list = new DataTransfer();
+    await origen.map( f => list.items.add(new File([f.data],f.nombre_archivo,{'type': 'image/png'})));
+    file.files = list.files;
+    console.log(file);
+    return file;
+  }
+
 
   eliminar(){
     if(window.confirm("Desea eliminar el registro?")){
@@ -208,109 +258,98 @@ export class FormProductosComponent implements OnInit {
 
 
   private handlerSuccess(res: string[]){
-    console.log(res);
     this._mensajeService.mostrarMensaje(res['mensaje'], res['tipo-mensaje']);
     this._spinnerService.hide();
-    this.router.navigate(['/admin/productos']);
+    if(res['tipo-mensaje'] === 'success'){
+      this.router.navigate(['/admin/productos']);
+    }
   }
 
 
   private handlerError(error: any){
     console.log(error);
-    this._mensajeService.mostrarMensaje(error.message(), 'danger');
+    let msg = error.error !== undefined ? error.error.message : error.message;
+    this._mensajeService.mostrarMensaje(msg, 'danger');
     this._spinnerService.hide();
   }
 
-  seleccionarArchivo(e){
-    let fileName = <HTMLInputElement>document.getElementById('file');
-    fileName.value = e.target.value;
+
+  // --------------------------------   MANEJO DE IMÁGENES -------------------------------- 
+
+  //Convierte la imágen slececcionada desde el control file, en un objeto ImagenProducto, para poder ser 
+  //agregada al array de imagenes this.producto.imagenes, ya que este array es el que contiene las imágenes
+  //a subir al servidor (Backend)
+  private createImage(img)
+  {
+    if(img === undefined )return img;
+    var imgProd = new ImagenProducto();
+    imgProd.id = img.lastModified;
+    imgProd.producto_id = this.producto.id;
+    imgProd.nombre_archivo = img.name;
+    imgProd.default = false;
+    return imgProd;
   }
 
-/*
-  seleccionarArchivo(event){
-    var files = event.target.files;
-    var file = files[0];
-    this.archivo.nombreArchivo = file.name;     
-    this.archivo.data = file;
 
-    if(file && files){
-      var reader = new FileReader();
-      reader.onload = this.handlerReaderOnLoad.bind(this);
-      reader.readAsBinaryString(file);
-      
+  //Agrega las imágenes cargadas a través del control file, al array imagesBlob el cual contiene las 
+  //referencia a las imágenes seleccionadas en el control file pero en formato Blob,
+  //El array imagesBlob será iterado en el html para mostrrar los controles img con las imágenes
+  private fileToBlob(f){
+    var reader = new FileReader();
+    reader.readAsDataURL(f);
+    reader.onload = (_event) => { 
+      this.imagesBlob =this.imagesBlob.concat( {id: f.lastModified, data: reader.result}); 
     }
-
-  }
-
-  private handlerReaderOnLoad(readerEvent){
-    var binaryString = readerEvent.target.result;
-    this.archivo.base64TextString = btoa(binaryString);
-  }
-
-  uploadFile(){
-    let nombre = <HTMLInputElement>document.getElementById('txt_fileName');
-    this.archivo.nombre = nombre.value;
     
-    let formData: FormData = new FormData();    
-    formData.append('file', this.archivo.data);
-    //console.log(formData);
-    this._uploadFilesService.insert(formData).subscribe(
-      (res)=>{
-        //this._mensajeService.showModalMessage('Subida de archivos',res['mensaje']);
-        console.log(res);
-        //if(res['tipo-mensaje'] === 'success'){
-        //alert(res['mensaje']);
-        //}
-      },(error)=>{
-        console.log(error);
-        alert(error.message);
-      }
-    )
+  }
+
+
+  //Obtiene las imágenes seleccionadas desde el control File y luego las carga en el array this.producto.imagenes, para ser subidas
+  //al servidor al momento de grabar el registro
+  seleccionarArchivo(e){
+    let files: File[] = Array.from(e.target.files);
+    if(this.producto.imagenes !== undefined){
+      var archivos = files.map( f => {if(!this.producto.imagenes.map(img => img.nombre_archivo).includes(f.name)){return this.createImage(f) }}).filter( f => f !== undefined );
+      //this.producto.imagenes  = this.producto.imagenes.concat(archivos);
+    }else{
+      this.producto.imagenes = [];
+      var archivos = files.map( f => this.createImage(f));
+    }
+    this.producto.imagenes  = this.producto.imagenes.concat(archivos);
+    Array.from(e.target.files).map(f => this.fileToBlob(f)); //LLama a la función fileToBlob para preparar y cargar el array que contendrá las imágenes seleccionadas por el usuario a travéd del control file, las que se encuentran en memoria a diferencia de las imágenes que se encuentran en el array this.producto.imagenes las que se encuentran en el servidor (Backend)
+  }
+
+
+  public eliminarImagen(idProducto, idImagen){    
+    this.producto.imagenes.map(i => i.id === idImagen ? i.deleted_at = new Date() : null);
+    let div = <HTMLDivElement>document.getElementById(`div-img-${idProducto} - ${idImagen}`);
+    div.style.display = 'none';
+  }
+
+
+  public quitarImagen(id){
+    let div = <HTMLDivElement>document.getElementById(`div-img-${id}`);
+    div.remove();
+    this.imagesBlob = this.imagesBlob.filter( i => i.id !== id);
   }
 
   
-  /*
-  uploadFile(file) {  
-    const formData = new FormData();  
-    formData.append('file', file.data);  
-    file.inProgress = true;  
-    this.uploadService.upload(formData).pipe(  
-      map(event => {  
-        switch (event.type) {  
-          case HttpEventType.UploadProgress:  
-            file.progress = Math.round(event.loaded * 100 / event.total);  
-            break;  
-          case HttpEventType.Response:  
-            return event;  
-        }  
-      }),  
-      catchError((error: HttpErrorResponse) => {  
-        file.inProgress = false;  
-        return of(`${file.data.name} upload failed.`);  
-      })).subscribe((event: any) => {  
-        if (typeof (event) === 'object') {  
-          console.log(event.body);  
-        }  
-      });  
+  public configurarPredeterminada(id: number){    
+    let chk = document.getElementsByClassName('chk-predeterminada');
+    for(let key = 0;key < chk.length; key++){              
+      var checbox = <HTMLInputElement>chk[key];
+      checbox.checked = false;      
+    }
+
+
+    var checbox = <HTMLInputElement>document.getElementById('predeterminada' + id);
+    checbox.checked = true; 
+
+    this.producto.imagenes.map(i => i.default = i.id == id);
   }
 
-  private uploadFiles() {  
-    this.fileUpload.nativeElement.value = '';  
-    this.files.forEach(file => {  
-      this.uploadFile(file);  
-    });  
+  public showImageDialog(){
+    let inputFile = <HTMLInputElement>document.getElementById('input-files');
+    inputFile.click();
   }
-
-  onClick() {  
-    const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {  
-    for (let index = 0; index < fileUpload.files.length; index++)  
-    {  
-     const file = fileUpload.files[index];  
-     this.files.push({ data: file, inProgress: false, progress: 0});  
-    }  
-      this.uploadFiles();  
-    };  
-    fileUpload.click();  
-  }
-  */
 }

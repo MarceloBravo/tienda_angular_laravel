@@ -18,7 +18,7 @@
                 </div>
 
                 <form [formGroup]="form">
-                <ngb-tabset [destroyOnHide]="false">
+                    <ngb-tabset [destroyOnHide]="false">
                     
                         <ngb-tab >
                             <ng-template ngbTabTitle>Producto</ng-template>
@@ -28,83 +28,83 @@
                                         <!-- <form [formGroup]="form"> -->
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
-                                                <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre de la región.">
-                                                <div *ngIf="form.get('nombre').hasError('required') && form.get('nombre').dirty" class="errorFieldClass">En nombre de la región es obligatorio</div>
+                                                <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Ingresa el nombre del producto.">*
+                                                <div *ngIf="form.get('nombre').hasError('required') && form.get('nombre').dirty" class="errorFieldClass">En nombre del producto es obligatorio</div>
                                                 <div *ngIf="form.get('nombre').hasError('minlength') && form.get('nombre').dirty" class="errorFieldClass">El campo debe tener al menos 3 carácteres</div>
                                                 <div *ngIf="form.get('nombre').hasError('maxlength') && form.get('nombre').dirty" class="errorFieldClass">El campo no debe sobrepasar los  50 carácteres</div>                            
                                             </div>
                 
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="descripcion">Descripción</label>
-                                                <textarea id="descripcion" formControlName="descripcion" class="form-control col-md-5"></textarea>
+                                                <textarea id="descripcion" formControlName="descripcion" class="form-control col-md-5" placeholder="Ingresa el una descripción para el producto"></textarea>*
                                                 <div *ngIf="form.get('descripcion').hasError('required') && form.get('descripcion').dirty" class="errorFieldClass">La descripción del producto es obligatoria.</div>
-                                                <div *ngIf="form.get('descripcion').hasError('minlength') && form.get('descripcion').dirty">La descripción debe tener almenos 10 carácteres.</div>
-                                                <div *ngIf="form.get('descripcion').hasError('maxlength') && form.get('descripcion').dirty">La descripción no debe sobrepasar los 500 carácteres.</div>
+                                                <div *ngIf="form.get('descripcion').hasError('minlength') && form.get('descripcion').dirty" class="errorFieldClass">La descripción debe tener almenos 10 carácteres.</div>
+                                                <div *ngIf="form.get('descripcion').hasError('maxlength') && form.get('descripcion').dirty" class="errorFieldClass">La descripción no debe sobrepasar los 500 carácteres.</div>
                                             </div>
                 
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="resumen">Resumen</label>
-                                                <textarea id="resumen" formControlName="resumen" class="form-control col-md-5"></textarea>
-                                                <div *ngIf="form.get('resumen').hasError('required') && form.get('resumen').dirty" class="errorFieldClass">El resumen del producto es obligatoria.</div>
-                                                <div *ngIf="form.get('resumen').hasError('minlength') && form.get('resumen').dirty">El resumen debe tener almenos 10 carácteres.</div>
-                                                <div *ngIf="form.get('resumen').hasError('maxlength') && form.get('resumen').dirty">El resumen no debe sobrepasar los 500 carácteres.</div>
+                                                <textarea id="resumen" formControlName="resumen" class="form-control col-md-5" placeholder="Ingresa un resumen de la descripción del producto."></textarea>*
+                                                <div *ngIf="form.get('resumen').hasError('required') && form.get('resumen').dirty" class="errorFieldClass">El resumen de la descripción producto es obligatoria.</div>
+                                                <div *ngIf="form.get('resumen').hasError('minlength') && form.get('resumen').dirty" class="errorFieldClass">El resumen debe tener almenos 10 carácteres.</div>
+                                                <div *ngIf="form.get('resumen').hasError('maxlength') && form.get('resumen').dirty" class="errorFieldClass">El resumen no debe sobrepasar los 500 carácteres.</div>
                                             </div>
                 
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="slug">Slug</label>
-                                                <input type="text" id="slug" formControlName="slug" class="form-control col-md-5"/>
+                                                <input type="text" id="slug" formControlName="slug" class="form-control col-md-5" placeholder="Ingresa un texto breve descriptivo" text="El slug será utilizado cómo código de búsqueda en algunas ocasiones."/>*
                                                 <div *ngIf="form.get('slug').hasError('required') && form.get('slug').dirty" class="errorFieldClass">El slug es obligatoria.</div>
-                                                <div *ngIf="form.get('slug').hasError('minlength') && form.get('slug').dirty">El slug debe tener almenos 3 carácteres.</div>
-                                                <div *ngIf="form.get('slug').hasError('maxlength') && form.get('slug').dirty">El slug no debe sobrepasar los 255 carácteres.</div>
+                                                <div *ngIf="form.get('slug').hasError('minlength') && form.get('slug').dirty" class="errorFieldClass">El slug debe tener almenos 3 carácteres.</div>
+                                                <div *ngIf="form.get('slug').hasError('maxlength') && form.get('slug').dirty" class="errorFieldClass">El slug no debe sobrepasar los 255 carácteres.</div>
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label" for="region_id">Marca</label>
                                                 <select id="marca_id" formControlName="marca_id" class="form-control col-md-3">
                                                     <option *ngFor="let item of marcas" [value]=" item.id ">{{ item.nombre }}</option>
-                                                </select>
+                                                </select>*
                                                 
-                                                <div *ngIf="form.get('marca_id').hasError('required') && form.get('marca_id').dirty" class="errorFieldClass">Debes seleccionar una región.</div>                            
-                                                <div *ngIf="form.get('marca_id').hasError('min') && form.get('marca_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>                            
+                                                <div *ngIf="form.get('marca_id').hasError('required') && form.get('marca_id').dirty" class="errorFieldClass">Debes seleccionar una marca.</div>                            
+                                                <div *ngIf="form.get('marca_id').hasError('min') && form.get('marca_id').dirty" class="errorFieldClass">La opción seleccionada no es válida.</div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label" for="categoria_id">Categoría</label>
                                                 <select id="categoria_id" formControlName="categoria_id" class="form-control col-md-3">
                                                     <option *ngFor="let item of categorias" [value]=" item.id ">{{ item.nombre }}</option>
-                                                </select>
+                                                </select>*
                                                 
-                                                <div *ngIf="form.get('categoria_id').hasError('required') && form.get('categoria_id').dirty" class="errorFieldClass">Debes seleccionar una región.</div>                            
+                                                <div *ngIf="form.get('categoria_id').hasError('required') && form.get('categoria_id').dirty" class="errorFieldClass">Debes seleccionar una categoría.</div>                            
                                                 <div *ngIf="form.get('categoria_id').hasError('min') && form.get('categoria_id').dirty" class="errorFieldClass">El valor seleccionado no es válido.</div>                            
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="precio">Precio</label>
-                                                $<input id="precio" type="number" formControlName="precio" class="form-control col-md-2"/>
+                                                $<input id="precio" type="number" formControlName="precio" class="form-control col-md-2" placeholder="Precio actual"/>*
                                                 <div *ngIf="form.get('precio').hasError('required') && form.get('precio').dirty" class="errorFieldClass">El precio es obligatorio.</div>
-                                                <div *ngIf="form.get('precio').hasError('min') && form.get('precio').dirty">El precio debe ser un valor positivo.</div>
+                                                <div *ngIf="form.get('precio').hasError('min') && form.get('precio').dirty" class="errorFieldClass">El precio debe ser un valor positivo.</div>
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="precio_anterior">Precio anterior</label>
-                                                $<input id="precio_anterior" type="number" formControlName="precio_anterior" class="form-control col-md-2"/>
+                                                $<input id="precio_anterior" type="number" formControlName="precio_anterior" class="form-control col-md-2" placeholder="Precio anterior"/>*
                                                 <div *ngIf="form.get('precio_anterior').hasError('required') && form.get('precio_anterior').dirty" class="errorFieldClass">El precio anterior es obligatorio.</div>
-                                                <div *ngIf="form.get('precio_anterior').hasError('min') && form.get('precio_anterior').dirty">El precio anterior debe ser un valor positivo.</div>
+                                                <div *ngIf="form.get('precio_anterior').hasError('min') && form.get('precio_anterior').dirty" class="errorFieldClass">El precio anterior debe ser un valor positivo.</div>
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="porcentaje_descuento">Porcentaje de descuento</label>
-                                                <input id="porcentaje_descuento" type="number" formControlName="porcentaje_descuento" class="form-control col-md-2"/> %
+                                                <input id="porcentaje_descuento" type="number" formControlName="porcentaje_descuento" class="form-control col-md-2" placeholder="Porcentaje de descuento."/> % *
                                                 <div *ngIf="form.get('porcentaje_descuento').hasError('required') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento es obligatorio.</div>
-                                                <div *ngIf="form.get('porcentaje_descuento').hasError('min') && form.get('porcentaje_descuento').dirty">El porcentaje de descuento debe ser un valor positivo.</div>
-                                                <div *ngIf="form.get('porcentaje_descuento').hasError('max') && form.get('porcentaje_descuento').dirty">El porcentaje de descuento no debe sobrepasar el 100%.</div>
+                                                <div *ngIf="form.get('porcentaje_descuento').hasError('min') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento debe ser un valor positivo.</div>
+                                                <div *ngIf="form.get('porcentaje_descuento').hasError('max') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento no debe sobrepasar el 100%.</div>
                                             </div>
                 
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="color">Color</label>
-                                                <input id="color" type="text" formControlName="color" class="form-control col-md-5"/>
+                                                <input id="color" type="text" formControlName="color" class="form-control col-md-5" placeholder="Ingresa el nombre del color predominante del producto"/>*
                                                 <div *ngIf="form.get('color').hasError('required') && form.get('color').dirty" class="errorFieldClass">El color es obligatorio.</div>                            
-                                                <div *ngIf="form.get('color').hasError('maxlength') && form.get('color').dirty">El color no debe sobrepasar los 20 carácteres.</div>
-                                            </div>
+                                                <div *ngIf="form.get('color').hasError('maxlength') && form.get('color').dirty" class="errorFieldClass">El color no debe sobrepasar los 20 carácteres.</div>
+                                            </div>                                            
                                             
                                             <div class="custom-control custom-checkbox row">
                                                 <div class="form-group row">
@@ -124,83 +124,62 @@
                                             </div>
                                         <!-- </form> -->
                                     </div>
-                                
+                        
+                                    <div>
+                                                <b>Atención :</b>Los campos marcados con asterísco (*) son obligatorios.
+                                            </div>
                             </ng-template>
                         </ngb-tab>
+                        
                         
                         <ngb-tab >
                             <ng-template ngbTabTitle>Imágenes</ng-template>
                             <ng-template ngbTabContent>          
                                 <div class="card-body">
-                                <!-- <form (ngSubmit)="uploadFile()" enctype="multipart/form-data">  -->
-                                    <p>
-                                        <label form="txt_fileName">Nombre del archivo</label>
-                                        <input type="text" id="file" />
-                                    </p>
-                                    <p>
-                                        <input type="file" formControlName="file" accept="image/*" (change)="seleccionarArchivo($event)"/>
-                                    </p>
+                                    <input type="file" id="input-files" multiple formControlName="file" accept=".png, .jpg, .jpeg*" (change)="seleccionarArchivo($event)"/>                                    
+                                    <button class="btn btn-primary" (click)="showImageDialog()">Agregar imágen</button>
                                 </div>
-                                    <!--<p>
-                                        <button type="submit" class="btn btn-primary">Subir archivo</button>
-                                    </p>
-                                -->
-                                <!-- </form> -->
-                                <!--
-                                <div style="text-align:center; margin-top: 100px; ">
-                                    <mat-card style="margin-top:10px; width: 50%;">  
-                                        <mat-card-content>  
-                                            <ul class="ul-upload-files">  
-                                                <li class="li-upload-files" *ngFor="let file of files">  
-                                                    <mat-progress-bar [value]="file.progress"></mat-progress-bar>  
-                                                    <span id="file-label">  
-                                                        
-                                                    </span>  
-                                                </li>  
-                                            </ul>  
-                                        </mat-card-content>  
-                                        <mat-card-actions>  
-                                            <button mat-button color="warn" (click)="onClick()">  
-                                                <mat-icon>file_upload</mat-icon>  <!-- Agreagar en index.html -> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  <!-- Necesario para los iconos de Material ui (Ej. Mantenedor de productos boton subir imágen ) 
-                                                Subir  
-                                            </button>  
-                                        </mat-card-actions>  
-                                    </mat-card>
-                                    
-                                    <input 
-                                        type="file" 
-                                        #fileUpload 
-                                        id="fileUpload" 
-                                        name="fileUpload" 
-                                        multiple="multiple" 
-                                        accept="image/*" 
-                                        style="display:none;" 
-                                    />
-                                </div>
-                                -->
+                                <div class="row">
+                                    <ng-container *ngFor="let img of producto.imagenes; let i of index">    <!-- Ya que no se puede colocar un ngFor junto con un ngIf es que se coloca éste contenedor angular ng-container -->
+                                        <div *ngIf="img.created_at !== undefined" class="col-md-4 div-imagen-producto"  id="div-img-{{ producto.id }} - {{ img.id }}">
+                                            <button class="btn btn-danger deleteImage" (click)="eliminarImagen(producto.id, img.id)" title="Eliminar imagen {{ img.id }}">X</button>
+                                            <img *ngIf="img.created_at !== undefined" src="{{ producto.ruta_imagen }}/{{ img.url }}"/>
+                                            
+                                            <div *ngIf="img.created_at !== undefined" class="custom-control custom-checkbox mr-sm-2">
+                                                <input 
+                                                    type="checkbox" 
+                                                     class="custom-control-input chk-predeterminada" 
+                                                    id="predeterminada{{ img.id }}" 
+                                                    [checked]="img.default" 
+                                                    (change)="configurarPredeterminada(img.id)"
+                                                >
+                                                <label class="custom-control-label" for="predeterminada{{ img.id }}" >Predeterminada</label>
+                                            </div>
 
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngFor="let img of imagesBlob; let i = index">
+                                        <div class="col-md-4 div-imagen-producto"  id="div-img-{{ img.id }}">
+                                            <button class="btn btn-danger deleteImage" (click)="quitarImagen(img.id)" title="Eliminar imagen">X</button>
+                                            <img [src]="img.data"/>
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input 
+                                                    type="checkbox" 
+                                                    class="custom-control-input chk-predeterminada" 
+                                                    id="predeterminada{{ img.id }}" 
+                                                    [checked]="img.default" 
+                                                    (change)="configurarPredeterminada(img.id)"
+                                                >
+                                                <label class="custom-control-label" for="predeterminada{{ img.id }}" >Predeterminada</label>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <br/>
                             </ng-template>
                         </ngb-tab>
-                    
-                    <!-- 
-                    <ngb-tab>
-                      <ng-template ngbTabTitle>Email Setting</ng-template>
-                      <ng-template ngbTabContent>
-                          <p>This is Email Setting</p>
-                      </ng-template>
-                    </ngb-tab>
-                    
-                    <ngb-tab title="Disabled" [disabled]="true">
-                      <ng-template ngbTabContent>
-                        <p>This is Disabled</p>
-                      </ng-template>
-                    </ngb-tab>
-                    -->
-                  </ngb-tabset>
+                    </ngb-tabset>
                 </form>
-
-
-
                 
                     
                 

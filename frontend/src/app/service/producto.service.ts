@@ -35,12 +35,20 @@ export class ProductoService {
     return this.http.get(this.endPoint + 'admin/productos/' + texto + '/' + page);
   }
 
-  insert(producto: Producto){
-    return this.http.post(this.endPoint + 'admin/productos', producto, {headers: this.getHeaders()});
+  insert(formData: FormData){
+    return this.http.post<any>(this.endPoint + 'admin/productos' , formData);
   }
+ 
+  //insert(producto: Producto){
+  //  return this.http.post(this.endPoint + 'admin/productos', producto, {headers: this.getHeaders()});
+  //}
 
-  update(id: number, producto: Producto){
-    return this.http.post<any>(this.endPoint + 'admin/productos/' + id + '?_method=PUT', JSON.stringify(producto), {headers: this.getHeaders2()});
+  //update(id: number, producto: Producto){
+  //  return this.http.post<any>(this.endPoint + 'admin/productos/' + id + '?_method=PUT', JSON.stringify(producto), {headers: this.getHeaders2()});
+  //}
+  
+  update(id: number, formData: FormData){
+    return this.http.post<any>(this.endPoint + 'admin/productos/' + id , formData);
   }
 
   delete(id: number){

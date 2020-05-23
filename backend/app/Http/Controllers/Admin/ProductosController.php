@@ -36,9 +36,11 @@ class ProductosController extends Controller
         foreach($productos as $item)
         {
             $imagenes = ImagenesProducto::where("producto_id","=",$item->id)->get();
-            $item->imagenes = $imagenes;
+            $item->imagenes = $imagenes;            
+            $item->ruta_imagen = explode('/api/',url()->current())[0] . '/storage/productos' ;
         }
 
+        
         return response()->json(['data'=>$productos->ToArray(), 'rows' => $CantReg, 'page' => $page, 'rowsByPage' => $this->rowsByPage]);
     }
 
@@ -72,21 +74,25 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
+        //return response()->json(["mensaje"=>$request->all(), 'tipo-mensaje' => 'warning']);
         $validar = $this->validarCampos($request);
         if($validar->fails())
         {
             return response()->json(["mensaje"=>"Datos incompletos o no válidos", "tipo-mensaje" => "danger", "errores"=>$validar->errors()]);
         }
 
+        $request['imagenes'] = array_map(function($i){return json_decode($i);}, $request['imagenes']);
+        //return response()->json(["mensaje"=>$request->all(), 'file' => $request->file('file')[0]->getClientOriginalName(), 'tipo-mensaje' => 'warning']);
         try{
             $producto = new Producto();
-            DB::begiTransaction();
-            $result = $producto->fill($request->all())->save();
-            $mensaje = $result ? "El registro ha sido creado." : "Ocurrio un error al intentar ingresar el registro.";
-            $tipoMensaje = $result ? "success" : "danger";
+            DB::beginTransaction();
+            $result = $producto->fill($request->all())->save();    
+            if(!$result){$mensaje =  "Ocurrio un error al intentar ingresar el registro.";}
+            if(!$result){$tipoMensaje = "danger";} 
             $id = $result ? $producto->id : -1;
+            //return response()->json(["mensaje"=>$request->all(), 'file' => $request->file('file')[0]->getClientOriginalName(), 'id' => $id, 'tipo-mensaje' => 'warning']);
             if($result && $request->file("file") !== null){
-                $resultImage = $this->_uploadFile($request, $id);
+                $resultImage = $this->saveImages($request, $id);
                 if($resultImage['tipo-mensaje'] == "danger"){
                     $mensaje = $resultImage['mensaje'];
                     $tipoMensaje = $resultImage['tipo-mensaje'];
@@ -94,9 +100,11 @@ class ProductosController extends Controller
                 }
             }
             
-            if($result){
+            if(!$result){
                 DB::rollback();
             }else{
+                $mensaje =  "El registro ha sido creado.";
+                $tipoMensaje = "success";
                 DB::commit();
             }
 
@@ -126,6 +134,7 @@ class ProductosController extends Controller
         {
             $imagenes = ImagenesProducto::where("producto_id","=",$producto->id)->get();
             $producto->imagenes = $imagenes;
+            $producto->ruta_imagen = explode('/api/',url()->current())[0] . '/storage/productos' ;
         }
         return response()->json($producto);
     }
@@ -141,6 +150,14 @@ class ProductosController extends Controller
         //
     }
 
+
+    
+    function searchUploadFile($objFile, $nombreArchivo)
+    {
+        return $objFile->name == $nombreArchivo;
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -149,34 +166,46 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //dd($request->all(),$request->file('file'));
-        return response()->json(['all' =>$request->all(), 'file' =>$request->file('file')]);
-        
+    {   
         $validar = $this->validarCampos($request, $id);
         if($validar->fails())
         {
             return response()->json(["mensaje"=>"Datos incompletos o no válidos", "tipo-mensaje" => "danger", "errores"=>$validar->errors()]);
         }
 
+
+        $request['imagenes'] = array_map(function($i){return json_decode($i);}, $request['imagenes']);
+
         $producto = Producto::find($id);
         try{
             DB::beginTransaction();            
             $result = $producto->fill($request->all())->save();
-            $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
-            $tipoMensaje = $result ? "success" : "danger";
-            if($result && $request->input("file") !== null){
-                $resultImage = $this->updateFile($request, $id);
+            $tipoMensaje = "";
+
+            if($result && count($request["imagenes"]) > 0){
+                $resultImage = $this->saveImages($request, $id);
                 if($resultImage['tipo-mensaje'] == "danger"){
-                    $mensaje = $resultImage['mensaje'];
-                    $tipoMensaje = $resultImage['tipo-mensaje'];
                     $result = false;
+                }
+                $mensaje = $resultImage['mensaje'];
+                $tipoMensaje = $resultImage['tipo-mensaje'];
+            }
+
+            if($result && isset($request['deletedFiles'])){
+                
+                foreach($request['deletedFiles'] as $fileId){
+                    $result = $this->deleteFile($fileId);
+                    if($result['tipo-mensaje'] == 'danger'){
+                        break;
+                    }
                 }
             }
             
-            if($result){
+            if(!$result){
                 DB::rollback();
             }else{
+                $mensaje = $result ? "El registro ha sido actualizado." : "Ocurrio un error al intentar actualizar el registro.";
+                $tipoMensaje = $result ? "success" : "danger";
                 DB::commit();
             }
 
@@ -290,61 +319,109 @@ class ProductosController extends Controller
         return Validator::make($request->all(), $rules, $messages);
     }
 
+    
+    private function saveImages(Request $request, $id)
+    {        
+        if($request["imagenes"] > 0){
+            $files = $request->file('file');
+
+            foreach($request['imagenes']  as $archivo){
+                
+                $registro = ImagenesProducto::find($archivo->id);
+                if(!is_null($registro)){
+                    //Actualizando los datos de las imágenes en la tabla de base de datos
+                    $res = $this->registrarArchivoEnDb($registro, $archivo, $id);
+                    if($res['tipo-mensaje'] == 'danger'){
+                        return $res;
+                    }
+                }else{
+                    //Procesa los archvios de imágenes Nuevos
+                    $res = $this->procesarArchivosNuevos($request, $id, $archivo->nombre_archivo, $archivo->default);
+                }
+            }
+
+            return $res;
+        }else{
+            return ['mensaje' => 'No se han recibido archivos', 'tipo-mensaje' => 'danger'];
+        }
+    }
+
 
     
+    //Asocia los datos como el nombre del archivo y si ésta imágen es configurada como la imágen por defecto para el producto, con 
+    //el archivo de imágen recibido en la variable $request->file('file'), el nombre y la configuración "archivo por defecto"
+    //serán almacenadas en un registro en la tabla imagenes_producto, el archivo en si será almacenado en una carpeta en disco.
+    //Solo procesa los archivo nuevos
+    private function procesarArchivosNuevos($request, $id, $nombreArchivo, $isDefault){
+        foreach($request->file("file")  as $archivo){
+            if($archivo->getClientOriginalName() == $nombreArchivo){    //Si el nombre recibido en el objeto que contiene la información del archivo coincide con el nombre del archivo recibido se procede a registrar la información del archivo en la tabla de base de datos
 
-    private function _uploadFile(Request $request, $id)
-    {
-        if($request->input("file") !== null){
-            $repositorio = new ImagenesProducto();
-            return $this->storeFile($repositorio, $request, $id);
-        }else{
-            return ['mensaje' => 'No se han recibido archivos', 'tipo-mensaje' => 'danger'];
-        }
-    }
-
-
-
-    //PUT
-    private function UpdateFile(Request $request, $id)
-    {
-        if($request->input("file") !== null){
-            $repositorio = ImagenesProducto::find($id);
-            return $this->storeFile($repositorio, $request, $id);
-        }else{
-            return ['mensaje' => 'No se han recibido archivos', 'tipo-mensaje' => 'danger'];
-        }
-    }
-
-
-    private function storeFile($repositorio, Request $request, $id){
-        try{
-            $archivo = $this->uploadFile($request->input('file'), 'docs', true);
-            
-            if($archivo != ""){
-                $repositorio->producto_id = $id;
-                $repositorio->nombre_archivo = $request->input("file")->getClientOriginalName();
-                $repositorio->url = $archivo;
-            
-                $res = $repositorio->save();
-                if($archivo != "")
-                $mensaje = $res ? "El archivo de imagen sido subido." : "Ocurrió un error al intentar subir el archivo.";
-                $tipoMensaje = $res ? "success" : "danger";
-
-                return ['mensaje' => $mensaje, 'tipo-mensaje' => $tipoMensaje];
-            }else{
-                return ['mensaje' => '', 'tipo-mensaje' => ''];
+                $registro = new ImagenesProducto(); //Crea un registro
+                $url = $this->uploadFile($id, $archivo);    //Sube el archivo a la carpeta de almacenamiento y devbuelve la ruta relativa originada
+                if($url !== ""){    
+                    $archivo->url = $url;
+                    $registro->nombre_archivo = $nombreArchivo;
+                    $archivo->default = $isDefault;
+                    
+                    $res = $this->registrarArchivoEnDb($registro, $archivo, $id);
+                    if($res['tipo-mensaje'] == 'danger'){
+                        return $res;
+                    }
+                }else{
+                    //Si no se recibe quiere decir que no fue posible grabar el archivo en la carpeta de almacenmiento para las imágenes
+                    return ['mensaje' => 'Error al intentar subir un archivo.', 'tipo-mensaje' => 'warning'];
+                }
+                
             }
+        }
+    }
+
+
+   //Registra el archivo en la tabla imágenes_producto     
+    private function registrarArchivoEnDb($repositorio, $file, $id){
+        try{
+            $repositorio->producto_id = $id;
+            $repositorio->url = $file->url; 
+            $repositorio->default = $file->default;               
+        
+            $res = $repositorio->save();
+            $mensaje = $res ? "El archivo de imagen sido registrado." : "Ocurrió un error al intentar registrar el archivo.";
+            $tipoMensaje = $res ? "success" : "danger";
+
+            return ['mensaje' => $mensaje, 'tipo-mensaje' => $tipoMensaje];
 
         }catch(Exception $error){ 
             return ['mensaje' => 'Ocurrió un error al intentar subir el archivo: ' .$error->getMessage(), 'tipo-mensaje' => 'danger'];
         }
     }
 
-    private function uploadFile($path, $destino = 'local', $sobreescribir = false){
+
+
+    //PUT
+    private function deleteFile($id)
+    {
+        try{            
+            $repositorio = ImagenesProducto::find($id);
+            unlink(storage_path('app/public/productos/'.$repositorio['url']));
+            $res = $repositorio->delete();
+            $mensaje = $res ? 'Imagén eliminada.' : 'Error al intentar eliminar una imágen';
+            $tipoMensaje = $res ? 'success' : 'danger';
+
+            return ['mensaje' => $mensaje, 'tipo-mensaje' => $tipoMensaje];
+        }catch(Exception $e){
+            return ['mensaje' => 'Error al intentar eliminar una imágen del producto: '.$e, 'tipo-mensaje'=>'danger'];
+        }
+    }
+
+
+    
+
+
+
+    private function uploadFile($idProd, $path, $destino = 'local', $sobreescribir = false){
         $name = "";
         if(!empty($path)){
-            $name = ($sobreescribir ? "" : Carbon::now()->second).$path->getClientOriginalName();
+            $name = $idProd.'/'.($sobreescribir ? "" : Carbon::now()->second).$path->getClientOriginalName();
             //$this->attributes['afiche'] = $name;    //Asigna automáticamente el nombre al cargar los datos en el controlador, con la función fill($request->all())
             \Storage::disk($destino)->put($name, \File::get($path));            
         }

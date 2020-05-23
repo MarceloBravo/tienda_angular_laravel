@@ -22,3 +22,22 @@
       padding: 0;  
       list-style: none;  
 }
+
+img{
+    height: 200px;
+    max-width: 200px;
+}
+
+.div-imagen-producto{
+    padding: 36px;
+}
+
+.deleteImage{
+    position: absolute;    
+    left: 50%;
+    border-radius: 100%;
+}
+
+#input-files{
+    display: none;
+}

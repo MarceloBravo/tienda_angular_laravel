@@ -50,7 +50,7 @@
                                 <td>{{ item.nombre}}</td>
                                 <td>{{ item.marca}}</td>
                                 <td>{{ item.categoria}}</td>
-                                <td class="cel-img"><img src="{{ item.foto}}"/></td>
+                                <td class="cel-img"><img src="{{ rutaImagen(item) }}"/></td>
                                 <td class="col-action">
                                     <a class="btn btn-success btn-sm" routerLink="/admin/productos/{{ item.id }}">Editar</a>
                                     <button class="btn btn-danger btn-sm"

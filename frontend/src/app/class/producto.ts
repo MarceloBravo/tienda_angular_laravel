@@ -1,3 +1,5 @@
+import { ImagenProducto } from './imagen-producto';
+
 export class Producto {
     id?: number;
     nombre: string;
@@ -18,4 +20,6 @@ export class Producto {
     deleted_at?: File;
 
     file?: string;
+    ruta_imagen?: string;
+    imagenes?: ImagenProducto[];
 }

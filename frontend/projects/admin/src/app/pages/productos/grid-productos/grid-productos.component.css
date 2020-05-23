@@ -3,6 +3,13 @@
     padding: 0px 10px;
 }
 
+#filtro{
+    border-color: #b9b6b6;
+    border-style: solid;
+    border-width: thin;
+    padding: 5px;
+}
+
 .col-th-sup{
     text-align: center;
 }
@@ -10,3 +17,12 @@
 .col-action{
     width: 180px;
 }
+
+td{
+    vertical-align: middle;
+}
+
+img{
+    height: 100px;
+}
+

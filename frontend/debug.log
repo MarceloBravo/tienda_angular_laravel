@@ -2,3 +2,15 @@
 [0204/183620.805:ERROR:http_transport_win.cc(276)] WinHttpSendRequest: La operación se completó correctamente. (0x0)
 [0331/210425.020:ERROR:http_transport_win.cc(276)] WinHttpSendRequest: La operación se completó correctamente. (0x0)
 [0401/231905.454:ERROR:file_io.cc(134)] WriteFile: Se está cerrando la canalización. (0xE8)
+[0515/174118.313:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0515/174118.329:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/175118.335:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/175118.335:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/175618.375:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/181118.398:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/212737.863:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/213740.537:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/213741.287:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/214237.910:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0515/214240.439:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0517/124521.426:ERROR:http_transport_win.cc(276)] WinHttpSendRequest: La operación se completó correctamente. (0x0)
