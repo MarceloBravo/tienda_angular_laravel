@@ -70,6 +70,16 @@ export class FormMenusComponent implements OnInit {
       pantalla_id: [this.menu.pantalla_id, [Validators.required, Validators.min(0)]],
       url: [this.menu.url, [Validators.required, Validators.minLength(1), Validators.maxLength(255)]]
     });
+    /*
+    const invalid = [];
+    const controls = this.formMenu.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    console.log(this.formMenu.value, this.formMenu.valid, invalid);
+    */
   }
 
 
@@ -131,7 +141,7 @@ export class FormMenusComponent implements OnInit {
 
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/admin/menus']);
+        if(res['tipo-mensaje'] === 'success')this.router.navigate(['/admin/menus']);
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);
@@ -148,7 +158,7 @@ export class FormMenusComponent implements OnInit {
 
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/admin/menus']);        
+        if(res['tipo-mensaje'] === 'success')this.router.navigate(['/admin/menus']);
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);
@@ -164,7 +174,7 @@ export class FormMenusComponent implements OnInit {
         (res: string[])=>{
         this.mostrarMensajes(res);
         this._spinnerService.hide();
-        this.router.navigate(['/admin/menus']);
+        if(res['tipo-mensaje'] === 'success')this.router.navigate(['/admin/menus']);
       },(error)=>{
         this._messagesService.mostrarMensaje(error.message, 'danger');
         console.log(error);

@@ -43,6 +43,9 @@ export class MenuService {
     return this.httpClient.get(this._const.servidorEndPoint + this.endPoint + '/filtrar/' + text + '/' + pag);
   }
 
+  getMenuBarItems(idMenuPadre: number = 0){
+    return this.httpClient.get(`${this._const.servidorEndPoint}admin/get-menus/${idMenuPadre}` );
+  }
 
 
 }

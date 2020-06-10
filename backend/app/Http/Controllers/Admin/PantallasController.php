@@ -72,7 +72,7 @@ class PantallasController extends Controller
         $validator = $this->validaDatos($request, null);
         if($validator->fails())
         {
-            return response()->json(["mensaje"=>"Datos no válidos o incompletos:", "errores"=>$validator->errors()]);
+            return response()->json(["mensaje"=>"Datos no válidos o incompletos:", "tipo-mensaje" => "danger", "errores"=>$validator->errors()]);
         }
 
         $pantalla = new Pantalla();

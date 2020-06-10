@@ -64,7 +64,7 @@
                 <div class="div-buttons-group">
                     <button class="btn btn-success" (click)="grabar()" [disabled]="!formPantalla.valid">Grabar</button>
                     <span class="spn-separate"></span>
-                    <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="this.id === 0">Eliminar</button>
                     <span class="spn-separate"></span>
                     <a class="btn btn-primary" routerLink="/admin/pantallas">Regresar</a>
                 </div>

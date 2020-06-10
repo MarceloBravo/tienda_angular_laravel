@@ -40,6 +40,7 @@ export class GridMenusComponent implements OnInit {
     private _messagesServices: MessagesService,  //Importa (ver imports) el servicio desde el proyecto principal no desed éste proyecto
     private _spinnerService: SpinnerService //Se encarga de mostrar (show()) u ocultar (hide()) el protctor de pantalla de la carga da datos.
   ) {
+    this._messagesServices.ocultarMensaje();
     this._scriptService.loadScripts(this.src);  //Carga archivos javascripts
     this.cargarRegistros();
     sessionStorage.setItem('pag',this.paginacion.pag.toString());
@@ -94,7 +95,7 @@ export class GridMenusComponent implements OnInit {
 
         this.paginacion.pag = res['page']; //Número real de la página actual (Comienza desde 0)
         this.paginacion.filas = res['rows']; //Cantidad total de registros
-        this.paginacion.totPag = Math.round( res['rows'] / res['rowsByPage'] ) + 1;  //Calculando el total de páginas obtenidas (cantidad total de registros / registros por página)
+        this.paginacion.totPag = Math.ceil( res['rows'] / res['rowsByPage'] ) + 1;  //Calculando el total de páginas obtenidas (cantidad total de registros / registros por página)
         this.paginacion.activePag = this.paginacion.pag + 1;  //Número del botón de paginación activo (Comienza desde 1)
         this.paginacion.arrPagesNumbers = Array.from({length: this.paginacion.totPag},(k ,v)=> v + 1) //ver https://stackoverflow.com/questions/36354325/angular-2-ngfor-using-numbers-instead-collections
         this._spinnerService.hide();

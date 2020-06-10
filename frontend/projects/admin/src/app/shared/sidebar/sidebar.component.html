@@ -1,5 +1,5 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/assets/index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/assets/home">
         <div class="sidebar-brand-icon">
             <img src="/assets/img/logo/logo2.png">
         </div>
@@ -7,7 +7,7 @@
     </a>
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" href="/assets/index.html">
+        <a class="nav-link" href="/assets/home">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Cuadro de mando</span></a>
     </li>
@@ -15,6 +15,20 @@
     <div class="sidebar-heading">
         Secciones
     </div>
+    <li *ngFor="let item of mainMenuItems" class="nav-item">
+        <a class="nav-link collapsed" href="#collapse{{ item.nombre }}" data-toggle="collapse" 
+            aria-expanded="true" aria-controls="collapseBootstrap" (click)="getSubMenus(item.id)">
+            <i class="far fa-fw {{ item.icono_fa_class }}"></i>
+            <span>{{ item.nombre }}</span>
+        </a>
+        <div id="collapse{{ item.nombre }}" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Administración de {{ item.nombre }}</h6>
+                <a *ngFor="let itemMenu of subMenusItems" class="collapse-item" routerLink="/admin{{ itemMenu.url }}">{{ itemMenu.nombre }}</a>
+            </div>
+        </div>
+    </li>
+<!--
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSistema"
             aria-expanded="true" aria-controls="collapseBootstrap">
@@ -55,6 +69,7 @@
             </div>
         </div>
     </li>
+-->
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
 </ul>

@@ -51,9 +51,9 @@ export class FormPantallasComponent implements OnInit {
     this.formPantalla = this.fb.group({      
       nombre: [this.pantalla.nombre,[Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       tabla: [this.pantalla.tabla, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      permite_crear: [this.pantalla.permite_crear],
-      permite_editar: [this.pantalla.permite_editar],
-      permite_eliminar: [this.pantalla.permite_eliminar],
+      permite_crear: [this.pantalla.permite_crear === undefined ? false : this.pantalla.permite_crear],
+      permite_editar: [this.pantalla.permite_editar === undefined ? false : this.pantalla.permite_editar],
+      permite_eliminar: [this.pantalla.permite_eliminar === undefined ? false : this.pantalla.permite_eliminar],
       created_at: [this.pantalla.created_at],
       updated_at: [this.pantalla.updated_at],
       deleted_at: [this.pantalla.deleted_at]
