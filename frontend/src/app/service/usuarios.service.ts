@@ -15,12 +15,36 @@ export class UsuariosService {
     return header;
   }
 
+  get(page: number){
+    return this.httpClient.get(this.endPoint + `/pag/${page}`);
+  }
+
+  getAll(){
+    return this.httpClient.get(this.endPoint + `-all`);
+  }
+  
+  find(id: number){
+    return this.httpClient.get(this.endPoint + `/${id}`);
+  }
+
   insert(usuario: usuariosInterfaces){
     return this.httpClient.post(this.endPoint, usuario, {headers:this.headers()});
+  }
+  
+  update(id: number, usuario: usuariosInterfaces){
+    return this.httpClient.put(this.endPoint + `/${id}`, usuario, {headers: this.headers()});
+  }
+
+  delete(id: number){
+    return this.httpClient.delete(this.endPoint + `/${id}`, {headers: this.headers()});
   }
 
   getUserByEmail(email: string){
     return this.httpClient.get(this.endPoint + '/email/' + email);
+  }
+
+  filter(texto: string, pag: number){
+    return this.httpClient.get(this.endPoint + `/filtrar/${texto}/${pag}`);
   }
 
 }

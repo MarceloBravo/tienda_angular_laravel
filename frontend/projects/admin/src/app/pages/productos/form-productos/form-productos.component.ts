@@ -89,8 +89,8 @@ export class FormProductosComponent implements OnInit {
       marca_id: [this.producto.marca_id, [Validators.required, Validators.min(1)]],
       precio: [this.producto.precio, [Validators.required, Validators.min(1)]],
       precio_anterior: [this.producto.precio_anterior, [Validators.required, Validators.min(0)]],
-      visible: [this.producto.visible, [Validators.required]],
-      color: [this.producto.color === undefined ? false : this.producto.color , [Validators.required, Validators.minLength(0), Validators.maxLength(20)]],
+      visible: [this.producto.visible === undefined ? false : this.producto.visible, [Validators.required]],
+      color: [this.producto.color === undefined ? '' : this.producto.color , [Validators.required, Validators.minLength(0), Validators.maxLength(20)]],
       nuevo: [this.producto.nuevo === undefined ? true : this.producto.nuevo, [Validators.required]],
       oferta: [this.producto.oferta === undefined ? false : this.producto.oferta, [Validators.required]],
       porcentaje_descuento: [this.producto.porcentaje_descuento, [Validators.required, Validators.min(0), Validators.max(100)]],
@@ -176,8 +176,9 @@ export class FormProductosComponent implements OnInit {
           this.form.get(field).value.map( f => formData.append('file[]', f, f.name));
         }
       }else if(field === 'imagenes'){
-          //if(this.producto.imagenes !== undefined)this.producto.imagenes = [];
-          this.producto.imagenes.map( f => formData.append('imagenes[]',JSON.stringify(f)));
+          if(this.producto.imagenes !== undefined){
+            this.producto.imagenes.map( f => formData.append('imagenes[]',JSON.stringify(f)));
+          }
       }else{
         formData.append(field, this.form.get(field).value);
       }
@@ -351,5 +352,30 @@ export class FormProductosComponent implements OnInit {
   public showImageDialog(){
     let inputFile = <HTMLInputElement>document.getElementById('input-files');
     inputFile.click();
+  }
+
+  handlerPrecio(){
+    let inputPrecio = <HTMLInputElement>document.getElementById('precio');    
+    let inputPrecioAnterior = <HTMLInputElement>document.getElementById('precio_anterior');    
+    let porcentaje = <HTMLInputElement>document.getElementById('porcentaje_descuento');
+    let precioAnt = parseInt(inputPrecioAnterior.value);
+    let porcent = parseInt(inputPrecioAnterior.value);
+    if(precioAnt > 0){
+      porcentaje.value = (Math.round(precioAnt * 100 / parseInt(inputPrecio.value)) - 100).toString();
+    }
+  }
+
+  handlerPorcentaje(){
+    let inputPrecio = <HTMLInputElement>document.getElementById('precio');    
+    let inputPrecioAnterior = <HTMLInputElement>document.getElementById('precio_anterior');    
+    let porcentaje = <HTMLInputElement>document.getElementById('porcentaje_descuento');
+    inputPrecio.value =  Math.round(parseInt(inputPrecioAnterior.value) - (parseInt(inputPrecioAnterior.value) * (parseInt(porcentaje.value) / 100))).toString();
+  }
+  
+  handlerPrecioAnterior(){
+    let inputPrecio = <HTMLInputElement>document.getElementById('precio');
+    let inputPrecioAnterior = <HTMLInputElement>document.getElementById('precio_anterior');
+    let inputPorcentaje = <HTMLInputElement>document.getElementById('porcentaje_descuento');
+    inputPorcentaje.value = Math.round(100 - (parseInt(inputPrecio.value) * 100 / parseInt(inputPrecioAnterior.value))).toString();
   }
 }

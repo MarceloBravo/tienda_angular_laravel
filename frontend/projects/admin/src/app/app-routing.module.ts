@@ -28,6 +28,8 @@ import { GridMarcasComponent } from './pages/marcas/grid-marcas/grid-marcas.comp
 import { FormMarcasComponent } from './pages/marcas/form-marcas/form-marcas.component';
 import { GridProductosComponent } from './pages/productos/grid-productos/grid-productos.component';
 import { FormProductosComponent } from './pages/productos/form-productos/form-productos.component';
+import { GridUsuariosComponent } from './pages/usuarios/grid-usuarios/grid-usuarios.component';
+import { FormUsuariosComponent } from './pages/usuarios/form-usuarios/form-usuarios.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
@@ -58,8 +60,9 @@ const routes: Routes = [
       { path: 'marcas', component: GridMarcasComponent},
       { path: 'marcas/:id', component: FormMarcasComponent},
       { path: 'productos', component: GridProductosComponent},
-      { path: 'productos/:id', component: FormProductosComponent}
-      
+      { path: 'productos/:id', component: FormProductosComponent},
+      { path: 'usuarios', component: GridUsuariosComponent},
+      { path: 'usuarios/:id', component: FormUsuariosComponent}
     ]
   },
   { path: '**', pathMatch: 'full', redirectTo: ''}

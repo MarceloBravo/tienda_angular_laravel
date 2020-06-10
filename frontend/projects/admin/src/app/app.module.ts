@@ -50,6 +50,8 @@ import { MatToolbarModule,
           MatCardModule,  
           MatButtonModule,  
           MatProgressBarModule } from '@angular/material';
+import { GridUsuariosComponent } from './pages/usuarios/grid-usuarios/grid-usuarios.component';
+import { FormUsuariosComponent } from './pages/usuarios/form-usuarios/form-usuarios.component';
 
 
 @NgModule({
@@ -88,7 +90,9 @@ import { MatToolbarModule,
     GridMarcasComponent,
     FormMarcasComponent,
     GridProductosComponent,
-    FormProductosComponent
+    FormProductosComponent,
+    GridUsuariosComponent,
+    FormUsuariosComponent
   ],
   imports: [
     BrowserModule,

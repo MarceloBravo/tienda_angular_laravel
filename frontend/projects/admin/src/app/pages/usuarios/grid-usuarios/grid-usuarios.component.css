@@ -1,0 +1,20 @@
+
+.div-btn-nuevo{
+    padding: 0px 10px;
+}
+
+.col-th-sup{
+    text-align: center;
+}
+
+.col-action{
+    width: 180px;
+}
+
+#filtro{
+    border-color: #b7b8bb;
+    border-style: solid !important;
+    border-radius: 5px;
+    padding: 3px;
+    border-width: thin;
+}

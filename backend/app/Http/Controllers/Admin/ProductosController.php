@@ -74,15 +74,15 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //return response()->json(["mensaje"=>$request->all(), 'tipo-mensaje' => 'warning']);
+        //return response()->json(["mensaje"=>$request->$request['imagenes'], 'tipo-mensaje' => 'warning']);
+
         $validar = $this->validarCampos($request);
         if($validar->fails())
         {
             return response()->json(["mensaje"=>"Datos incompletos o no válidos", "tipo-mensaje" => "danger", "errores"=>$validar->errors()]);
         }
 
-        $request['imagenes'] = array_map(function($i){return json_decode($i);}, $request['imagenes']);
-        //return response()->json(["mensaje"=>$request->all(), 'file' => $request->file('file')[0]->getClientOriginalName(), 'tipo-mensaje' => 'warning']);
+        $request['imagenes'] = is_null($request['imagenes']) ? [] : array_map(function($i){return json_decode($i);}, $request['imagenes']);
         try{
             $producto = new Producto();
             DB::beginTransaction();
@@ -90,7 +90,6 @@ class ProductosController extends Controller
             if(!$result){$mensaje =  "Ocurrio un error al intentar ingresar el registro.";}
             if(!$result){$tipoMensaje = "danger";} 
             $id = $result ? $producto->id : -1;
-            //return response()->json(["mensaje"=>$request->all(), 'file' => $request->file('file')[0]->getClientOriginalName(), 'id' => $id, 'tipo-mensaje' => 'warning']);
             if($result && $request->file("file") !== null){
                 $resultImage = $this->saveImages($request, $id);
                 if($resultImage['tipo-mensaje'] == "danger"){

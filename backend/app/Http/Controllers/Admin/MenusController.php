@@ -218,4 +218,15 @@ class MenusController extends Controller
 
         return Validator::make($request->all(), $rules, $messages);
     }
+
+
+    public function getMenus($id = 0)
+    {
+        $idMenuPadre = $id > 0 ? $id : null;
+        $menus = Menu::where('menu_padre_id','=',$idMenuPadre)
+                    ->OrderBy('posicion')
+                    ->get();
+
+        return response()->json($menus);
+    }
 }

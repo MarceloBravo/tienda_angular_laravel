@@ -1,0 +1,204 @@
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sistema</li>
+            <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Basic -->
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary col-md-7">Mantenedor de usuarios</h6>
+                    <h6 class="m-0 font-weight-bold text-primary col-md-5" id="action-title">Nuevo</h6>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="userForm">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="nombre">Rut</label>
+                            <input id="nombre" formControlName="rut" type="text" class="form-control col-md-2" placeholder="Ej.: 11.222.333-K.">
+                            <div *ngIf="userForm.get('rut').hasError('required') && userForm.get('rut').dirty" class="errorFieldClass">El rut es obligatorio</div>
+                            <div *ngIf="userForm.get('rut').hasError('minlength') && userForm.get('rut').dirty" class="errorFieldClass">Debe ingresar un minimo 10 carácteres</div>
+                            <div *ngIf="userForm.get('rut').hasError('maxlength') && userForm.get('rut').dirty" class="errorFieldClass">Debe ingresar un máximo de 13 carácteres.</div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="nombre">Nombre</label>
+                            <input id="nombre" formControlName="nombre" type="text" class="form-control col-md-5" aria-describedby="nombreHelp" placeholder="Nombre del usuario.">
+                            <div *ngIf="userForm.get('nombre').hasError('required') && userForm.get('nombre').dirty" class="errorFieldClass">El nombre es obligatorio</div>
+                            <div *ngIf="userForm.get('nombre').hasError('minlength') && userForm.get('nombre').dirty" class="errorFieldClass">Debe ingresar un minimo 5 carácteres</div>
+                            <div *ngIf="userForm.get('nombre').hasError('maxlength') && userForm.get('nombre').dirty" class="errorFieldClass">Debe ingresar un máximo de 50 carácteres.</div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="a_paterno">A. Paterno</label>
+                            <input type="text" id="a_paterno" formControlName="a_paterno" class="form-control col-md-5" aria-describedby="a_paternoHelp"  placeholder="Apellido paterno"/>
+                            <div *ngIf="userForm.get('a_paterno').hasError('required') && userForm.get('a_paterno').dirty" class="errorFieldClass">El apellido paterno es oligatorio</div>
+                            <div *ngIf="userForm.get('a_paterno').hasError('minlength') && userForm.get('a_paterno').dirty" class="errorFieldClass">El apellido debe tener almenos 3 carácteres. Ingresa un apllido más largo.</div>
+                            <div *ngIf="userForm.get('a_paterno').hasError('maxlength') && userForm.get('a_paterno').dirty" class="errorFieldClass">El apellido debe tener un máximo de 50 carácteres. Ingresa un apellido más corto</div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="a_materno">A. Materno</label>
+                            <input type="text" id="a_materno" name="a_materno" formControlName="a_materno" class="form-control col-md-5" placeholder="Apellido materno"/>
+                            <div *ngIf="userForm.get('a_materno').hasError('required') && userForm.get('a_materno').dirty" class="errorFieldClass">El apellido materno es oligatorio</div>
+                            <div *ngIf="userForm.get('a_materno').hasError('minlength') && userForm.get('a_materno').dirty" class="errorFieldClass">El apellido debe tener almenos 3 carácteres. Ingresa un apllido más largo.</div>
+                            <div *ngIf="userForm.get('a_materno').hasError('maxlength') && userForm.get('a_materno').dirty" class="errorFieldClass">El apellido debe tener un máximo de 50 carácteres. Ingresa un apellido más corto</div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="email">Email</label>
+                            <input type="text" id="email" formControlName="email" class="form-control col-md-5" placeholder="Email"/>
+                            <div *ngIf="userForm.get('email').hasError('required') && userForm.get('email').dirty" class="errorFieldClass">El email es oligatorio</div>
+                            <div *ngIf="userForm.get('email').hasError('email') && userForm.get('email').dirty" class="errorFieldClass">El email ingresado no es válido.</div>
+                            <div *ngIf="userForm.get('email').hasError('maxlength') && userForm.get('email').dirty" class="errorFieldClass">El email debe tener un máximo de 255 carácteres. Ingresa un email más corto</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="direccion">Dirección</label>
+                            <input id="direccion" formControlName="direccion" type="text" class="form-control col-md-5" placeholder="Ingresa la dirección del usuario.">
+                            <div *ngIf="userForm.get('direccion').hasError('required') && userForm.get('direccion').dirty" class="errorFieldClass">La dirección del usuario es obligatoria.</div>
+                            <div *ngIf="userForm.get('direccion').hasError('minlength') && userForm.get('direccion').dirty" class="errorFieldClass">Debes ingresar un minimo 10 carácteres.</div>
+                            <div *ngIf="userForm.get('direccion').hasError('maxlength') && userForm.get('direccion').dirty" class="errorFieldClass">Debes ingresar un máximo de 255 carácteres.</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="pais_id">Pais</label>
+                            <select id="pais_id" name="pais_id" formControlName="pais_id" class="form-control col-md-5" (change)="cargarRegiones()">
+                                <option 
+                                    *ngFor="let item of paises" 
+                                    value="{{item.id}}" 
+                                    [disabled]="item.id === null"
+                                    >{{ item.nombre }}
+                                </option>
+                            </select>
+                            <!--
+                            <div *ngIf="userForm.get('pais_id').hasError('required') && userForm.get('pais_id').dirty" class="errorFieldClass">Debe seleccionar el pais</div>
+                            <div *ngIf="userForm.get('pais_id').hasError('min') && userForm.get('pais_id').dirty" class="errorFieldClass">El pais seleccionado no es válido.</div>
+                            -->
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="region_id">Región</label>
+                            <select 
+                                id="region_id" 
+                                formControlName="region_id" 
+                                class="form-control col-md-5" 
+                                placeholder="Region" 
+                                (change)="cargarProvincias()"
+                            >
+                                <option 
+                                    *ngFor="let item of regiones" 
+                                    value="{{ item.id }}" 
+                                    [disabled]="item.id === null"
+                                    [selected]="userForm.value.region_id === item.id">
+                                        {{ item.nombre }}
+                                </option>
+                            </select>
+                            <!--
+                            <div *ngIf="userForm.get('region_id').hasError('required') && userForm.get('region_id').dirty" class="errorFieldClass">Debe seleccionar el rol|</div>
+                            <div *ngIf="userForm.get('region_id').hasError('min') && userForm.get('region_id').dirty" class="errorFieldClass">El rol seleccionado no es válido.</div>
+                            -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="provincia_id">Provincia</label>
+                            <select id="provincia_id" formControlName="provincia_id" class="form-control col-md-5" placeholder="Provincia" (change)="cargarComunas()">
+                                <option 
+                                    *ngFor="let item of provincias" 
+                                    value="{{ item.id }}"
+                                    [disabled]="item.id === null"
+                                    >{{ item.nombre }}
+                                </option>
+                            </select>
+                            <!--
+                            <div *ngIf="userForm.get('provincia_id').hasError('required') && userForm.get('provincia_id').dirty" class="errorFieldClass">Debe seleccionar el rol|</div>
+                            <div *ngIf="userForm.get('provincia_id').hasError('min') && userForm.get('provincia_id').dirty" class="errorFieldClass">El rol seleccionado no es válido.</div>
+                            -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="comuna_id">Comuna</label>
+                            <select id="comuna_id" formControlName="comuna_id" class="form-control col-md-5" placeholder="Comuna" (change)="cargarCiudades()">
+                                <option 
+                                    *ngFor="let item of comunas" 
+                                    value="{{ item.id }}"
+                                    [disabled]="item.id === null"
+                                    >{{ item.nombre }}
+                                </option>
+                            </select>
+                            <!--
+                            <div *ngIf="userForm.get('comuna_id').hasError('required') && userForm.get('comuna_id').dirty" class="errorFieldClass">Debe seleccionar el rol|</div>
+                            <div *ngIf="userForm.get('comuna_id').hasError('min') && userForm.get('comuna_id').dirty" class="errorFieldClass">El rol seleccionado no es válido.</div>
+                            -->
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="ciudad_id">Ciudad</label>
+                            <select id="ciudad_id" formControlName="ciudad_id" class="form-control col-md-5" placeholder="Ciudad">
+                                <option 
+                                    *ngFor="let item of ciudades" 
+                                    value="{{ item.id }}"
+                                    [disabled]="item.id === null"
+                                    >{{ item.nombre }}
+                                </option>
+                            </select>
+                            <div *ngIf="userForm.get('ciudad_id').hasError('required') && userForm.get('ciudad_id').dirty" class="errorFieldClass">Debe seleccionar el rol|</div>
+                            <div *ngIf="userForm.get('ciudad_id').hasError('min') && userForm.get('ciudad_id').dirty" class="errorFieldClass">El rol seleccionado no es válido.</div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="fono">Fono</label>
+                            <input id="fono" formControlName="fono" type="text" class="form-control col-md-5" placeholder="Ingresa el teléfono.">
+                            <div *ngIf="userForm.get('fono').hasError('required') && userForm.get('fono').dirty" class="errorFieldClass">El teléfono es obligatoria.</div>
+                            <div *ngIf="userForm.get('fono').hasError('minlength') && userForm.get('fono').dirty" class="errorFieldClass">El teléfono un minimo 9 carácteres.</div>
+                            <div *ngIf="userForm.get('fono').hasError('maxlength') && userForm.get('fono').dirty" class="errorFieldClass">El teléfono un máximo de 15 carácteres.</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="nickname">Nombre de usuario</label>
+                            <input type="text" id="nickname" formControlName="nickname" class="form-control col-md-5" placeholder="Nickname"/>
+                            <div *ngIf="userForm.get('nickname').hasError('required') && userForm.get('nickname').dirty" class="errorFieldClass">El nombre de usuario es oligatorio</div>
+                            <div *ngIf="userForm.get('nickname').hasError('minlength') && userForm.get('nickname').dirty" class="errorFieldClass">El nombre de usuario debe tener almenos 6 carácteres. Ingresa un nombre más largo</div>
+                            <div *ngIf="userForm.get('nickname').hasError('maxlength') && userForm.get('nickname').dirty" class="errorFieldClass">El nombre de usuario debe tener un máximo de 20 carácteres. Ingresa un nombre de usuario más corto</div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="password">Contraseña</label>
+                            <input type="password" id="password" formControlName="password" class="form-control col-md-5" placeholder="Contraseña"/>
+                            <!-- <div *ngIf="userForm.get('password').hasError('required') && userForm.get('password').dirty" class="errorFieldClass">El la contraseña de usuario es oligatorio</div> -->
+                            <div *ngIf="userForm.get('password').hasError('minlength') && userForm.get('password').dirty" class="errorFieldClass">La contraseña debe tener almenos 6 carácteres. Ingresa una contraseña más larga.</div>
+                            <div *ngIf="userForm.get('password').hasError('maxlength') && userForm.get('password').dirty" class="errorFieldClass">La contraseña debe tener un máximo de 20 carácteres. Ingresa una contraseña más corta.</div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2" for="roles">Rol</label>
+                            <select id="rol_id" formControlName="rol_id" class="form-control col-md-5" placeholder="Rol">
+                                <option 
+                                    *ngFor="let item of roles" 
+                                    value="{{ item.id }}"
+                                    [disabled]="item.id === null"
+                                    >{{ item.nombre }}
+                                </option>
+                            </select>                            
+                            <div *ngIf="userForm.get('rol_id').hasError('required') && userForm.get('rol_id').dirty" class="errorFieldClass">Debe seleccionar el rol|</div>
+                            <div *ngIf="userForm.get('rol_id').hasError('min') && userForm.get('rol_id').dirty" class="errorFieldClass">El rol seleccionado no es válido.</div>                            
+                        </div> 
+                        
+                    </form>
+                </div>
+                <div class="div-buttons-group">
+                    <button class="btn btn-success" (click)="grabar()" [disabled]="!userForm.valid">Grabar</button>
+                    <span class="spn-separate"></span>
+                    <button class="btn btn-danger" (click)="eliminar()" [disabled]="this.id === 0">Eliminar</button>
+                    <span class="spn-separate"></span>
+                    <a class="btn btn-primary" routerLink="/admin/usuarios">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

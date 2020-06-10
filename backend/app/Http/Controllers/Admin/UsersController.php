@@ -10,19 +10,38 @@ use App\Rules\ValidaRut;
 
 class UsersController extends Controller
 {
+    private $rowsByPage = 10;
+
     public function __construct(){
-        $this->middleware('jwt', ['except' => ['login']]);
+    //    $this->middleware('jwt', ['except' => ['login']]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pag = 0)
     {
-        $users = User::all();
+        $allReg = User::join('roles','users.rol_id','=','roles.id')
+                    ->join('ciudades','users.ciudad_id','=','ciudades.id')
+                    ->select('users.*','roles.nombre as rol','ciudades.nombre as ciudad');
+                    
+        $countReg = count($allReg->get());
 
-        return response()->json($users->ToArray());
+        $users = $allReg->skip($this->rowsByPage * $pag)
+                        ->take($this->rowsByPage)
+                        ->get();
+
+        return response()->json(['data' => $users->ToArray(), 'rows' => $countReg , 'rowsByPage' => $this->rowsByPage]);
+    }
+
+
+    public function getAll(){
+        $users = User::join('roles','users.rol_id','=','roles.id')
+                    ->join('ciudades','users.ciudad_id','=','ciudades.id')
+                    ->get();
+
+        return response()->json($users);
     }
 
     /**
@@ -66,7 +85,21 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::join('roles','users.rol_id','=','roles.id')
+            ->join('ciudades','users.ciudad_id','=','ciudades.id')
+            ->join('comunas','ciudades.comuna_id','=','comunas.id')
+            ->join('provincias','comunas.provincia_id','=','provincias.id')
+            ->join('regiones','provincias.region_id','=','regiones.id')
+            ->join('paises','regiones.pais_id','=','paises.id')
+            ->select(
+                'users.*',
+                'roles.nombre as rol',
+                'ciudades.nombre as ciudad',
+                'paises.id as pais_id',
+                'regiones.id as region_id',
+                'provincias.id as provincia_id',
+                'comunas.id as comuna_id'
+            )->find($id);
         
         return response()->json($user);
     }
@@ -128,14 +161,26 @@ class UsersController extends Controller
         return response()->json(["mensaje" => $mensaje, "tipo-mensaje" => $tipoMensaje]);
     }
 
+    public function findEmail($email)
+    {
+        $user = User::join('roles','users.rol_id','=','roles.id')
+                        ->join('ciudades','users.ciudad_id','=','ciudades.id')
+                        ->where('users.email','Like','%'.$email.'%')
+                        ->first();
 
-    public function filtrar($filtro)
+        return response()->json($user);
+    }
+
+
+    public function filtrar($filtro, $pag)
     {
         if(!isset($filtro))
         {
-            $users = User::all();
+            $allReg = User::join('roles','users.rol_id','=','roles.id')
+                    ->join('ciudades','users.ciudad_id','=','ciudades.id')
+                    ->select('users.*','roles.nombre as rol','ciudades.nombre as ciudad');    
         }else{
-            $users = User::join("roles","users.rol_id","=","roles.id")
+            $allReg = User::join("roles","users.rol_id","=","roles.id")
                             ->join("ciudades","users.ciudad_id","=","ciudades.id")
                             ->where("users.rut","Like","%".$filtro."%")
                             ->orWhere("users.nombre","Like","%".$filtro."%")
@@ -147,13 +192,16 @@ class UsersController extends Controller
                             ->orWhere("users.fono","Like","%".$filtro."%")
                             ->orWhere("roles.nombre","Like","%".$filtro."%")
                             ->orWhere("ciudades.nombre","Like","%".$filtro."%")
-                            ->select("users.*", "roles.nombre as rol", "ciudades.nombre as ciudad")
-                            ->get();
-
-                            //return response()->json($users);
+                            ->select("users.*", "roles.nombre as rol", "ciudades.nombre as ciudad");
         }
 
-        return response()->json($users->ToArray());
+        $countReg = count($allReg->get());
+
+        $users = $allReg->skip($this->rowsByPage * $pag)
+                        ->take($this->rowsByPage)
+                        ->get();
+
+        return response()->json(['data' => $users->ToArray(), 'rows' => $countReg, 'rowsByPage' => $this->rowsByPage]);
     }
 
 

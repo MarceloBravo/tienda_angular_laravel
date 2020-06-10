@@ -79,21 +79,21 @@
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="precio">Precio</label>
-                                                $<input id="precio" type="number" formControlName="precio" class="form-control col-md-2" placeholder="Precio actual"/>*
+                                                $<input id="precio" type="number" formControlName="precio" class="form-control col-md-2" placeholder="Precio actual" (change)="handlerPrecio()">*
                                                 <div *ngIf="form.get('precio').hasError('required') && form.get('precio').dirty" class="errorFieldClass">El precio es obligatorio.</div>
                                                 <div *ngIf="form.get('precio').hasError('min') && form.get('precio').dirty" class="errorFieldClass">El precio debe ser un valor positivo.</div>
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="precio_anterior">Precio anterior</label>
-                                                $<input id="precio_anterior" type="number" formControlName="precio_anterior" class="form-control col-md-2" placeholder="Precio anterior"/>*
+                                                $<input id="precio_anterior" type="number" formControlName="precio_anterior" class="form-control col-md-2" placeholder="Precio anterior" (change)="handlerPrecioAnterior()"/>*
                                                 <div *ngIf="form.get('precio_anterior').hasError('required') && form.get('precio_anterior').dirty" class="errorFieldClass">El precio anterior es obligatorio.</div>
                                                 <div *ngIf="form.get('precio_anterior').hasError('min') && form.get('precio_anterior').dirty" class="errorFieldClass">El precio anterior debe ser un valor positivo.</div>
                                             </div>
                                             
                                             <div class="form-group row">
                                                 <label class="col-md-2 form-label" for="porcentaje_descuento">Porcentaje de descuento</label>
-                                                <input id="porcentaje_descuento" type="number" formControlName="porcentaje_descuento" class="form-control col-md-2" placeholder="Porcentaje de descuento."/> % *
+                                                <input id="porcentaje_descuento" type="number" formControlName="porcentaje_descuento" class="form-control col-md-2" placeholder="Porcentaje de descuento." (change)="handlerPorcentaje()"/> % *
                                                 <div *ngIf="form.get('porcentaje_descuento').hasError('required') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento es obligatorio.</div>
                                                 <div *ngIf="form.get('porcentaje_descuento').hasError('min') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento debe ser un valor positivo.</div>
                                                 <div *ngIf="form.get('porcentaje_descuento').hasError('max') && form.get('porcentaje_descuento').dirty" class="errorFieldClass">El porcentaje de descuento no debe sobrepasar el 100%.</div>

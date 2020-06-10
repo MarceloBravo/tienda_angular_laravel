@@ -101,7 +101,7 @@ export class FormComunasComponent implements OnInit {
         var arrOptions: Pais[];
         arrOptions = res;
         var optDefault = new Pais();
-        optDefault.id = null,
+        optDefault.id = null;
         optDefault.nombre = '-- seleccione --';
         arrOptions.push(optDefault);
         

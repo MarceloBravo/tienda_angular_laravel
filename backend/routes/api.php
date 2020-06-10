@@ -70,7 +70,10 @@ Route::get('admin/roles-all','Admin\RolesController@getAll');
 Route::get('admin/roles-default','Admin\RolesController@getDefaultRol');
 
 Route::resource('admin/usuarios','Admin\UsersController');
-Route::get('admin/usuarios/filtrar/{filtro}','Admin\UsersController@filtrar');
+Route::get('admin/usuarios/pag/{pag}','Admin\UsersController@index');
+Route::get('admin/usuarios-all','Admin\UsersController@getAll');
+Route::get('admin/usuarios/email/{email}','Admin\UsersController@findEmail');
+Route::get('admin/usuarios/filtrar/{filtro}/{pag}','Admin\UsersController@filtrar');
 
 Route::resource('admin/pantallas','Admin\PantallasController');
 Route::get('admin/pantallas/filtrar/{filtro}/{pag}','Admin\PantallasController@filtrar');
@@ -111,6 +114,7 @@ Route::resource('admin/menus', 'Admin\MenusController');
 Route::get('admin/menus/filtrar/{id}/{pag}', 'Admin\MenusController@filtrar');
 Route::get('admin/menus/pag/{pag}', 'Admin\MenusController@index');
 Route::get('admin/menus-all', 'Admin\MenusController@getAll');
+Route::get('admin/get-menus/{idMenuPadre}', 'Admin\MenusController@getMenus');
 
 Route::resource('admin/categorias', 'Admin\CategoriasController');
 Route::get('admin/categorias/filtro/{filtro}/{page}', 'Admin\CategoriasController@filtrar');

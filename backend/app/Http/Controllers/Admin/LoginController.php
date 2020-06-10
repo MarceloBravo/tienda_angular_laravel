@@ -29,7 +29,7 @@ class LoginController extends Controller
                 'message' => $validator->messages()
             ]);
         }
-
+        
         try {
             // Attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
